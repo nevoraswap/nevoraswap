@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEVORA SWAP — подтверждение входа</title>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background-color: #0a0a0f;
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      background: #14141f;
+      border: 2px solid #7c3aed;
+      border-radius: 30px;
+      padding: 2rem;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 0 30px #7c3aed40;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #7c3aed;
+      margin-bottom: 1.5rem;
+    }
+
+    .code {
+      font-size: 3rem;
+      letter-spacing: 10px;
+      color: #7c3aed;
+      margin: 1.5rem 0;
+      padding: 1rem;
+      background: #1e1e2a;
+      border-radius: 20px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .status {
+      color: #a0a0c0;
+      margin: 1rem 0;
+      font-size: 1rem;
+    }
+
+    .btn {
+      background: transparent;
+      border: 2px solid #7c3aed;
+      border-radius: 40px;
+      padding: 0.8rem 2rem;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 100%;
+      margin: 0.5rem 0;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background: #7c3aed20;
+    }
+
+    .login-form, .register-form {
+      margin-top: 1.5rem;
+      text-align: left;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      background: #1e1e2a;
+      border: 1px solid #3a3a55;
+      border-radius: 30px;
+      color: white;
+      font-size: 1rem;
+    }
+
+    input:focus {
+      border-color: #7c3aed;
+      outline: none;
+    }
+
+    .error {
+      color: #ef4444;
+      font-size: 0.9rem;
+      margin-top: 0.3rem;
+      text-align: center;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 0.5rem;
+      background: transparent;
+      border: 1px solid #3a3a55;
+      border-radius: 30px;
+      color: #a0a0c0;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      border-color: #7c3aed;
+      color: #7c3aed;
+      background: #7c3aed20;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">NEVORA SWAP</div>
+    
+    <div id="codeDisplay" class="code">------</div>
+    <div id="status" class="status">Загрузка...</div>
+
+    <div id="authSection" style="display: none;">
+      <div class="tabs">
+        <button class="tab active" id="loginTab" onclick="switchTab('login')">Вход</button>
+        <button class="tab" id="registerTab" onclick="switchTab('register')">Регистрация</button>
+      </div>
+
+      <div id="loginForm" class="login-form">
+        <input type="text" id="loginUsername" placeholder="Логин (3-15 символов)">
+        <input type="password" id="loginPassword" placeholder="Пароль">
+        <div id="loginError" class="error"></div>
+        <button class="btn" onclick="handleLogin()">Войти и подтвердить</button>
+      </div>
+
+      <div id="registerForm" class="register-form" style="display: none;">
+        <input type="text" id="regUsername" placeholder="Логин (3-15 символов)">
+        <input type="password" id="regPassword" placeholder="Пароль">
+        <div id="registerError" class="error"></div>
+        <button class="btn" onclick="handleRegister()">Зарегистрироваться и подтвердить</button>
+      </div>
+    </div>
+
+    <div id="successSection" style="display: none;">
+      <div style="font-size: 3rem; color: #7c3aed; margin: 1rem 0;">✅</div>
+      <h3 style="color: #7c3aed;">Успешно!</h3>
+      <p class="status">Можете закрыть это окно</p>
+    </div>
+  </div>
+
+  <script>
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyCbgkMW0F0Nb8THjhoCapueR0ccGTexoyk",
+      databaseURL: "https://swap-3f785-default-rtdb.firebaseio.com"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // Получаем код из URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const authCode = urlParams.get('code');
+
+    let currentUser = null;
+    let currentTab = 'login';
+
+    // Показываем код
+    if (authCode) {
+      document.getElementById('codeDisplay').innerText = authCode;
+      document.getElementById('status').innerText = 'Войдите в аккаунт для подтверждения';
+      document.getElementById('authSection').style.display = 'block';
+      
+      // Проверяем, не авторизован ли уже этот код
+      const codeRef = db.ref('auth_codes/' + authCode);
+      codeRef.on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (data && data.username) {
+          // Код уже активирован
+          showSuccess();
+        }
+      });
+    } else {
+      document.getElementById('status').innerText = 'Ошибка: код не найден';
+    }
+
+    function switchTab(tab) {
+      currentTab = tab;
+      if (tab === 'login') {
+        document.getElementById('loginTab').classList.add('active');
+        document.getElementById('registerTab').classList.remove('active');
+        document.getElementById('loginForm').style.display = 'block';
+        document.getElementById('registerForm').style.display = 'none';
+      } else {
+        document.getElementById('registerTab').classList.add('active');
+        document.getElementById('loginTab').classList.remove('active');
+        document.getElementById('registerForm').style.display = 'block';
+        document.getElementById('loginForm').style.display = 'none';
+      }
+    }
+
+    function hashPassword(password) {
+      return CryptoJS.SHA256(password).toString();
+    }
+
+    function validateUsername(username) {
+      if (!username) return 'Введите логин';
+      if (username.length < 3) return 'Логин должен быть от 3 символов';
+      if (username.length > 15) return 'Логин должен быть до 15 символов';
+      if (!/^[a-z0-9]+$/i.test(username)) return 'Логин может содержать только английские буквы и цифры';
+      return null;
+    }
+
+    function validatePassword(password) {
+      if (!password) return 'Введите пароль';
+      if (password.length < 3) return 'Пароль должен быть минимум 3 символа';
+      return null;
+    }
+
+    async function handleLogin() {
+      const username = document.getElementById('loginUsername').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+
+      const usernameError = validateUsername(username);
+      if (usernameError) {
+        document.getElementById('loginError').innerText = usernameError;
+        return;
+      }
+
+      const passwordError = validatePassword(password);
+      if (passwordError) {
+        document.getElementById('loginError').innerText = passwordError;
+        return;
+      }
+
+      document.getElementById('loginError').innerText = 'Проверка...';
+
+      try {
+        const snapshot = await db.ref('users/' + username).once('value');
+        const user = snapshot.val();
+
+        if (!user) {
+          document.getElementById('loginError').innerText = 'Пользователь не найден';
+          return;
+        }
+
+        if (user.password !== hashPassword(password)) {
+          document.getElementById('loginError').innerText = 'Неверный пароль';
+          return;
+        }
+
+        // Успешный вход - сохраняем код
+        await db.ref('auth_codes/' + authCode).set({
+          username: username,
+          timestamp: Date.now()
+        });
+
+        showSuccess();
+      } catch (error) {
+        document.getElementById('loginError').innerText = 'Ошибка: ' + error.message;
+      }
+    }
+
+    async function handleRegister() {
+      const username = document.getElementById('regUsername').value.trim();
+      const password = document.getElementById('regPassword').value.trim();
+
+      const usernameError = validateUsername(username);
+      if (usernameError) {
+        document.getElementById('registerError').innerText = usernameError;
+        return;
+      }
+
+      const passwordError = validatePassword(password);
+      if (passwordError) {
+        document.getElementById('registerError').innerText = passwordError;
+        return;
+      }
+
+      document.getElementById('registerError').innerText = 'Регистрация...';
+
+      try {
+        // Проверяем, существует ли пользователь
+        const exists = await db.ref('users/' + username).once('value').then(s => s.exists());
+        if (exists) {
+          document.getElementById('registerError').innerText = 'Пользователь уже существует';
+          return;
+        }
+
+        // Создаем пользователя
+        const user = {
+          password: hashPassword(password),
+          created_at: new Date().toISOString()
+        };
+        await db.ref('users/' + username).set(user);
+
+        // Сохраняем код
+        await db.ref('auth_codes/' + authCode).set({
+          username: username,
+          timestamp: Date.now()
+        });
+
+        showSuccess();
+      } catch (error) {
+        document.getElementById('registerError').innerText = 'Ошибка: ' + error.message;
+      }
+    }
+
+    function showSuccess() {
+      document.getElementById('authSection').style.display = 'none';
+      document.getElementById('successSection').style.display = 'block';
+      document.getElementById('status').style.display = 'none';
+      
+      // Автоматически закрыть окно через 2 секунды
+      setTimeout(() => {
+        window.close();
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
