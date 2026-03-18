@@ -2,9 +2,9 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NEVORA SWAP — официальный сайт</title>
-  <!-- Подключаем Firebase SDK -->
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
@@ -758,6 +758,7 @@
             </div>
           </div>
 
+          <!-- Информация о лицензии с скрытым ключом -->
           <div class="license-card" id="licenseInfo">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
               <span class="license-type" id="licenseType">Активная лицензия</span>
@@ -832,7 +833,21 @@
     <div id="activate" class="section">
       <h2 class="section-title">Активация ключа</h2>
       <div class="card" style="max-width:500px; margin:0 auto;">
-        <!-- Контент будет динамически заменяться -->
+        <div style="text-align:center; margin-bottom:2rem;">
+          <div style="font-size:3rem; color:#7c3aed;">🔑</div>
+          <h3 style="margin:1rem 0;">Введите лицензионный ключ</h3>
+          <p style="color:#aaa;">Ключ будет привязан к вашему аккаунту и устройству</p>
+        </div>
+        
+        <input type="text" id="activationKey" placeholder="XXXXXX-XXXXXX-XXXXXX-XXXXXX" 
+               style="width:100%; padding:1rem; background:#1e1e2a; border:2px solid #7c3aed; border-radius:60px; color:white; font-family:'Courier New'; text-align:center; font-size:1.2rem; letter-spacing:2px; text-transform:uppercase;">
+        
+        <div style="display:flex; gap:1rem; margin-top:2rem;">
+          <button class="payment-btn" id="activateBtn" style="flex:2;">Активировать</button>
+          <button class="payment-btn" id="checkKeyBtn" style="flex:1;">Проверить</button>
+        </div>
+        
+        <div id="activationStatus" style="margin-top:1.5rem; text-align:center; min-height:40px;"></div>
       </div>
     </div>
 
