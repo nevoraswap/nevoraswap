@@ -1523,6 +1523,7 @@
         currentUser = null;
         currentLicense = null;
         updateUI();
+        updateLauncherButton();
         document.querySelector('.menu-item[data-section="nevoraswap"]').click();
       }
 
@@ -1620,6 +1621,7 @@
           
           await updateProfileUI();
           updateActivationSection();
+          updateLauncherButton();
           
           return true;
         }
@@ -1664,21 +1666,14 @@
       function updateUI() {
         const authButtons = document.getElementById('authButtons');
         const userGreeting = document.getElementById('userGreeting');
-        const launcherBtn = document.getElementById('launcherMainBtn');
-        const launcherStatus = document.getElementById('launcherStatus');
         const profileNotLogged = document.getElementById('profileNotLogged');
         const profileLogged = document.getElementById('profileLogged');
-        const profileLoginBtn = document.getElementById('profileLoginBtn');
         const profileLoginDisplay = document.getElementById('profileLoginDisplay');
 
         if (currentUser) {
           authButtons.style.display = 'none';
           userGreeting.style.display = 'block';
           userGreeting.innerText = `Привет, ${currentUser.username}`;
-          
-          const hasActive = currentLicense && currentLicense.status === 'active' && !isLicenseExpired(currentLicense);
-          launcherBtn.disabled = !hasActive;
-          launcherStatus.innerText = hasActive ? '✅ Доступно для скачивания' : '❌ Требуется активная лицензия';
           
           profileNotLogged.style.display = 'none';
           profileLogged.style.display = 'block';
@@ -1687,13 +1682,34 @@
         } else {
           authButtons.style.display = 'flex';
           userGreeting.style.display = 'none';
-          launcherBtn.disabled = true;
-          launcherStatus.innerText = 'Доступно после входа и активации лицензии';
           profileNotLogged.style.display = 'block';
           profileLogged.style.display = 'none';
         }
         
         updateActivationSection();
+        updateLauncherButton();
+      }
+
+      function updateLauncherButton() {
+        const launcherBtn = document.getElementById('launcherMainBtn');
+        const launcherStatus = document.getElementById('launcherStatus');
+        
+        if (!launcherBtn) return;
+        
+        const hasActive = currentLicense && currentLicense.status === 'active' && !isLicenseExpired(currentLicense);
+        
+        launcherBtn.disabled = !hasActive;
+        launcherStatus.innerText = hasActive ? '✅ Доступно для скачивания' : '❌ Требуется активная лицензия';
+        
+        if (hasActive) {
+          launcherBtn.style.opacity = '1';
+          launcherBtn.style.cursor = 'pointer';
+          launcherBtn.style.borderColor = '#7c3aed';
+        } else {
+          launcherBtn.style.opacity = '0.4';
+          launcherBtn.style.cursor = 'not-allowed';
+          launcherBtn.style.borderColor = '#555';
+        }
       }
 
       async function updateProfileUI() {
@@ -1776,6 +1792,9 @@
           if (licenseHours) licenseHours.innerText = '0';
           if (licenseMinutes) licenseMinutes.innerText = '0';
         }
+        
+        // Обновляем кнопку скачивания после обновления лицензии
+        updateLauncherButton();
       }
 
       window.toggleKeyVisibility = function() {
@@ -1913,6 +1932,7 @@
           currentUser = { username: saved, ...user };
           await updateUI();
           await checkAndRemoveExpiredLicense();
+          updateLauncherButton();
         }
       }
       restoreSession();
@@ -1998,6 +2018,7 @@
           await database.ref('users/' + currentUser.username + '/license_id').set(license.id);
           currentLicense = { ...license, ...updated, id: license.id };
           await updateProfileUI();
+          updateLauncherButton();
           statusDiv.innerHTML = `<span style="color:#7c3aed;">✅ Ключ активирован! Действует до ${expires.toLocaleDateString()}</span>`;
           setTimeout(() => document.querySelector('.menu-item[data-section="profile"]').click(), 1500);
           return true;
@@ -2086,6 +2107,7 @@
       });
 
       updateActivationSection();
+      updateLauncherButton();
     })();
   </script>
 </body>
