@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
   <title>NEVORA SWAP — официальный сайт</title>
-  <!-- Подключаем Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
@@ -24,8 +23,6 @@
       color: #e0e0e0;
       overflow-x: hidden;
       position: relative;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
     #canvas-bg {
@@ -39,57 +36,13 @@
       opacity: 0.8;
     }
 
-    @media (max-width: 768px) {
-      #canvas-bg {
-        opacity: 0.5;
-      }
-    }
-
-    /* ========== НЕОНОВАЯ ПОДСВЕТКА СО СВЕТЛЫМ ГРАДИЕНТОМ ========== */
-    .menu-toggle,
-    .menu-item,
-    .btn-auth,
-    .btn-outline,
-    .price-card,
-    .key-btn,
-    .support-btn,
-    .payment-btn,
-    .modal-tab,
-    .close-modal,
-    .logout-btn,
-    #activateBtn,
-    #checkKeyBtn,
-    #loginBtn,
-    #registerBtn,
-    #profileLoginBtn,
-    #activateNewKeyBtn,
-    #launcherMainBtn:not(:disabled),
-    .password-toggle {
+    .menu-toggle, .menu-item, .btn-auth, .btn-outline, .price-card, .key-btn, .support-btn, .payment-btn, .modal-tab, .close-modal, .logout-btn, #activateBtn, #checkKeyBtn, #loginBtn, #registerBtn, #profileLoginBtn, #activateNewKeyBtn, #launcherMainBtn:not(:disabled), .password-toggle, .agreement-clickable {
       position: relative;
       transition: all 0.2s ease;
       z-index: 1;
     }
 
-    /* Светлый переливающийся градиент */
-    .menu-toggle::before,
-    .menu-item::before,
-    .btn-auth::before,
-    .btn-outline::before,
-    .price-card::before,
-    .key-btn::before,
-    .support-btn::before,
-    .payment-btn::before,
-    .modal-tab::before,
-    .close-modal::before,
-    .logout-btn::before,
-    #activateBtn::before,
-    #checkKeyBtn::before,
-    #loginBtn::before,
-    #registerBtn::before,
-    #profileLoginBtn::before,
-    #activateNewKeyBtn::before,
-    #launcherMainBtn:not(:disabled)::before,
-    .password-toggle::before {
+    .menu-toggle::before, .menu-item::before, .btn-auth::before, .btn-outline::before, .price-card::before, .key-btn::before, .support-btn::before, .payment-btn::before, .modal-tab::before, .close-modal::before, .logout-btn::before, #activateBtn::before, #checkKeyBtn::before, #loginBtn::before, #registerBtn::before, #profileLoginBtn::before, #activateNewKeyBtn::before, #launcherMainBtn:not(:disabled)::before, .password-toggle::before, .agreement-clickable::before {
       content: '';
       position: absolute;
       top: -2px;
@@ -106,76 +59,20 @@
       animation: neonGlow 3s ease infinite;
     }
 
-    /* Анимация переливания */
     @keyframes neonGlow {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    /* Эффект при наведении/нажатии */
-    .menu-toggle:hover::before,
-    .menu-item:hover::before,
-    .btn-auth:hover::before,
-    .btn-outline:hover:not(:disabled)::before,
-    .price-card:hover::before,
-    .key-btn:hover::before,
-    .support-btn:hover::before,
-    .payment-btn:hover::before,
-    .modal-tab:hover::before,
-    .close-modal:hover::before,
-    .logout-btn:hover::before,
-    #activateBtn:hover::before,
-    #checkKeyBtn:hover::before,
-    #loginBtn:hover::before,
-    #registerBtn:hover::before,
-    #profileLoginBtn:hover::before,
-    #activateNewKeyBtn:hover::before,
-    #launcherMainBtn:not(:disabled):hover::before,
-    .password-toggle:hover::before,
-    
-    .menu-toggle:active::before,
-    .menu-item:active::before,
-    .btn-auth:active::before,
-    .btn-outline:active:not(:disabled)::before,
-    .price-card:active::before,
-    .key-btn:active::before,
-    .support-btn:active::before,
-    .payment-btn:active::before,
-    .modal-tab:active::before,
-    .close-modal:active::before,
-    .logout-btn:active::before,
-    #activateBtn:active::before,
-    #checkKeyBtn:active::before,
-    #loginBtn:active::before,
-    #registerBtn:active::before,
-    #profileLoginBtn:active::before,
-    #activateNewKeyBtn:active::before,
-    #launcherMainBtn:not(:disabled):active::before,
-    .password-toggle:active::before {
+    .menu-toggle:hover::before, .menu-item:hover::before, .btn-auth:hover::before, .btn-outline:hover:not(:disabled)::before, .price-card:hover::before, .key-btn:hover::before, .support-btn:hover::before, .payment-btn:hover::before, .modal-tab:hover::before, .close-modal:hover::before, .logout-btn:hover::before, #activateBtn:hover::before, #checkKeyBtn:hover::before, #loginBtn:hover::before, #registerBtn:hover::before, #profileLoginBtn:hover::before, #activateNewKeyBtn:hover::before, #launcherMainBtn:not(:disabled):hover::before, .password-toggle:hover::before, .agreement-clickable:hover::before {
       opacity: 1;
     }
 
-    /* Стили для кнопок */
-    .btn-auth,
-    .btn-outline,
-    .payment-btn,
-    .support-btn,
-    .key-btn,
-    #activateBtn,
-    #checkKeyBtn,
-    #loginBtn,
-    #registerBtn,
-    #profileLoginBtn,
-    #activateNewKeyBtn,
-    #launcherMainBtn,
-    .logout-btn {
+    .agreement-clickable { cursor: pointer; transition: all 0.2s ease; }
+    .agreement-clickable:hover { transform: translateY(-1px); }
+
+    .btn-auth, .btn-outline, .payment-btn, .support-btn, .key-btn, #activateBtn, #checkKeyBtn, #loginBtn, #registerBtn, #profileLoginBtn, #activateNewKeyBtn, #launcherMainBtn, .logout-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -187,13 +84,7 @@
       text-decoration: none;
     }
 
-    #loginBtn,
-    #registerBtn,
-    #profileLoginBtn,
-    #activateNewKeyBtn,
-    #launcherMainBtn,
-    .btn-auth,
-    .btn-outline {
+    #loginBtn, #registerBtn, #profileLoginBtn, #activateNewKeyBtn, #launcherMainBtn, .btn-auth, .btn-outline {
       background: transparent !important;
       border: 2px solid #7c3aed !important;
       color: white !important;
@@ -203,110 +94,8 @@
       min-height: 44px;
     }
 
-    /* Убираем ненужные фоны */
-    .price-card,
-    .key-btn,
-    .support-btn,
-    .payment-btn,
-    .modal-tab,
-    .logout-btn {
-      background: transparent !important;
-    }
+    .price-card, .key-btn, .support-btn, .payment-btn, .modal-tab, .logout-btn { background: transparent !important; }
 
-    /* Для модальных кнопок */
-    .modal-card button[type="submit"] {
-      background: #7c3aed !important;
-      border: none !important;
-      color: white !important;
-    }
-
-    .modal-card button[type="submit"]:hover {
-      background: #8e4ef0 !important;
-    }
-
-    /* Эффекты при наведении */
-    .menu-toggle:hover,
-    .btn-auth:hover,
-    .btn-outline:hover:not(:disabled),
-    .price-card:hover,
-    .key-btn:hover,
-    .support-btn:hover,
-    .payment-btn:hover,
-    .modal-tab:hover,
-    .close-modal:hover,
-    .logout-btn:hover,
-    #activateBtn:hover,
-    #checkKeyBtn:hover,
-    #loginBtn:hover,
-    #registerBtn:hover,
-    #profileLoginBtn:hover,
-    #activateNewKeyBtn:hover,
-    #launcherMainBtn:not(:disabled):hover,
-    .password-toggle:hover {
-      border-color: #b39ddb !important;
-      transform: translateY(-2px);
-    }
-
-    /* Активное состояние */
-    .menu-toggle:active,
-    .btn-auth:active,
-    .btn-outline:active:not(:disabled),
-    .price-card:active,
-    .key-btn:active,
-    .support-btn:active,
-    .payment-btn:active,
-    .modal-tab:active,
-    .close-modal:active,
-    .logout-btn:active,
-    #activateBtn:active,
-    #checkKeyBtn:active,
-    #loginBtn:active,
-    #registerBtn:active,
-    #profileLoginBtn:active,
-    #activateNewKeyBtn:active,
-    #launcherMainBtn:not(:disabled):active,
-    .password-toggle:active {
-      transform: translateY(0) scale(0.98);
-    }
-
-    /* Для disabled кнопок */
-    .btn-outline:disabled,
-    #launcherMainBtn:disabled {
-      opacity: 0.4;
-      border-color: #555 !important;
-      pointer-events: none;
-    }
-
-    .btn-outline:disabled::before,
-    #launcherMainBtn:disabled::before {
-      display: none;
-    }
-
-    /* Для пунктов меню */
-    .menu-item {
-      border: 1px solid transparent;
-    }
-
-    .menu-item:hover {
-      border-color: #7c3aed;
-    }
-
-    .menu-item.active {
-      background: #7c3aed20;
-      border-color: #7c3aed;
-    }
-
-    /* Для поля ввода ключа */
-    .license-key:hover {
-      border-color: #7c3aed;
-    }
-
-    /* Для модальных окон */
-    .modal-card {
-      border: 2px solid #7c3aed;
-    }
-
-    /* Остальные стили */
     .menu-toggle {
       position: fixed;
       top: 15px;
@@ -315,7 +104,6 @@
       height: 48px;
       background: rgba(20, 20, 30, 0.95);
       backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
       border-radius: 16px;
       display: flex;
       flex-direction: column;
@@ -327,13 +115,7 @@
       border: 2px solid #7c3aed;
     }
 
-    .menu-toggle span {
-      width: 26px;
-      height: 3px;
-      background: #7c3aed;
-      border-radius: 10px;
-      transition: 0.2s;
-    }
+    .menu-toggle span { width: 26px; height: 3px; background: #7c3aed; border-radius: 10px; transition: 0.2s; }
 
     .side-menu {
       position: fixed;
@@ -343,7 +125,6 @@
       height: 100vh;
       background: rgba(12, 12, 20, 0.98);
       backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
       border-right: 2px solid #7c3aed;
       z-index: 1000;
       transition: left 0.25s ease;
@@ -351,9 +132,7 @@
       box-shadow: 5px 0 30px black;
     }
 
-    .side-menu.open {
-      left: 0;
-    }
+    .side-menu.open { left: 0; }
 
     .menu-item {
       padding: 16px 20px;
@@ -365,8 +144,10 @@
       cursor: pointer;
       transition: 0.2s;
       border: 1px solid transparent;
-      -webkit-touch-callout: none;
     }
+
+    .menu-item:hover { border-color: #7c3aed; }
+    .menu-item.active { background: #7c3aed20; border-color: #7c3aed; }
 
     .overlay {
       position: fixed;
@@ -378,12 +159,9 @@
       z-index: 999;
       display: none;
       backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
     }
     
-    .overlay.show {
-      display: block;
-    }
+    .overlay.show { display: block; }
 
     .main-content {
       position: relative;
@@ -392,13 +170,6 @@
       max-width: 1400px;
       margin: 0 auto;
       padding: 1rem 1rem 1rem 70px;
-      transition: padding 0.2s;
-    }
-
-    @media (max-width: 480px) {
-      .main-content {
-        padding: 0.8rem 0.8rem 0.8rem 60px;
-      }
     }
 
     .top-bar {
@@ -410,10 +181,8 @@
       padding: 0.6rem 1.2rem;
       background: rgba(10, 10, 15, 0.8);
       backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
       border-radius: 40px;
       border: 1px solid #7c3aed40;
-      width: 100%;
       gap: 0.8rem;
     }
 
@@ -425,19 +194,7 @@
       white-space: nowrap;
     }
 
-    @media (min-width: 400px) {
-      .logo {
-        font-size: 1.6rem;
-      }
-    }
-
-    .auth-buttons {
-      display: flex;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-      flex: 1;
-      justify-content: flex-end;
-    }
+    .auth-buttons { display: flex; gap: 0.8rem; flex-wrap: wrap; flex: 1; justify-content: flex-end; }
 
     .user-greeting {
       color: #b39ddb;
@@ -455,61 +212,27 @@
       transition: 0.2s;
     }
 
-    .user-greeting:hover {
-      border-color: #b39ddb;
-      box-shadow: 0 0 15px #7c3aed;
-    }
+    .user-greeting:hover { border-color: #b39ddb; box-shadow: 0 0 15px #7c3aed; }
 
-    .user-greeting:active {
-      transform: scale(0.98);
-    }
+    .section { display: none; animation: fade 0.2s; width: 100%; }
+    .section.active { display: block; }
 
-    .section {
-      display: none;
-      animation: fade 0.2s;
-      width: 100%;
-    }
-
-    .section.active {
-      display: block;
-    }
-
-    @keyframes fade {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
-    }
+    @keyframes fade { 0% { opacity: 0; } 100% { opacity: 1; } }
 
     .section-title {
       font-size: 1.8rem;
       margin-bottom: 1.5rem;
       border-left: 5px solid #7c3aed;
       padding-left: 1rem;
-      word-break: break-word;
-    }
-
-    @media (max-width: 480px) {
-      .section-title {
-        font-size: 1.6rem;
-        padding-left: 0.8rem;
-      }
     }
 
     .card {
       background: rgba(18, 18, 26, 0.9);
       backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
       border: 1px solid #2a2a3a;
       border-radius: 28px;
       padding: 1.5rem;
       margin-bottom: 1.5rem;
-      width: 100%;
-    }
-
-    @media (max-width: 480px) {
-      .card {
-        padding: 1.2rem;
-        border-radius: 24px;
-      }
     }
 
     .pricing-grid {
@@ -517,7 +240,6 @@
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 1rem;
       margin: 1.5rem 0;
-      width: 100%;
     }
 
     .price-card {
@@ -526,20 +248,11 @@
       padding: 1.5rem 1rem;
       text-align: center;
       cursor: pointer;
-      -webkit-touch-callout: none;
       border: 2px solid #7c3aed;
     }
 
-    .price-card div:first-child {
-      font-size: 1.6rem;
-      font-weight: 600;
-    }
-    
-    .price-card div:last-child {
-      font-size: 1.4rem;
-      color: #7c3aed;
-      margin-top: 0.3rem;
-    }
+    .price-card div:first-child { font-size: 1.6rem; font-weight: 600; }
+    .price-card div:last-child { font-size: 1.4rem; color: #7c3aed; margin-top: 0.3rem; }
 
     .profile-header {
       display: flex;
@@ -562,28 +275,9 @@
       color: #7c3aed;
     }
 
-    .profile-info {
-      flex: 1;
-      min-width: 150px;
-    }
-
-    .profile-login {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 0.3rem;
-      word-break: break-word;
-    }
-
-    .profile-badge {
-      display: inline-block;
-      padding: 0.2rem 0.8rem;
-      border-radius: 30px;
-      background: #7c3aed20;
-      border: 1px solid #7c3aed;
-      color: #b39ddb;
-      font-size: 0.8rem;
-    }
+    .profile-info { flex: 1; min-width: 150px; }
+    .profile-login { font-size: 1.3rem; font-weight: 600; color: white; margin-bottom: 0.3rem; word-break: break-word; }
+    .profile-badge { display: inline-block; padding: 0.2rem 0.8rem; border-radius: 30px; background: #7c3aed20; border: 1px solid #7c3aed; color: #b39ddb; font-size: 0.8rem; }
 
     .license-card {
       background: #14141f;
@@ -591,22 +285,10 @@
       padding: 1.5rem;
       margin-top: 1.2rem;
       border: 1px solid #7c3aed;
-      position: relative;
-      overflow: hidden;
     }
 
-    .license-type {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #7c3aed;
-      margin-bottom: 0.5rem;
-      word-break: break-word;
-    }
-
-    .license-key-container {
-      position: relative;
-      margin: 1.2rem 0;
-    }
+    .license-type { font-size: 1.5rem; font-weight: 700; color: #7c3aed; margin-bottom: 0.5rem; word-break: break-word; }
+    .license-key-container { position: relative; margin: 1.2rem 0; }
 
     .license-key {
       font-family: 'Courier New', monospace;
@@ -615,118 +297,42 @@
       border-radius: 16px;
       border: 1px solid #2a2a3a;
       color: #b39ddb;
-      letter-spacing: 1px;
-      font-size: 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      cursor: pointer;
-      transition: 0.2s;
       gap: 0.5rem;
       flex-wrap: wrap;
     }
 
-    .license-key span:first-child {
-      font-size: 0.9rem;
-      word-break: break-all;
-      flex: 1;
-    }
+    .license-key span:first-child { font-size: 0.9rem; word-break: break-all; flex: 1; }
+    .license-key-blur { filter: blur(4px); user-select: none; }
 
-    .license-key-blur {
-      filter: blur(4px);
-      user-select: none;
-    }
+    .key-actions { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .key-btn { background: transparent; border-radius: 30px; padding: 0.3rem 0.8rem; color: #b39ddb; cursor: pointer; font-size: 0.75rem; min-height: 36px; border: 2px solid #7c3aed; }
 
-    .key-actions {
-      display: flex;
-      gap: 0.4rem;
-      flex-wrap: wrap;
-    }
+    .license-timer { display: flex; align-items: center; gap: 1rem; margin: 1.2rem 0; flex-wrap: wrap; }
+    .timer-progress { flex: 1; min-width: 120px; height: 8px; background: #2a2a3a; border-radius: 4px; overflow: hidden; }
+    .timer-fill { height: 100%; background: #7c3aed; width: 100%; border-radius: 4px; transition: width 0.3s ease; }
+    .timer-text { font-size: 1.2rem; font-weight: 700; color: #b39ddb; }
 
-    .key-btn {
-      background: transparent;
-      border-radius: 30px;
-      padding: 0.3rem 0.8rem;
-      color: #b39ddb;
-      cursor: pointer;
-      font-size: 0.75rem;
-      min-height: 36px;
-      min-width: 36px;
-      border: 2px solid #7c3aed;
-    }
-
-    .license-timer {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin: 1.2rem 0;
-      flex-wrap: wrap;
-    }
-
-    .timer-progress {
-      flex: 1;
-      min-width: 120px;
-      height: 8px;
-      background: #2a2a3a;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .timer-fill {
-      height: 100%;
-      background: #7c3aed;
-      width: 75%;
-      border-radius: 4px;
-    }
-
-    .timer-text {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #b39ddb;
-    }
-
-    .license-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.8rem;
-      margin-top: 1.2rem;
-    }
-
-    .stat-value {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #7c3aed;
-    }
-
-    .support-buttons {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-top: 1.2rem;
-    }
-
-    .support-btn {
-      background: transparent;
-      border-radius: 40px;
-      padding: 0.8rem 1.5rem;
-      font-size: 1.1rem;
-      color: white;
-      text-decoration: none;
+    .remaining-time {
+      background: #0a0a0f;
+      padding: 0.8rem;
+      border-radius: 16px;
       text-align: center;
-      flex: 1 1 auto;
-      min-height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid #7c3aed;
+      margin-top: 0.5rem;
+      font-size: 1.1rem;
+      color: #b39ddb;
     }
+
+    .support-buttons { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.2rem; }
+    .support-btn { background: transparent; border-radius: 40px; padding: 0.8rem 1.5rem; font-size: 1.1rem; color: white; text-decoration: none; text-align: center; flex: 1 1 auto; min-height: 50px; border: 2px solid #7c3aed; }
 
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.96);
       backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -737,48 +343,36 @@
       padding: 15px;
     }
 
-    .modal-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
 
     .modal-card {
       background: #14141f;
       border: 2px solid #7c3aed;
       border-radius: 36px;
       padding: 1.8rem 1.5rem;
-      max-width: 460px;
+      max-width: 500px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    @media (max-width: 480px) {
-      .modal-card {
-        padding: 1.5rem 1.2rem;
-        border-radius: 28px;
-      }
+      position: relative;
     }
 
     .close-modal {
-      text-align: right;
-      font-size: 2rem;
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 1.8rem;
       cursor: pointer;
       color: #aaa;
       line-height: 1;
-      padding: 5px;
-      margin-bottom: 5px;
-      display: inline-block;
-      float: right;
+      z-index: 10;
     }
 
     .modal-tabs {
       display: flex;
       gap: 0.8rem;
-      margin: 1rem 0 1rem;
+      margin: 0.5rem 0 1.5rem;
       justify-content: center;
-      clear: both;
     }
 
     .modal-tab {
@@ -794,13 +388,9 @@
       border: 2px solid #7c3aed;
     }
 
-    .modal-tab.active {
-      background: #7c3aed20;
-      color: #b39ddb;
-      border: 2px solid #7c3aed;
-    }
+    .modal-tab.active { background: #7c3aed20; color: #b39ddb; }
 
-    .modal-card input {
+    .modal-card input, .modal-card select {
       width: 100%;
       padding: 1rem 1.2rem;
       margin: 0.8rem 0;
@@ -809,114 +399,27 @@
       border-radius: 50px;
       color: white;
       font-size: 1rem;
-      -webkit-appearance: none;
-      appearance: none;
     }
 
-    .modal-card input:focus {
-      border-color: #7c3aed;
-      outline: none;
-    }
+    .modal-card input:focus, .modal-card select:focus { border-color: #7c3aed; outline: none; }
 
-    .password-field {
-      position: relative;
-      width: 100%;
-      margin: 0.8rem 0;
-    }
+    .password-field { position: relative; width: 100%; margin: 0.8rem 0; }
+    .password-field input { width: 100%; padding: 1rem 3rem 1rem 1.2rem !important; margin: 0 !important; }
+    .password-toggle { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #7c3aed; cursor: pointer; font-size: 1.2rem; padding: 8px; border-radius: 50%; }
 
-    .password-field input {
-      width: 100%;
-      padding: 1rem 3rem 1rem 1.2rem !important;
-      margin: 0 !important;
-    }
-
-    .password-toggle {
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #7c3aed;
-      cursor: pointer;
-      font-size: 1.2rem;
-      user-select: none;
-      z-index: 10;
-      padding: 8px;
-      border-radius: 50%;
-    }
-
-    .payment-actions {
-      display: flex;
-      gap: 0.8rem;
-      margin-top: 1.5rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .payment-btn {
-      flex: 1 1 120px;
-      min-width: 100px;
-      text-align: center;
-      padding: 0.8rem 1rem;
-      border-radius: 40px;
-      background: transparent;
-      color: white;
-      font-size: 1rem;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      min-height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid #7c3aed;
-    }
+    .payment-actions { display: flex; gap: 0.8rem; margin-top: 1.5rem; flex-wrap: wrap; justify-content: center; }
+    .payment-btn { flex: 1 1 120px; min-width: 100px; text-align: center; padding: 0.8rem 1rem; border-radius: 40px; background: transparent; color: white; font-size: 1rem; font-weight: 600; text-decoration: none; cursor: pointer; min-height: 50px; border: 2px solid #7c3aed; }
 
     footer {
       margin-top: 3rem;
       padding: 1.5rem;
       background: rgba(10,10,15,0.7);
       backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
       border-radius: 30px;
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
-      width: 100%;
       gap: 1rem;
-    }
-
-    @media (max-width: 400px) {
-      .main-content {
-        padding: 0.5rem 0.5rem 0.5rem 55px;
-      }
-      
-      .logo {
-        font-size: 1.2rem;
-      }
-      
-      .btn-auth {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.8rem;
-      }
-      
-      .user-greeting {
-        font-size: 0.9rem;
-        padding: 0.4rem 0.8rem;
-        max-width: 140px;
-      }
-      
-      .price-card div:first-child {
-        font-size: 1.3rem;
-      }
-      
-      .price-card div:last-child {
-        font-size: 1.2rem;
-      }
-      
-      .support-btn {
-        padding: 0.7rem 1rem;
-        font-size: 1rem;
-      }
     }
 
     .agreement-box {
@@ -929,120 +432,24 @@
       width: calc(100% - 85px);
     }
 
-    @media (max-width: 480px) {
-      .agreement-box {
-        margin-left: 60px;
-        width: calc(100% - 70px);
-        padding: 1rem;
-      }
-    }
-
-    .error-text {
-      color: #ef4444;
-      font-size: 0.85rem;
-      margin-top: 0.3rem;
-      text-align: center;
-    }
-
-    .copy-notification {
-      position: fixed;
-      bottom: 20px;
-      left: 15px;
-      right: 15px;
-      transform: none;
-      background: #7c3aed;
-      color: white;
-      padding: 0.8rem 1.2rem;
-      border-radius: 40px;
-      font-size: 0.9rem;
-      z-index: 3000;
-      animation: slideUp 0.3s ease;
-      text-align: center;
-      margin: 0 auto;
-      max-width: 300px;
-      width: auto;
-    }
-
-    .logout-btn {
-      margin-top: 1.8rem;
-      padding: 0.8rem 1.5rem;
-      background: transparent;
-      border-radius: 40px;
-      color: #ef4444;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      min-height: 48px;
-      border: 2px solid #ef4444;
-    }
-
-    .expired-badge {
-      background: #ef444420;
-      border: 1px solid #ef4444;
-      color: #ef4444;
-      padding: 0.2rem 0.8rem;
-      border-radius: 30px;
-      font-size: 0.8rem;
-      display: inline-block;
-    }
-
-    .side-menu, .modal-card {
-      -webkit-overflow-scrolling: touch;
-    }
-
-    button, .menu-item, .price-card, .key-btn, .support-btn, .payment-btn, .modal-tab, .close-modal {
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      user-select: none;
-    }
-
-    #activateBtn, #checkKeyBtn {
-      background: transparent;
-      border-radius: 40px;
-      padding: 1rem;
-      font-size: 1.1rem;
-      border: 2px solid #7c3aed;
-    }
-
-    #activationKey {
-      border: 2px solid #7c3aed !important;
-    }
-
-    .faq-answer {
-      color: #aaa;
-      font-size: 0.95rem;
-      line-height: 1.5;
-      margin-top: 0.3rem;
-      padding-left: 0.5rem;
-      border-left: 2px solid #7c3aed;
-    }
-
-    .faq-answer p {
-      margin-bottom: 0.5rem;
-    }
-
-    .faq-answer ul {
-      margin-left: 1.2rem;
-      margin-top: 0.3rem;
-    }
-
-    .faq-answer li {
-      margin-bottom: 0.2rem;
-    }
+    .error-text { color: #ef4444; font-size: 0.85rem; margin-top: 0.3rem; text-align: center; }
+    .copy-notification { position: fixed; bottom: 20px; left: 15px; right: 15px; background: #7c3aed; color: white; padding: 0.8rem 1.2rem; border-radius: 40px; font-size: 0.9rem; z-index: 3000; text-align: center; max-width: 300px; margin: 0 auto; }
+    .logout-btn { margin-top: 1.8rem; padding: 0.8rem 1.5rem; background: transparent; border-radius: 40px; color: #ef4444; font-size: 1rem; font-weight: 600; cursor: pointer; min-height: 48px; border: 2px solid #ef4444; }
+    .expired-badge { background: #ef444420; border: 1px solid #ef4444; color: #ef4444; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.8rem; display: inline-block; }
+    .important-note { background: #7c3aed20; border-left: 4px solid #7c3aed; padding: 1rem; border-radius: 16px; margin-top: 1rem; }
+    .admin-panel-card { background: #14141f; border-radius: 20px; padding: 1rem; margin-bottom: 1rem; border: 1px solid #7c3aed; }
+    .admin-user-row { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem; border-bottom: 1px solid #2a2a3a; flex-wrap: wrap; gap: 0.5rem; }
+    .user-table { max-height: 400px; overflow-y: auto; }
+    .disabled-btn { opacity: 0.5; pointer-events: none; }
+    .btn-outline:disabled, #launcherMainBtn:disabled { opacity: 0.4; border-color: #555 !important; pointer-events: none; }
   </style>
 </head>
 <body>
   <canvas id="canvas-bg"></canvas>
 
-  <!-- Бургер -->
-  <div class="menu-toggle" id="menuToggle">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+  <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
   <div class="overlay" id="overlay"></div>
 
-  <!-- Боковое меню -->
   <div class="side-menu" id="sideMenu">
     <div class="menu-item active" data-section="nevoraswap">Nevoraswap</div>
     <div class="menu-item" data-section="profile">Профиль</div>
@@ -1050,282 +457,114 @@
     <div class="menu-item" data-section="activate">Активация</div>
     <div class="menu-item" data-section="support">Поддержка</div>
     <div class="menu-item" data-section="launcher">Скачать</div>
+    <div class="menu-item" id="adminMenuItem" data-section="admin" style="display:none;">🔧 Админ панель</div>
   </div>
 
-  <!-- Основной контент -->
   <div class="main-content">
-    <div class="top-bar" id="topBar">
+    <div class="top-bar">
       <div class="logo">NEVORA SWAP</div>
-      <div class="auth-buttons" id="authButtons">
-        <button class="btn-auth" id="showAuthModalBtn">Вход / Регистрация</button>
-      </div>
-      <div class="user-greeting" id="userGreeting" style="display: none;" onclick="document.querySelector('.menu-item[data-section=\'profile\']').click()"></div>
+      <div class="auth-buttons" id="authButtons"><button class="btn-auth" id="showAuthModalBtn">Вход / Регистрация</button></div>
+      <div class="user-greeting" id="userGreeting" style="display: none;"></div>
     </div>
 
-    <!-- Раздел Nevoraswap -->
     <div id="nevoraswap" class="section active">
       <h2 class="section-title">О продукте</h2>
       <div class="card">
-        <p style="font-size:1.1rem; margin-bottom:1.2rem;">Nevora Swap — профессиональный инструмент для автоматического переключения предметов в играх.</p>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:1rem;">
-          <div style="background:#14141f; border-radius:20px; padding:1.2rem; border:1px solid #2a2a3a;">
-            <div style="color:#7c3aed; font-size:1.3rem; margin-bottom:0.5rem;">⚡ Мгновенный свап</div>
-            <p style="color:#aaa; font-size:0.95rem;">Быстрое переключение предметов с настраиваемой задержкой от 10 до 100ms</p>
-          </div>
-          <div style="background:#14141f; border-radius:20px; padding:1.2rem; border:1px solid #2a2a3a;">
-            <div style="color:#7c3aed; font-size:1.3rem; margin-bottom:0.5rem;">🖱️ Bulova Combo</div>
-            <p style="color:#aaa; font-size:0.95rem;">Сложная механика для булавы с автоматической синхронизацией</p>
-          </div>
-          <div style="background:#14141f; border-radius:20px; padding:1.2rem; border:1px solid #2a2a3a;">
-            <div style="color:#7c3aed; font-size:1.3rem; margin-bottom:0.5rem;">🔒 Защита</div>
-            <p style="color:#aaa; font-size:0.95rem;">Аппаратный fingerprint и защита от повторного запуска</p>
-          </div>
+        <p style="font-size:1.1rem; margin-bottom:1.2rem;">Nevora Swap — профессиональный инструмент для автоматического переключения предметов в инвентаре, подходит для всех версий начиная от 1.12.2 заканчивая новейшими.</p>
+        <div class="important-note"><strong style="color:#7c3aed;">❗ ВАЖНО:</strong> Nevora Swap НЕ МОД, поэтому он не запрещен на серверах, в том числе и на Funtime. Данная программа работает поверх Minecraft, что означает, что она не внедряется в процесс игры, то есть не является читом.</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:1rem; margin-top:1.5rem;">
+          <div style="background:#14141f; border-radius:20px; padding:1.2rem; border:1px solid #2a2a3a;"><div style="color:#7c3aed; font-size:1.3rem; margin-bottom:0.5rem;">⚡ Мгновенный свап</div><p style="color:#aaa; font-size:0.95rem;">Быстрое переключение предметов с настраиваемой задержкой от 10 до 100ms</p></div>
+          <div style="background:#14141f; border-radius:20px; padding:1.2rem; border:1px solid #2a2a3a;"><div style="color:#7c3aed; font-size:1.3rem; margin-bottom:0.5rem;">🖱️ Bulova Helper</div><p style="color:#aaa; font-size:0.95rem;">Сложная механика для булавы с автоматической синхронизацией</p></div>
+          <div style="background:#14141f; border-radius:20px; padding:1.2rem; border:1px solid #2a2a3a;"><div style="color:#7c3aed; font-size:1.3rem; margin-bottom:0.5rem;">🔒 Защита HWID</div><p style="color:#aaa; font-size:0.95rem;">Привязка к устройству и защита от повторного запуска</p></div>
         </div>
-        <div style="text-align:center; margin-top:1.5rem;">
-          <a href="https://t.me/nevoraswap" target="_blank" class="support-btn" style="display:inline-block;">Telegram канал</a>
-        </div>
+        <div style="text-align:center; margin-top:1.5rem;"><a href="https://t.me/nevoraswap" target="_blank" class="support-btn" style="display:inline-block;">Telegram канал</a></div>
       </div>
     </div>
 
-    <!-- Раздел Профиль -->
     <div id="profile" class="section">
       <h2 class="section-title">Профиль</h2>
       <div class="card">
-        <div id="profileNotLogged" style="text-align:center; padding:1.5rem;">
-          <div style="font-size:2.5rem; color:#7c3aed; margin-bottom:1rem;">🔐</div>
-          <h3 style="margin-bottom:1rem;">Войдите в аккаунт</h3>
-          <p style="color:#aaa; margin-bottom:1.5rem;">Для доступа к профилю и активации лицензий</p>
-          <button class="btn-auth" id="profileLoginBtn">Вход / Регистрация</button>
-        </div>
-
+        <div id="profileNotLogged" style="text-align:center; padding:1.5rem;"><div style="font-size:2.5rem; color:#7c3aed; margin-bottom:1rem;">🔐</div><h3>Войдите в аккаунт</h3><button class="btn-auth" id="profileLoginBtn">Вход / Регистрация</button></div>
         <div id="profileLogged" style="display:none;">
-          <div class="profile-header">
-            <div class="profile-avatar">
-              <span id="profileAvatar">👤</span>
-            </div>
-            <div class="profile-info">
-              <div class="profile-login" id="profileLoginDisplay">user123</div>
-              <div>
-                <span class="profile-badge" id="profileStatusBadge">Активный пользователь</span>
-              </div>
-            </div>
-          </div>
-
+          <div class="profile-header"><div class="profile-avatar"><span>👤</span></div><div class="profile-info"><div class="profile-login" id="profileLoginDisplay"></div><div><span class="profile-badge" id="profileStatusBadge">Активный пользователь</span></div></div></div>
           <div class="license-card" id="licenseInfo">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem; flex-wrap:wrap; gap:0.5rem;">
-              <span class="license-type" id="licenseType">Активная лицензия</span>
-              <span class="expired-badge" id="expiredBadge" style="display: none;">Истекла</span>
-            </div>
-            
-            <div class="license-key-container">
-              <div class="license-key" id="licenseKeyBlock">
-                <span id="licenseKeyDisplay" class="license-key-blur">NEVORA-XXXX-XXXX-XXXX</span>
-                <div class="key-actions">
-                  <span class="key-btn" id="toggleKeyBtn">👁️ показать</span>
-                  <span class="key-btn" id="copyKeyBtn">📋 копировать</span>
-                </div>
-              </div>
-            </div>
-            
-            <div class="license-timer">
-              <div class="timer-progress">
-                <div class="timer-fill" id="timerProgress" style="width:75%"></div>
-              </div>
-              <span class="timer-text" id="timerText">75%</span>
-            </div>
-            
-            <div class="license-stats">
-              <div class="stat-item">
-                <div class="stat-value" id="licenseDays">30</div>
-                <div class="stat-label">дней</div>
-              </div>
-              <div class="stat-item">
-                <div class="stat-value" id="licenseHours">720</div>
-                <div class="stat-label">часов</div>
-              </div>
-              <div class="stat-item">
-                <div class="stat-value" id="licenseMinutes">43200</div>
-                <div class="stat-label">минут</div>
-              </div>
-            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;"><span class="license-type" id="licenseType">Активная лицензия</span><span class="expired-badge" id="expiredBadge" style="display: none;">Истекла</span></div>
+            <div class="license-key-container"><div class="license-key" id="licenseKeyBlock"><span id="licenseKeyDisplay" class="license-key-blur">NEVORA-XXXX-XXXX-XXXX</span><div class="key-actions"><span class="key-btn" id="toggleKeyBtn">👁️ показать</span><span class="key-btn" id="copyKeyBtn">📋 копировать</span></div></div></div>
+            <div class="license-timer"><div class="timer-progress"><div class="timer-fill" id="timerProgress" style="width:100%"></div></div><span class="timer-text" id="timerText">100%</span></div>
+            <div class="remaining-time" id="remainingTimeDisplay">Осталось: -- дней -- часов -- минут</div>
           </div>
-
-          <div style="margin-top:1.5rem; text-align:center;">
-            <button class="btn-outline" id="activateNewKeyBtn">➕ Активировать новый ключ</button>
-          </div>
-
+          <div style="margin-top:1.5rem; text-align:center;"><button class="btn-outline" id="activateNewKeyBtn">➕ Активировать новый ключ</button></div>
           <button class="logout-btn" id="logoutBtn">Выйти из аккаунта</button>
         </div>
       </div>
     </div>
 
-    <!-- Раздел Цены -->
     <div id="prices" class="section">
       <h2 class="section-title">Цены</h2>
       <div class="pricing-grid">
-        <div class="price-card" data-days="12 часов" data-type="012h" data-price="24" data-funpay="https://funpay.com/lots/offer?id=65952691">
-          <div>12ч</div>
-          <div>24 ₽</div>
-        </div>
-        <div class="price-card" data-days="7 дней" data-type="007d" data-price="59" data-funpay="https://funpay.com/lots/offer?id=65952858">
-          <div>7д</div>
-          <div>59 ₽</div>
-        </div>
-        <div class="price-card" data-days="30 дней" data-type="030d" data-price="119" data-funpay="https://funpay.com/lots/offer?id=65952723">
-          <div>30д</div>
-          <div>119 ₽</div>
-        </div>
-        <div class="price-card" data-days="365 дней" data-type="365d" data-price="249" data-funpay="https://funpay.com/lots/offer?id=64199862">
-          <div>365д</div>
-          <div>249 ₽</div>
-        </div>
+        <div class="price-card" data-days="12 часов" data-type="012h" data-price="24" data-funpay="https://funpay.com/lots/offer?id=65952691"><div>12ч</div><div>24 ₽</div></div>
+        <div class="price-card" data-days="7 дней" data-type="007d" data-price="59" data-funpay="https://funpay.com/lots/offer?id=65952858"><div>7д</div><div>59 ₽</div></div>
+        <div class="price-card" data-days="30 дней" data-type="030d" data-price="119" data-funpay="https://funpay.com/lots/offer?id=65952723"><div>30д</div><div>119 ₽</div></div>
+        <div class="price-card" data-days="365 дней" data-type="365d" data-price="249" data-funpay="https://funpay.com/lots/offer?id=64199862"><div>365д</div><div>249 ₽</div></div>
       </div>
     </div>
 
-    <!-- Раздел Активация ключа -->
     <div id="activate" class="section">
       <h2 class="section-title">Активация ключа</h2>
-      <div class="card" style="max-width:500px; margin:0 auto;" id="activateCard">
-        <!-- Контент будет заменяться через updateActivationSection -->
-      </div>
+      <div class="card" style="max-width:500px; margin:0 auto;" id="activateCard"></div>
     </div>
 
-    <!-- Раздел Поддержка -->
     <div id="support" class="section">
       <h2 class="section-title">Поддержка</h2>
       <div class="card">
         <p style="margin-bottom:1.2rem;">Свяжитесь с нами любым удобным способом:</p>
-        <div class="support-buttons">
-          <a href="https://t.me/vergyTG" target="_blank" class="support-btn">Админ @vergyTG</a>
-          <a href="https://t.me/nevoraswap" target="_blank" class="support-btn">Канал @nevoraswap</a>
-        </div>
-        <div style="margin-top:1.5rem; padding:1.2rem; background:#14141f; border-radius:20px; border:1px solid #2a2a3a;">
+        <div class="support-buttons"><a href="https://t.me/vergyTG" target="_blank" class="support-btn">Админ @vergyTG</a><a href="https://t.me/nevoraswap" target="_blank" class="support-btn">Канал @nevoraswap</a></div>
+        <div style="margin-top:1.5rem; padding:1.2rem; background:#14141f; border-radius:20px;">
           <h4 style="color:#7c3aed; margin-bottom:0.8rem;">❓ Часто задаваемые вопросы</h4>
-          
-          <div style="margin-bottom:1rem;">
-            <div style="font-weight:bold; margin-bottom:0.2rem; color:#b39ddb;">🔹 Как активировать ключ?</div>
-            <p style="color:#aaa; font-size:0.95rem;">Купите ключ в разделе "Цены", затем введите его в разделе "Активация". Ключ привяжется к вашему аккаунту и устройству.</p>
-          </div>
-          
-          <div style="margin-bottom:1rem;">
-            <div style="font-weight:bold; margin-bottom:0.2rem; color:#b39ddb;">🔹 Что делать если ключ истек?</div>
-            <p style="color:#aaa; font-size:0.95rem;">Купите новый ключ и активируйте его в разделе "Активация". Старый ключ автоматически удаляется из системы.</p>
-          </div>
-          
-          <div style="margin-bottom:1rem;">
-            <div style="font-weight:bold; margin-bottom:0.2rem; color:#b39ddb;">🔹 Как скачать и запустить?</div>
-            <div class="faq-answer">
-              <p>1. Переходим в раздел <strong>"Скачать"</strong></p>
-              <p>2. Нажимаем <strong>"Скачать"</strong> (предварительно зарегистрировавшись и приобретя ключ)</p>
-              <p>3. После установки кидаем лаунчер в любое удобное для вас место</p>
-              <p>4. Запускаем лаунчер и в самом приложении ждем обновлений</p>
-              <p>5. Нажимаем <strong>"Запуск"</strong></p>
-              <p>6. Нажимаем <strong>"Войти через сайт"</strong></p>
-              <p>7. Еще раз логинимся — и все готово! 🎮</p>
-            </div>
-          </div>
+          <div style="margin-bottom:1rem;"><div style="font-weight:bold; color:#b39ddb;">🔹 Как активировать ключ?</div><p style="color:#aaa;">Купите ключ в разделе "Цены", затем введите его в разделе "Активация". Ключ привяжется к вашему аккаунту и устройству.</p></div>
+          <div style="margin-bottom:1rem;"><div style="font-weight:bold; color:#b39ddb;">🔹 Что делать если ключ истек?</div><p style="color:#aaa;">Купите новый ключ и активируйте его. Старый ключ автоматически удаляется из системы.</p></div>
+          <div style="margin-bottom:1rem;"><div style="font-weight:bold; color:#b39ddb;">🔹 Что делать, если вызвали на проверку?</div><p style="color:#aaa;">Просто закрываете программу. Если модератор спрашивает, что это было — говорите, что это AHK скрипт, который работает по бинду, и вас не забанят.</p></div>
+          <div><div style="font-weight:bold; color:#b39ddb;">🔹 Как скачать и запустить?</div><div style="color:#aaa;">1. Переходим в раздел "Скачать"<br>2. Нажимаем "Скачать" (предварительно зарегистрировавшись и приобретя ключ)<br>3. Запускаем лаунчер и ждем обновлений</div></div>
         </div>
       </div>
     </div>
 
-    <!-- Раздел Скачать лаунчер -->
-<div id="launcher" class="section">
-  <h2 class="section-title">Скачать лаунчер</h2>
-  <div class="card" style="text-align:center;">
-    <div style="font-size:2.5rem; color:#7c3aed; margin-bottom:1rem;">⬇️</div>
-    <h3 style="margin-bottom:0.8rem;">Nevora Swap Launcher</h3>
-    <p style="color:#aaa; margin-bottom:1.5rem;">Windows 10/11</p>
-    <a href="https://drive.google.com/file/d/1Y_xFhEen-xb1KRKWwb62pOsf79pZHGf4/view?usp=drive_link" id="launcherMainBtn" class="btn-outline" style="font-size:1.3rem; padding:0.8rem 2rem; text-decoration: none; display: inline-block;" download>СКАЧАТЬ</a>
-    <p style="margin-top:1rem; color:#aaa;" id="launcherStatus">Доступно после входа и активации лицензии</p>
-  </div>
-</div>
-
-    <!-- Футер -->
-    <footer>
-      <div>NEVORA SWAP</div>
-      <div>© 2026</div>
-    </footer>
-  </div>
-
-  <!-- МОДАЛКА АВТОРИЗАЦИИ -->
-  <div class="modal-overlay" id="authModal">
-    <div class="modal-card">
-      <div class="close-modal" id="closeAuthModal">✖</div>
-      <div class="modal-tabs">
-        <button class="modal-tab active" id="loginTab">Вход</button>
-        <button class="modal-tab" id="registerTab">Регистрация</button>
-      </div>
-      <div id="authForms">
-        <div id="loginForm">
-          <input type="text" placeholder="Логин (3-15 символов, англ)" id="loginUsername" maxlength="15">
-          <div class="password-field">
-            <input type="password" placeholder="Пароль" id="loginPassword">
-            <span class="password-toggle" onclick="togglePassword('loginPassword')">👁️</span>
-          </div>
-          <div id="loginError" class="error-text"></div>
-          <button type="submit" id="loginBtn">Войти</button>
-        </div>
-        
-        <div id="registerForm" style="display: none;">
-          <input type="text" placeholder="Логин (3-15 символов, англ)" id="regUsername" maxlength="15">
-          <div class="password-field">
-            <input type="password" placeholder="Пароль" id="regPassword">
-            <span class="password-toggle" onclick="togglePassword('regPassword')">👁️</span>
-          </div>
-          <div class="password-field">
-            <input type="password" placeholder="Повторите пароль" id="regPasswordConfirm">
-            <span class="password-toggle" onclick="togglePassword('regPasswordConfirm')">👁️</span>
-          </div>
-          <div id="registerError" class="error-text"></div>
-          <button type="submit" id="registerBtn">Зарегистрироваться</button>
-        </div>
+    <div id="launcher" class="section">
+      <h2 class="section-title">Скачать лаунчер</h2>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:2.5rem; color:#7c3aed; margin-bottom:1rem;">⬇️</div>
+        <h3>Nevora Swap Launcher</h3>
+        <p style="color:#aaa; margin-bottom:1.5rem;">Windows 10/11</p>
+        <a href="https://drive.google.com/file/d/1Y_xFhEen-xb1KRKWwb62pOsf79pZHGf4/view?usp=drive_link" id="launcherMainBtn" class="btn-outline" style="font-size:1.3rem; padding:0.8rem 2rem; text-decoration: none; display: inline-block;" download>СКАЧАТЬ</a>
+        <p style="margin-top:1rem; color:#aaa;" id="launcherStatus">Доступно после входа и активации лицензии</p>
       </div>
     </div>
-  </div>
-
-  <!-- МОДАЛКА ПОДТВЕРЖДЕНИЯ ВЫХОДА -->
-  <div class="modal-overlay" id="logoutConfirmModal">
-    <div class="modal-card" style="max-width: 380px;">
-      <div class="close-modal" id="closeLogoutModal">✖</div>
-      <h2 style="text-align:center; margin: 0.5rem 0 1.5rem;">Выход из аккаунта</h2>
-      <p style="text-align:center; color:#aaa; margin-bottom:1.5rem;">Вы уверены, что хотите выйти?</p>
-      <div style="display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap;">
-        <button class="btn-auth" id="confirmLogoutBtn" style="background:#ef4444; border-color:#ef4444;">Выйти</button>
-        <button class="btn-auth" id="cancelLogoutBtn">Отмена</button>
-      </div>
+    
+    <div id="admin" class="section">
+      <h2 class="section-title">🔧 Административная панель</h2>
+      <div class="card"><div id="adminContent"><p style="text-align:center; color:#7c3aed;">Загрузка...</p></div></div>
     </div>
+
+    <footer><div>NEVORA SWAP</div><div>© 2026</div></footer>
   </div>
 
-  <!-- МОДАЛКА ОПЛАТЫ -->
-  <div class="modal-overlay" id="paymentModal">
-    <div class="modal-card">
-      <div class="close-modal" id="closePaymentModal">✖</div>
-      <h2 id="paymentTitle" style="text-align:center;">12 часов</h2>
-      <p id="paymentPrice" style="font-size:2rem; text-align:center; margin:0.8rem 0;">24 ₽</p>
-      <div class="payment-actions">
-        <a href="#" id="funpayLink" target="_blank" class="payment-btn">FunPay</a>
-        <button class="payment-btn" id="adminPayBtn">Admin</button>
-      </div>
-      <p style="text-align:center; margin-top:1rem; color:#aaa;">После оплаты ключ придёт от админа</p>
-    </div>
-  </div>
+  <div class="agreement-box"><h3 class="agreement-clickable" style="color:#b39ddb; cursor:pointer;" id="agreementBtn">📜 Пользовательское соглашение</h3></div>
 
-  <!-- СОГЛАШЕНИЕ -->
-  <div class="agreement-box">
-    <h3 style="color:#b39ddb; font-size:1.1rem;">Пользовательское соглашение</h3>
-    <p style="color:#aaa; margin-top:0.8rem; font-size:0.9rem;">Администрация вправе заблокировать подписку без возврата средств при нарушении правил. Использование NEVORA SWAP означает согласие с условиями.</p>
-  </div>
+  <div class="modal-overlay" id="agreementModal"><div class="modal-card"><div class="close-modal" id="closeAgreementModal">✖</div><h2 style="text-align:center;">📜 Пользовательское соглашение</h2><div style="color:#aaa; line-height:1.6;"><p><strong>1. Общие положения</strong><br>Используя NEVORA SWAP, вы соглашаетесь с условиями.</p><p><strong>2. Запрещенные действия</strong><br>❌ Запрещена передача лицензии третьим лицам<br>❌ Запрещено взламывать или модифицировать программу</p><p><strong>3. Ответственность</strong><br>Администрация вправе заблокировать подписку без возврата средств при нарушении правил.</p></div><button class="btn-auth" id="closeAgreementBtn" style="margin-top:1.5rem; width:100%;">Закрыть</button></div></div>
+
+  <div class="modal-overlay" id="authModal"><div class="modal-card"><div class="close-modal" id="closeAuthModal">✖</div><div class="modal-tabs"><button class="modal-tab active" id="loginTab">Вход</button><button class="modal-tab" id="registerTab">Регистрация</button></div><div id="authForms"><div id="loginForm"><input type="text" placeholder="Логин (3-15 символов, англ)" id="loginUsername" maxlength="15"><div class="password-field"><input type="password" placeholder="Пароль" id="loginPassword"><span class="password-toggle" onclick="togglePassword('loginPassword')">👁️</span></div><div id="loginError" class="error-text"></div><button id="loginBtn">Войти</button></div><div id="registerForm" style="display: none;"><input type="text" placeholder="Логин (3-15 символов, англ)" id="regUsername" maxlength="15"><div class="password-field"><input type="password" placeholder="Пароль" id="regPassword"><span class="password-toggle" onclick="togglePassword('regPassword')">👁️</span></div><div class="password-field"><input type="password" placeholder="Повторите пароль" id="regPasswordConfirm"><span class="password-toggle" onclick="togglePassword('regPasswordConfirm')">👁️</span></div><div id="registerError" class="error-text"></div><button id="registerBtn">Зарегистрироваться</button></div></div></div></div>
+
+  <div class="modal-overlay" id="logoutConfirmModal"><div class="modal-card"><div class="close-modal" id="closeLogoutModal">✖</div><h2 style="text-align:center;">Выход из аккаунта</h2><p style="text-align:center; color:#aaa; margin:1rem 0;">Вы уверены, что хотите выйти?</p><div style="display:flex; gap:0.8rem; justify-content:center;"><button class="btn-auth" id="confirmLogoutBtn" style="background:#ef4444; border-color:#ef4444;">Выйти</button><button class="btn-auth" id="cancelLogoutBtn">Отмена</button></div></div></div>
+
+  <div class="modal-overlay" id="paymentModal"><div class="modal-card"><div class="close-modal" id="closePaymentModal">✖</div><h2 id="paymentTitle" style="text-align:center;">12 часов</h2><p id="paymentPrice" style="font-size:2rem; text-align:center; margin:0.8rem 0;">24 ₽</p><div class="payment-actions"><a href="#" id="funpayLink" target="_blank" class="payment-btn">FunPay</a><button class="payment-btn" id="adminPayBtn">Admin</button></div></div></div>
 
   <script>
     window.togglePassword = function(inputId) {
       const input = document.getElementById(inputId);
-      if (input) {
-        input.type = input.type === 'password' ? 'text' : 'password';
-      }
+      if (input) input.type = input.type === 'password' ? 'text' : 'password';
     };
 
     (function() {
-      // ========== ИНИЦИАЛИЗАЦИЯ FIREBASE ==========
       const firebaseConfig = {
         apiKey: "AIzaSyCbgkMW0F0Nb8THjhoCapueR0ccGTexoyk",
         authDomain: "swap-3f785.firebaseapp.com",
@@ -1339,29 +578,26 @@
       firebase.initializeApp(firebaseConfig);
       const database = firebase.database();
       
-      // ========== ФОН ТОЧКИ ==========
+      // ФОН
       const canvas = document.getElementById('canvas-bg');
       const ctx = canvas.getContext('2d');
-      let width, height, mouse = { x: -1000, y: -1000, active: false };
-      let particles = [];
-      let animationFrame;
+      let width, height, particles = [];
       let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
       function createParticles() {
         particles = [];
         const count = isMobile ? 80 : 200;
         for (let i = 0; i < count; i++) {
-          const x = Math.random() * window.innerWidth;
-          const y = Math.random() * window.innerHeight;
           particles.push({
-            x: x, y: y, baseX: x, baseY: y,
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            baseX: Math.random() * window.innerWidth,
+            baseY: Math.random() * window.innerHeight,
             size: Math.random() * (isMobile ? 3 : 4) + (isMobile ? 1 : 1.5),
             speed: 0.01 + Math.random() * 0.02
           });
         }
       }
-
-      createParticles();
 
       function resizeCanvas() {
         width = window.innerWidth;
@@ -1372,46 +608,14 @@
       }
 
       resizeCanvas();
-
-      window.addEventListener('resize', () => {
-        resizeCanvas();
-      });
-
-      if (!isMobile) {
-        window.addEventListener('mousemove', (e) => {
-          mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true;
-        });
-        window.addEventListener('mouseleave', () => {
-          mouse.active = false; mouse.x = -1000; mouse.y = -1000;
-        });
-      }
+      window.addEventListener('resize', resizeCanvas);
 
       function updateParticles() {
-        if (isMobile) {
-          particles.forEach(p => {
-            let dxBase = p.baseX - p.x, dyBase = p.baseY - p.y;
-            p.x += dxBase * p.speed * 0.5;
-            p.y += dyBase * p.speed * 0.5;
-          });
-        } else {
-          const repulsionRadius = 160, strength = 0.25;
-          particles.forEach(p => {
-            let dxBase = p.baseX - p.x, dyBase = p.baseY - p.y;
-            p.x += dxBase * p.speed;
-            p.y += dyBase * p.speed;
-            if (mouse.active) {
-              let dx = p.x - mouse.x, dy = p.y - mouse.y, dist = Math.hypot(dx, dy);
-              if (dist < repulsionRadius && dist > 1) {
-                let force = (repulsionRadius - dist) / repulsionRadius * strength;
-                let angle = Math.atan2(dy, dx);
-                p.x += Math.cos(angle) * force * 18;
-                p.y += Math.sin(angle) * force * 18;
-              }
-            }
-            p.x = Math.min(width + 100, Math.max(-100, p.x));
-            p.y = Math.min(height + 100, Math.max(-100, p.y));
-          });
-        }
+        particles.forEach(p => {
+          let dxBase = p.baseX - p.x, dyBase = p.baseY - p.y;
+          p.x += dxBase * p.speed;
+          p.y += dyBase * p.speed;
+        });
       }
 
       function draw() {
@@ -1427,38 +631,16 @@
         ctx.shadowBlur = 0;
       }
 
-      function animate() {
-        if (width && height) { 
-          updateParticles(); 
-          draw(); 
-        }
-        animationFrame = requestAnimationFrame(animate);
-      }
+      function animate() { updateParticles(); draw(); requestAnimationFrame(animate); }
       animate();
 
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-          cancelAnimationFrame(animationFrame);
-        } else {
-          animate();
-        }
-      });
-
-      // ========== МЕНЮ ==========
+      // МЕНЮ
       const menuToggle = document.getElementById('menuToggle');
       const sideMenu = document.getElementById('sideMenu');
       const overlay = document.getElementById('overlay');
 
-      menuToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        sideMenu.classList.toggle('open');
-        overlay.classList.toggle('show');
-      });
-
-      overlay.addEventListener('click', () => {
-        sideMenu.classList.remove('open');
-        overlay.classList.remove('show');
-      });
+      menuToggle.addEventListener('click', (e) => { e.stopPropagation(); sideMenu.classList.toggle('open'); overlay.classList.toggle('show'); });
+      overlay.addEventListener('click', () => { sideMenu.classList.remove('open'); overlay.classList.remove('show'); });
 
       document.querySelectorAll('.menu-item').forEach(item => {
         item.addEventListener('click', function() {
@@ -1472,195 +654,97 @@
         });
       });
 
-      // ========== РАБОТА С FIREBASE ==========
       let currentUser = null;
       let currentLicense = null;
       let isKeyVisible = false;
 
       async function generateFingerprint() {
         try {
-          const components = [];
-          components.push(`cpu_${navigator.hardwareConcurrency || 'unknown'}`);
-          components.push(`mac_${Math.random().toString(36)}`);
-          components.push(`host_${window.location.hostname}`);
-          components.push(`disk_${Math.random().toString(36)}`);
-          components.push("NEVORA_SECURE_SALT_2026");
-          const combined = components.join('|');
-          return CryptoJS.SHA512(combined).toString().substring(0, 64);
-        } catch {
-          return CryptoJS.SHA512(Math.random().toString()).toString().substring(0, 64);
-        }
+          const components = [`cpu_${navigator.hardwareConcurrency || 'unknown'}`, `screen_${screen.width}x${screen.height}`, `lang_${navigator.language}`, `tz_${new Date().getTimezoneOffset()}`, "NEVORA_SECURE_SALT_2026"];
+          return CryptoJS.SHA512(components.join('|')).toString().substring(0, 64);
+        } catch { return CryptoJS.SHA512(Math.random().toString()).toString().substring(0, 64); }
       }
 
       function validateUsername(username) {
         if (!username) return 'Введите логин';
-        if (username.length < 3) return 'Логин должен быть от 3 символов';
-        if (username.length > 15) return 'Логин должен быть до 15 символов';
-        if (!/^[A-Za-z0-9]+$/.test(username)) return 'Логин может содержать только английские буквы и цифры';
+        if (username.length < 3) return 'Логин от 3 символов';
+        if (username.length > 15) return 'Логин до 15 символов';
+        if (!/^[A-Za-z0-9]+$/.test(username)) return 'Только английские буквы и цифры';
         return null;
       }
 
-      function validatePassword(password) {
-        if (!password) return 'Введите пароль';
-        if (password.length < 3) return 'Пароль должен быть минимум 3 символа';
-        return null;
-      }
+      function validatePassword(password) { if (!password) return 'Введите пароль'; if (password.length < 3) return 'Пароль минимум 3 символа'; return null; }
+      function hashPassword(password) { return CryptoJS.SHA256(password).toString(); }
+      function saveSession(username) { localStorage.setItem('nevora_session', username); }
+      function loadSession() { return localStorage.getItem('nevora_session'); }
+      function clearSession() { localStorage.removeItem('nevora_session'); currentUser = null; currentLicense = null; updateUI(); document.querySelector('.menu-item[data-section="nevoraswap"]').click(); }
 
-      function hashPassword(password) {
-        return CryptoJS.SHA256(password).toString();
-      }
-
-      function saveSession(username) {
-        localStorage.setItem('nevora_session', username);
-      }
-
-      function loadSession() {
-        return localStorage.getItem('nevora_session');
-      }
-
-      function clearSession() {
-        localStorage.removeItem('nevora_session');
-        currentUser = null;
-        currentLicense = null;
-        updateUI();
-        updateLauncherButton();
-        document.querySelector('.menu-item[data-section="nevoraswap"]').click();
-      }
-
-      async function getUserByUsername(username) {
-        try {
-          const snapshot = await database.ref('users/' + username).once('value');
-          return snapshot.val();
-        } catch {
-          return null;
-        }
-      }
-
-      async function saveUser(username, userData) {
-        try {
-          await database.ref('users/' + username).set(userData);
-          return true;
-        } catch {
-          return false;
-        }
-      }
-
-      async function loadUserLicense(username) {
-        try {
-          const user = await getUserByUsername(username);
-          if (!user || !user.license_id) return null;
-          const snapshot = await database.ref('licenses/' + user.license_id).once('value');
-          const license = snapshot.val();
-          if (license) license.id = user.license_id;
-          return license;
-        } catch {
-          return null;
-        }
-      }
-
-      async function getLicenseByCode(code) {
-        try {
-          const snapshot = await database.ref('licenses').once('value');
-          const licenses = snapshot.val();
-          if (!licenses) return null;
-          for (const [id, license] of Object.entries(licenses)) {
-            if (license.code && license.code.toUpperCase() === code.toUpperCase()) {
-              return { ...license, id };
-            }
-          }
-          return null;
-        } catch {
-          return null;
-        }
-      }
-
-      async function updateLicense(licenseId, data) {
-        try {
-          await database.ref('licenses/' + licenseId).update(data);
-          return true;
-        } catch {
-          return false;
-        }
-      }
-
-      async function deleteLicense(licenseId) {
-        try {
-          await database.ref('licenses/' + licenseId).remove();
-          console.log(`✅ Лицензия ${licenseId} полностью удалена из базы`);
-          return true;
-        } catch {
-          return false;
-        }
-      }
+      async function getUserByUsername(username) { try { const snapshot = await database.ref('users/' + username).once('value'); return snapshot.val(); } catch { return null; } }
+      async function saveUser(username, userData) { try { await database.ref('users/' + username).set(userData); return true; } catch { return false; } }
+      async function loadUserLicense(username) { try { const user = await getUserByUsername(username); if (!user || !user.license_id) return null; const snapshot = await database.ref('licenses/' + user.license_id).once('value'); const license = snapshot.val(); if (license) license.id = user.license_id; return license; } catch { return null; } }
+      async function getLicenseByCode(code) { try { const snapshot = await database.ref('licenses').once('value'); const licenses = snapshot.val(); if (!licenses) return null; for (const [id, license] of Object.entries(licenses)) { if (license.code && license.code.toUpperCase() === code.toUpperCase()) return { ...license, id }; } return null; } catch { return null; } }
+      async function updateLicense(licenseId, data) { try { await database.ref('licenses/' + licenseId).update(data); return true; } catch { return false; } }
+      async function deleteLicense(licenseId) { try { await database.ref('licenses/' + licenseId).remove(); return true; } catch { return false; } }
 
       function isLicenseExpired(license) {
         if (!license || !license.expires_at) return false;
-        try {
-          const expiry = new Date(license.expires_at);
-          return new Date() > expiry || license.status === 'expired';
-        } catch {
-          return false;
+        try { return new Date() > new Date(license.expires_at) || license.status === 'expired'; } catch { return false; }
+      }
+
+      function getRemainingTime(license) {
+        if (!license || !license.expires_at || isLicenseExpired(license)) return { days: 0, hours: 0, minutes: 0, totalMinutes: 0 };
+        const expiry = new Date(license.expires_at);
+        const now = new Date();
+        const diff = expiry - now;
+        if (diff <= 0) return { days: 0, hours: 0, minutes: 0, totalMinutes: 0 };
+        const totalMinutes = Math.floor(diff / (1000 * 60));
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        return { days, hours, minutes, totalMinutes };
+      }
+
+      function getTotalDurationMinutes(license) {
+        if (!license || !license.type) return 30 * 24 * 60;
+        switch(license.type) {
+          case '012h': return 12 * 60;
+          case '007d': return 7 * 24 * 60;
+          case '030d': return 30 * 24 * 60;
+          case '365d': return 365 * 24 * 60;
+          default: return 30 * 24 * 60;
         }
       }
 
       async function checkAndRemoveExpiredLicense() {
         if (!currentUser || !currentLicense) return false;
-        
         if (isLicenseExpired(currentLicense)) {
-          console.log('🗑️ Лицензия истекла, удаляем...');
-          
           const licenseId = currentLicense.id;
-          
           await database.ref('users/' + currentUser.username + '/license_id').remove();
-          
-          if (licenseId) {
-            await deleteLicense(licenseId);
-          }
-          
+          if (licenseId) await deleteLicense(licenseId);
           currentLicense = null;
-          
           await updateProfileUI();
           updateActivationSection();
           updateLauncherButton();
-          
           return true;
         }
         return false;
       }
 
+      setInterval(async () => { if (currentUser && currentLicense) { await checkAndRemoveExpiredLicense(); await updateProfileUI(); } }, 60000);
+
       function updateActivationSection() {
         const activateCard = document.getElementById('activateCard');
         if (!activateCard) return;
-        
         if (!currentUser) {
-          activateCard.innerHTML = `
-            <div style="text-align:center; padding:1.5rem;">
-              <div style="font-size:2.5rem; color:#7c3aed; margin-bottom:1rem;">🔐</div>
-              <h3 style="margin-bottom:0.8rem;">Требуется авторизация</h3>
-              <p style="color:#aaa; margin-bottom:1.5rem;">Для активации ключа необходимо войти в аккаунт</p>
-              <button class="btn-auth" onclick="document.getElementById('showAuthModalBtn').click()">Войти / Регистрация</button>
-            </div>
-          `;
+          activateCard.innerHTML = `<div style="text-align:center;"><div style="font-size:2.5rem; color:#7c3aed;">🔐</div><h3>Требуется авторизация</h3><button class="btn-auth" onclick="document.getElementById('showAuthModalBtn').click()">Войти</button></div>`;
           return;
         }
-        
-        activateCard.innerHTML = `
-          <div style="text-align:center; margin-bottom:1.5rem;">
-            <div style="font-size:2.5rem; color:#7c3aed;">🔑</div>
-            <h3 style="margin:0.8rem 0;">Введите лицензионный ключ</h3>
-            <p style="color:#aaa; font-size:0.9rem;">${currentLicense ? 'У вас уже есть лицензия, но вы можете активировать новую' : 'Ключ будет привязан к вашему аккаунту'}</p>
-          </div>
-          
-          <input type="text" id="activationKey" placeholder="XXXXXX-XXXXXX-XXXXXX-XXXXXX" 
-                 style="width:100%; padding:0.9rem; background:#1e1e2a; border:2px solid #7c3aed; border-radius:50px; color:white; font-family:'Courier New'; text-align:center; font-size:1rem; letter-spacing:1px; text-transform:uppercase;">
-          
-          <div style="display:flex; gap:0.8rem; margin-top:1.5rem;">
-            <button class="payment-btn" id="activateBtn" style="flex:2;">Активировать</button>
-            <button class="payment-btn" id="checkKeyBtn" style="flex:1;">Проверить</button>
-          </div>
-          
-          <div id="activationStatus" style="margin-top:1.2rem; text-align:center; min-height:40px; font-size:0.9rem;"></div>
-        `;
+        const hasActiveLicense = currentLicense && currentLicense.status === 'active' && !isLicenseExpired(currentLicense);
+        if (hasActiveLicense) {
+          activateCard.innerHTML = `<div style="text-align:center;"><div style="font-size:2rem; color:#7c3aed;">✅</div><h3>У вас уже есть активная лицензия</h3><p style="color:#aaa;">Перейдите в профиль для просмотра деталей</p><button class="btn-auth" onclick="document.querySelector('.menu-item[data-section=\'profile\']').click()">Перейти в профиль</button></div>`;
+        } else {
+          activateCard.innerHTML = `<div style="text-align:center;"><div style="font-size:2.5rem; color:#7c3aed;">🔑</div><h3>Введите лицензионный ключ</h3></div><input type="text" id="activationKey" placeholder="XXXXXX-XXXXXX-XXXXXX-XXXXXX" style="width:100%; padding:0.9rem; background:#1e1e2a; border:2px solid #7c3aed; border-radius:50px; color:white; text-align:center; text-transform:uppercase;"><div style="display:flex; gap:0.8rem; margin-top:1.5rem;"><button class="payment-btn" id="activateBtn" style="flex:2;">Активировать</button><button class="payment-btn" id="checkKeyBtn" style="flex:1;">Проверить</button></div><div id="activationStatus" style="margin-top:1.2rem; text-align:center;"></div>`;
+        }
       }
 
       function updateUI() {
@@ -1668,24 +752,26 @@
         const userGreeting = document.getElementById('userGreeting');
         const profileNotLogged = document.getElementById('profileNotLogged');
         const profileLogged = document.getElementById('profileLogged');
-        const profileLoginDisplay = document.getElementById('profileLoginDisplay');
+        const adminMenuItem = document.getElementById('adminMenuItem');
 
         if (currentUser) {
           authButtons.style.display = 'none';
           userGreeting.style.display = 'block';
           userGreeting.innerText = `Привет, ${currentUser.username}`;
-          
+          userGreeting.onclick = () => document.querySelector('.menu-item[data-section="profile"]').click();
           profileNotLogged.style.display = 'none';
           profileLogged.style.display = 'block';
-          profileLoginDisplay.innerText = currentUser.username;
+          document.getElementById('profileLoginDisplay').innerText = currentUser.username;
+          if (currentUser.username === 'Nevora') adminMenuItem.style.display = 'block';
+          else adminMenuItem.style.display = 'none';
           updateProfileUI();
         } else {
           authButtons.style.display = 'flex';
           userGreeting.style.display = 'none';
           profileNotLogged.style.display = 'block';
           profileLogged.style.display = 'none';
+          adminMenuItem.style.display = 'none';
         }
-        
         updateActivationSection();
         updateLauncherButton();
       }
@@ -1693,107 +779,56 @@
       function updateLauncherButton() {
         const launcherBtn = document.getElementById('launcherMainBtn');
         const launcherStatus = document.getElementById('launcherStatus');
-        
-        if (!launcherBtn) return;
-        
         const hasActive = currentLicense && currentLicense.status === 'active' && !isLicenseExpired(currentLicense);
-        
-        launcherBtn.disabled = !hasActive;
-        launcherStatus.innerText = hasActive ? '✅ Доступно для скачивания' : '❌ Требуется активная лицензия';
-        
-        if (hasActive) {
-          launcherBtn.style.opacity = '1';
-          launcherBtn.style.cursor = 'pointer';
-          launcherBtn.style.borderColor = '#7c3aed';
-        } else {
-          launcherBtn.style.opacity = '0.4';
-          launcherBtn.style.cursor = 'not-allowed';
-          launcherBtn.style.borderColor = '#555';
+        if (launcherBtn) {
+          if (hasActive) {
+            launcherBtn.disabled = false;
+            launcherBtn.style.opacity = '1';
+            launcherBtn.style.pointerEvents = 'auto';
+            launcherStatus.innerText = '✅ Доступно для скачивания';
+          } else {
+            launcherBtn.disabled = true;
+            launcherBtn.style.opacity = '0.4';
+            launcherBtn.style.pointerEvents = 'none';
+            launcherStatus.innerText = '❌ Требуется активная лицензия';
+          }
         }
       }
 
       async function updateProfileUI() {
         if (!currentUser) return;
         currentLicense = await loadUserLicense(currentUser.username);
+        if (currentLicense && isLicenseExpired(currentLicense)) await checkAndRemoveExpiredLicense();
         
         const licenseType = document.getElementById('licenseType');
         const licenseKey = document.getElementById('licenseKeyDisplay');
         const expiredBadge = document.getElementById('expiredBadge');
         const timerProgress = document.getElementById('timerProgress');
         const timerText = document.getElementById('timerText');
-        const licenseDays = document.getElementById('licenseDays');
-        const licenseHours = document.getElementById('licenseHours');
-        const licenseMinutes = document.getElementById('licenseMinutes');
+        const remainingTimeDisplay = document.getElementById('remainingTimeDisplay');
         
-        if (currentLicense) {
-          const isExpired = isLicenseExpired(currentLicense);
-          licenseKey.innerText = currentLicense.code || 'NEVORA-XXXX-XXXX';
+        if (currentLicense && currentLicense.status === 'active' && !isLicenseExpired(currentLicense)) {
+          const remaining = getRemainingTime(currentLicense);
+          const totalMinutes = getTotalDurationMinutes(currentLicense);
+          const elapsedMinutes = totalMinutes - remaining.totalMinutes;
+          const percent = Math.max(0, Math.min(100, (elapsedMinutes / totalMinutes) * 100));
           
-          if (isExpired) {
-            licenseType.innerText = '❌ Лицензия истекла';
-            licenseType.style.color = '#ef4444';
-            expiredBadge.style.display = 'inline-block';
-            if (timerProgress) timerProgress.style.width = '100%';
-            if (timerText) timerText.innerText = 'Истекла';
-            if (licenseDays) licenseDays.innerText = '0';
-            if (licenseHours) licenseHours.innerText = '0';
-            if (licenseMinutes) licenseMinutes.innerText = '0';
-          } else if (currentLicense.status === 'active') {
-            licenseType.innerText = 
-              currentLicense.type === '012h' ? '12 часов' :
-              currentLicense.type === '007d' ? '7 дней' :
-              currentLicense.type === '030d' ? '30 дней' :
-              currentLicense.type === '365d' ? '1 год' : 'Активная лицензия';
-            licenseType.style.color = '#7c3aed';
-            expiredBadge.style.display = 'none';
-            
-            if (currentLicense.expires_at) {
-              try {
-                const expiry = new Date(currentLicense.expires_at);
-                const now = new Date();
-                const diff = expiry - now;
-                if (diff > 0) {
-                  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                  if (licenseDays) licenseDays.innerText = days;
-                  if (licenseHours) licenseHours.innerText = hours + days * 24;
-                  if (licenseMinutes) licenseMinutes.innerText = minutes + hours * 60 + days * 24 * 60;
-                  
-                  const totalMs = currentLicense.type === '012h' ? 12 * 60 * 60 * 1000 :
-                                  currentLicense.type === '007d' ? 7 * 24 * 60 * 60 * 1000 :
-                                  currentLicense.type === '030d' ? 30 * 24 * 60 * 60 * 1000 :
-                                  currentLicense.type === '365d' ? 365 * 24 * 60 * 60 * 1000 : 30 * 24 * 60 * 60 * 1000;
-                  const elapsed = totalMs - diff;
-                  const percent = Math.max(0, Math.min(100, (elapsed / totalMs) * 100));
-                  if (timerProgress) timerProgress.style.width = percent + '%';
-                  if (timerText) timerText.innerText = Math.round(percent) + '%';
-                }
-              } catch (e) {}
-            }
-          } else {
-            licenseType.innerText = '⏳ Ожидает активации';
-            licenseType.style.color = '#a0a0c0';
-            expiredBadge.style.display = 'none';
-            if (timerProgress) timerProgress.style.width = '0%';
-            if (timerText) timerText.innerText = '0%';
-            if (licenseDays) licenseDays.innerText = '0';
-            if (licenseHours) licenseHours.innerText = '0';
-            if (licenseMinutes) licenseMinutes.innerText = '0';
-          }
+          licenseType.innerText = currentLicense.type === '012h' ? '12 часов' : currentLicense.type === '007d' ? '7 дней' : currentLicense.type === '030d' ? '30 дней' : '1 год';
+          licenseType.style.color = '#7c3aed';
+          expiredBadge.style.display = 'none';
+          licenseKey.innerText = currentLicense.code || 'NEVORA-XXXX';
+          timerProgress.style.width = (100 - percent) + '%';
+          timerText.innerText = Math.round(100 - percent) + '%';
+          remainingTimeDisplay.innerText = `⏱️ Осталось: ${remaining.days} дн. ${remaining.hours} ч. ${remaining.minutes} мин.`;
         } else {
           licenseType.innerText = 'Нет активной лицензии';
           licenseType.style.color = '#a0a0c0';
           licenseKey.innerText = '---- ---- ---- ----';
           expiredBadge.style.display = 'none';
-          if (timerProgress) timerProgress.style.width = '0%';
-          if (timerText) timerText.innerText = '0%';
-          if (licenseDays) licenseDays.innerText = '0';
-          if (licenseHours) licenseHours.innerText = '0';
-          if (licenseMinutes) licenseMinutes.innerText = '0';
+          timerProgress.style.width = '0%';
+          timerText.innerText = '0%';
+          remainingTimeDisplay.innerText = '⏱️ Лицензия не активна';
         }
-        
-        // Обновляем кнопку скачивания после обновления лицензии
         updateLauncherButton();
       }
 
@@ -1801,282 +836,148 @@
         const keyDisplay = document.getElementById('licenseKeyDisplay');
         const toggleBtn = document.getElementById('toggleKeyBtn');
         isKeyVisible = !isKeyVisible;
-        if (isKeyVisible) {
-          keyDisplay.classList.remove('license-key-blur');
-          keyDisplay.classList.add('license-key-visible');
-          toggleBtn.textContent = '👁️ скрыть';
-        } else {
-          keyDisplay.classList.add('license-key-blur');
-          keyDisplay.classList.remove('license-key-visible');
-          toggleBtn.textContent = '👁️ показать';
-        }
+        if (isKeyVisible) { keyDisplay.classList.remove('license-key-blur'); toggleBtn.textContent = '👁️ скрыть'; }
+        else { keyDisplay.classList.add('license-key-blur'); toggleBtn.textContent = '👁️ показать'; }
       };
 
       window.copyKeyToClipboard = function() {
         if (!currentLicense?.code) return;
-        navigator.clipboard.writeText(currentLicense.code).then(() => {
-          const n = document.createElement('div');
-          n.className = 'copy-notification';
-          n.textContent = '✅ Ключ скопирован';
-          document.body.appendChild(n);
-          setTimeout(() => n.remove(), 2000);
-        });
+        navigator.clipboard.writeText(currentLicense.code);
+        const n = document.createElement('div'); n.className = 'copy-notification'; n.textContent = '✅ Ключ скопирован';
+        document.body.appendChild(n); setTimeout(() => n.remove(), 2000);
       };
 
       document.getElementById('toggleKeyBtn')?.addEventListener('click', toggleKeyVisibility);
       document.getElementById('copyKeyBtn')?.addEventListener('click', copyKeyToClipboard);
 
-      // ========== АВТОРИЗАЦИЯ ==========
+      // АВТОРИЗАЦИЯ
       const authModal = document.getElementById('authModal');
       const closeAuth = document.getElementById('closeAuthModal');
       const showAuthBtn = document.getElementById('showAuthModalBtn');
       const profileLoginBtn = document.getElementById('profileLoginBtn');
       const loginTab = document.getElementById('loginTab');
       const registerTab = document.getElementById('registerTab');
-      const loginForm = document.getElementById('loginForm');
-      const registerForm = document.getElementById('registerForm');
+      const loginFormDiv = document.getElementById('loginForm');
+      const registerFormDiv = document.getElementById('registerForm');
       const loginBtn = document.getElementById('loginBtn');
       const registerBtn = document.getElementById('registerBtn');
-      const loginUsername = document.getElementById('loginUsername');
-      const loginPassword = document.getElementById('loginPassword');
-      const regUsername = document.getElementById('regUsername');
-      const regPassword = document.getElementById('regPassword');
-      const regPasswordConfirm = document.getElementById('regPasswordConfirm');
-      const loginError = document.getElementById('loginError');
-      const registerError = document.getElementById('registerError');
 
       function openAuthModal() { authModal.classList.add('active'); }
       showAuthBtn.addEventListener('click', openAuthModal);
       if (profileLoginBtn) profileLoginBtn.addEventListener('click', openAuthModal);
       closeAuth.addEventListener('click', () => authModal.classList.remove('active'));
 
-      loginTab.addEventListener('click', () => {
-        loginTab.classList.add('active');
-        registerTab.classList.remove('active');
-        loginForm.style.display = 'block';
-        registerForm.style.display = 'none';
-        loginError.textContent = '';
-      });
-
-      registerTab.addEventListener('click', () => {
-        registerTab.classList.add('active');
-        loginTab.classList.remove('active');
-        registerForm.style.display = 'block';
-        loginForm.style.display = 'none';
-        registerError.textContent = '';
-      });
+      loginTab.addEventListener('click', () => { loginTab.classList.add('active'); registerTab.classList.remove('active'); loginFormDiv.style.display = 'block'; registerFormDiv.style.display = 'none'; });
+      registerTab.addEventListener('click', () => { registerTab.classList.add('active'); loginTab.classList.remove('active'); registerFormDiv.style.display = 'block'; loginFormDiv.style.display = 'none'; });
 
       loginBtn.addEventListener('click', async () => {
-        const username = loginUsername.value.trim();
-        const password = loginPassword.value.trim();
-        
-        const ue = validateUsername(username);
-        if (ue) { loginError.textContent = ue; return; }
-        const pe = validatePassword(password);
-        if (pe) { loginError.textContent = pe; return; }
-
-        loginError.textContent = 'Вход...';
+        const username = document.getElementById('loginUsername').value.trim();
+        const password = document.getElementById('loginPassword').value.trim();
+        const errorDiv = document.getElementById('loginError');
+        const ue = validateUsername(username); if (ue) { errorDiv.textContent = ue; return; }
+        const pe = validatePassword(password); if (pe) { errorDiv.textContent = pe; return; }
+        errorDiv.textContent = 'Вход...';
         const user = await getUserByUsername(username);
-        if (!user) { loginError.textContent = 'Пользователь не найден'; return; }
-        if (user.password !== hashPassword(password)) { loginError.textContent = 'Неверный пароль'; return; }
-
+        if (!user) { errorDiv.textContent = 'Пользователь не найден'; return; }
+        if (user.password !== hashPassword(password)) { errorDiv.textContent = 'Неверный пароль'; return; }
         currentUser = { username, ...user };
         saveSession(username);
         await updateUI();
         await checkAndRemoveExpiredLicense();
         authModal.classList.remove('active');
-        loginUsername.value = '';
-        loginPassword.value = '';
       });
 
       registerBtn.addEventListener('click', async () => {
-        const username = regUsername.value.trim();
-        const password = regPassword.value.trim();
-        const confirm = regPasswordConfirm.value.trim();
-        
-        const ue = validateUsername(username);
-        if (ue) { registerError.textContent = ue; return; }
-        const pe = validatePassword(password);
-        if (pe) { registerError.textContent = pe; return; }
-        if (password !== confirm) { registerError.textContent = 'Пароли не совпадают'; return; }
-
-        registerError.textContent = 'Регистрация...';
-        if (await getUserByUsername(username)) { registerError.textContent = 'Пользователь уже существует'; return; }
-
-        const newUser = {
-          username,
-          password: hashPassword(password),
-          created_at: new Date().toISOString(),
-          last_login: null,
-          license_id: null
-        };
-
+        const username = document.getElementById('regUsername').value.trim();
+        const password = document.getElementById('regPassword').value.trim();
+        const confirm = document.getElementById('regPasswordConfirm').value.trim();
+        const errorDiv = document.getElementById('registerError');
+        const ue = validateUsername(username); if (ue) { errorDiv.textContent = ue; return; }
+        const pe = validatePassword(password); if (pe) { errorDiv.textContent = pe; return; }
+        if (password !== confirm) { errorDiv.textContent = 'Пароли не совпадают'; return; }
+        errorDiv.textContent = 'Регистрация...';
+        if (await getUserByUsername(username)) { errorDiv.textContent = 'Пользователь уже существует'; return; }
+        const newUser = { username, password: hashPassword(password), created_at: new Date().toISOString(), license_id: null };
         if (await saveUser(username, newUser)) {
           currentUser = { username, ...newUser };
           saveSession(username);
           await updateUI();
           authModal.classList.remove('active');
-          regUsername.value = '';
-          regPassword.value = '';
-          regPasswordConfirm.value = '';
-        } else {
-          registerError.textContent = 'Ошибка при сохранении';
-        }
+        } else errorDiv.textContent = 'Ошибка при сохранении';
       });
 
       async function restoreSession() {
         const saved = loadSession();
         if (!saved) return;
         const user = await getUserByUsername(saved);
-        if (user) {
-          currentUser = { username: saved, ...user };
-          await updateUI();
-          await checkAndRemoveExpiredLicense();
-          updateLauncherButton();
-        }
+        if (user) { currentUser = { username: saved, ...user }; await updateUI(); await checkAndRemoveExpiredLicense(); }
       }
       restoreSession();
 
-      // ========== ВЫХОД ==========
-      const logoutModal = document.getElementById('logoutConfirmModal');
-      const closeLogout = document.getElementById('closeLogoutModal');
-      const confirmLogout = document.getElementById('confirmLogoutBtn');
-      const cancelLogout = document.getElementById('cancelLogoutBtn');
-      const logoutBtn = document.getElementById('logoutBtn');
-
-      logoutBtn?.addEventListener('click', () => logoutModal.classList.add('active'));
-      closeLogout.addEventListener('click', () => logoutModal.classList.remove('active'));
-      cancelLogout.addEventListener('click', () => logoutModal.classList.remove('active'));
-      confirmLogout.addEventListener('click', () => {
-        clearSession();
-        logoutModal.classList.remove('active');
-      });
-
-      logoutModal.addEventListener('click', (e) => {
-        if (e.target === logoutModal) logoutModal.classList.remove('active');
-      });
-
-      // ========== АКТИВАЦИЯ ==========
-      const activateNewKeyBtn = document.getElementById('activateNewKeyBtn');
-      if (activateNewKeyBtn) {
-        activateNewKeyBtn.addEventListener('click', () => {
-          document.querySelector('.menu-item[data-section="activate"]').click();
-        });
-      }
-
+      // АКТИВАЦИЯ
       async function activateKey(key) {
         key = key.toUpperCase().trim();
         const statusDiv = document.getElementById('activationStatus');
         if (!statusDiv) return false;
-        if (!currentUser) {
-          statusDiv.innerHTML = '<span style="color:#ef4444;">❌ Сначала войдите в аккаунт</span>';
-          return false;
-        }
-
-        if (currentLicense) {
-          if (isLicenseExpired(currentLicense)) {
-            await database.ref('users/' + currentUser.username + '/license_id').remove();
-            if (currentLicense.id) {
-              await deleteLicense(currentLicense.id);
-            }
-            currentLicense = null;
-          }
-        }
-
-        statusDiv.innerHTML = '<span style="color:#7c3aed;">⏳ Проверка ключа...</span>';
+        if (!currentUser) { statusDiv.innerHTML = '<span style="color:#ef4444;">❌ Сначала войдите</span>'; return false; }
+        if (currentLicense && !isLicenseExpired(currentLicense)) { statusDiv.innerHTML = '<span style="color:#ffa500;">⚠️ У вас уже есть активная лицензия</span>'; return false; }
+        statusDiv.innerHTML = '<span>⏳ Проверка ключа...</span>';
         const license = await getLicenseByCode(key);
-        if (!license) {
-          statusDiv.innerHTML = '<span style="color:#ef4444;">❌ Ключ не найден</span>';
-          return false;
-        }
-        if (license.locked) {
-          statusDiv.innerHTML = '<span style="color:#ef4444;">❌ Ключ заблокирован</span>';
-          return false;
-        }
-
-        statusDiv.innerHTML = '<span style="color:#7c3aed;">⏳ Генерация отпечатка...</span>';
+        if (!license) { statusDiv.innerHTML = '<span style="color:#ef4444;">❌ Ключ не найден</span>'; return false; }
+        if (license.locked) { statusDiv.innerHTML = '<span style="color:#ef4444;">❌ Ключ заблокирован</span>'; return false; }
         const fingerprint = await generateFingerprint();
         const now = new Date();
         let expires = new Date();
-        
         if (license.type === '012h') expires.setHours(now.getHours() + 12);
         else if (license.type === '007d') expires.setDate(now.getDate() + 7);
         else if (license.type === '030d') expires.setDate(now.getDate() + 30);
         else if (license.type === '365d') expires.setDate(now.getDate() + 365);
         else expires.setDate(now.getDate() + 30);
-
-        const updated = {
-          status: 'active',
-          username: currentUser.username,
-          fingerprint,
-          activated_at: now.toISOString(),
-          expires_at: expires.toISOString()
-        };
-
-        statusDiv.innerHTML = '<span style="color:#7c3aed;">⏳ Сохранение...</span>';
+        const updated = { status: 'active', username: currentUser.username, fingerprint, activated_at: now.toISOString(), expires_at: expires.toISOString() };
         if (await updateLicense(license.id, updated)) {
           await database.ref('users/' + currentUser.username + '/license_id').set(license.id);
           currentLicense = { ...license, ...updated, id: license.id };
           await updateProfileUI();
-          updateLauncherButton();
-          statusDiv.innerHTML = `<span style="color:#7c3aed;">✅ Ключ активирован! Действует до ${expires.toLocaleDateString()}</span>`;
+          statusDiv.innerHTML = `<span style="color:#7c3aed;">✅ Активировано! Действует до ${expires.toLocaleDateString()}</span>`;
           setTimeout(() => document.querySelector('.menu-item[data-section="profile"]').click(), 1500);
           return true;
-        } else {
-          statusDiv.innerHTML = '<span style="color:#ef4444;">❌ Ошибка при активации</span>';
-          return false;
         }
+        statusDiv.innerHTML = '<span style="color:#ef4444;">❌ Ошибка активации</span>';
+        return false;
       }
 
-      document.addEventListener('click', function(e) {
+      document.addEventListener('click', async function(e) {
         if (e.target.id === 'activateBtn') {
-          e.preventDefault();
           const key = document.getElementById('activationKey')?.value;
-          if (!key) {
-            document.getElementById('activationStatus').innerHTML = '<span style="color:#ef4444;">❌ Введите ключ</span>';
-            return;
-          }
+          if (!key) { document.getElementById('activationStatus').innerHTML = '<span style="color:#ef4444;">❌ Введите ключ</span>'; return; }
           activateKey(key);
         }
-        
         if (e.target.id === 'checkKeyBtn') {
-          e.preventDefault();
           const key = document.getElementById('activationKey')?.value;
-          if (!key) {
-            document.getElementById('activationStatus').innerHTML = '<span style="color:#ef4444;">❌ Введите ключ</span>';
-            return;
-          }
-          getLicenseByCode(key.toUpperCase().trim()).then(license => {
-            const status = document.getElementById('activationStatus');
-            if (license) {
-              const expired = isLicenseExpired(license);
-              if (license.status === 'active' && !expired) {
-                status.innerHTML = `<span style="color:#7c3aed;">✅ Ключ активирован пользователем ${license.username || 'неизвестно'}</span>`;
-              } else if (expired) {
-                status.innerHTML = '<span style="color:#ffa500;">⚠️ Ключ истек, может быть активирован заново</span>';
-              } else {
-                status.innerHTML = '<span style="color:#7c3aed;">✅ Ключ готов к активации</span>';
-              }
-            } else {
-              status.innerHTML = '<span style="color:#ef4444;">❌ Ключ не найден</span>';
-            }
-          });
+          if (!key) { document.getElementById('activationStatus').innerHTML = '<span style="color:#ef4444;">❌ Введите ключ</span>'; return; }
+          const license = await getLicenseByCode(key.toUpperCase().trim());
+          const status = document.getElementById('activationStatus');
+          if (license) {
+            if (license.status === 'active' && !isLicenseExpired(license)) status.innerHTML = `<span style="color:#7c3aed;">✅ Активирован пользователем ${license.username}</span>`;
+            else if (isLicenseExpired(license)) status.innerHTML = '<span style="color:#ffa500;">⚠️ Ключ истек</span>';
+            else status.innerHTML = '<span style="color:#7c3aed;">✅ Ключ готов к активации</span>';
+          } else status.innerHTML = '<span style="color:#ef4444;">❌ Ключ не найден</span>';
         }
       });
 
-      document.addEventListener('keypress', function(e) {
-        if (e.target.id === 'activationKey' && e.key === 'Enter') {
-          e.preventDefault();
-          const key = e.target.value;
-          if (!key) {
-            document.getElementById('activationStatus').innerHTML = '<span style="color:#ef4444;">❌ Введите ключ</span>';
-            return;
-          }
-          activateKey(key);
-        }
-      });
+      // ВЫХОД
+      const logoutModal = document.getElementById('logoutConfirmModal');
+      const closeLogout = document.getElementById('closeLogoutModal');
+      const confirmLogout = document.getElementById('confirmLogoutBtn');
+      const cancelLogout = document.getElementById('cancelLogoutBtn');
+      const logoutBtnElem = document.getElementById('logoutBtn');
 
-      // ========== ЦЕНЫ ==========
+      logoutBtnElem?.addEventListener('click', () => logoutModal.classList.add('active'));
+      closeLogout.addEventListener('click', () => logoutModal.classList.remove('active'));
+      cancelLogout.addEventListener('click', () => logoutModal.classList.remove('active'));
+      confirmLogout.addEventListener('click', () => { clearSession(); logoutModal.classList.remove('active'); });
+
+      // ЦЕНЫ
       const paymentModal = document.getElementById('paymentModal');
       const closePayment = document.getElementById('closePaymentModal');
       const paymentTitle = document.getElementById('paymentTitle');
@@ -2096,16 +997,56 @@
       closePayment.addEventListener('click', () => paymentModal.classList.remove('active'));
       adminPayBtn.addEventListener('click', () => window.open('https://t.me/vergyTG', '_blank'));
 
-      [authModal, paymentModal, logoutModal].forEach(modal => {
-        modal.addEventListener('click', (e) => {
-          if (e.target === modal) modal.classList.remove('active');
+      // СОГЛАШЕНИЕ
+      const agreementModal = document.getElementById('agreementModal');
+      const agreementBtn = document.getElementById('agreementBtn');
+      const closeAgreement = document.getElementById('closeAgreementModal');
+      const closeAgreementBtn = document.getElementById('closeAgreementBtn');
+      
+      agreementBtn.addEventListener('click', () => agreementModal.classList.add('active'));
+      closeAgreement.addEventListener('click', () => agreementModal.classList.remove('active'));
+      closeAgreementBtn.addEventListener('click', () => agreementModal.classList.remove('active'));
+
+      // АДМИН ПАНЕЛЬ (только для Nevora)
+      async function loadAdminPanel() {
+        if (!currentUser || currentUser.username !== 'Nevora') return;
+        const adminContent = document.getElementById('adminContent');
+        adminContent.innerHTML = '<p style="text-align:center;">Загрузка...</p>';
+        const usersSnapshot = await database.ref('users').once('value');
+        const licensesSnapshot = await database.ref('licenses').once('value');
+        const users = usersSnapshot.val() || {};
+        const licenses = licensesSnapshot.val() || {};
+        
+        let html = `<div class="admin-panel-card"><h3 style="color:#7c3aed;">👥 Все пользователи (${Object.keys(users).length})</h3><div class="user-table">`;
+        for (const [username, userData] of Object.entries(users)) {
+          const userLicense = userData.license_id ? licenses[userData.license_id] : null;
+          const isExpired = userLicense ? (userLicense.expires_at && new Date(userLicense.expires_at) < new Date()) : false;
+          const licenseStatus = userLicense ? (isExpired ? '🔴 Истекла' : '🟢 Активна') : '⚫ Нет';
+          html += `<div class="admin-user-row"><div><strong>${username}</strong><br><small>${userData.created_at ? new Date(userData.created_at).toLocaleDateString() : '?'}</small></div><div>📜 ${licenseStatus}</div><div><button class="key-btn admin-view-license" data-username="${username}">🔍 Ключ</button><button class="key-btn admin-extend" data-username="${username}">➕ Продлить</button><button class="key-btn admin-remove" data-username="${username}">🗑️ Удалить</button><button class="key-btn admin-changepass" data-username="${username}">🔑 Сменить пароль</button></div></div>`;
+        }
+        html += `</div></div><div class="admin-panel-card"><h3>➕ Создать ключ</h3><select id="adminKeyType"><option value="012h">12 часов</option><option value="007d">7 дней</option><option value="030d">30 дней</option><option value="365d">1 год</option></select><input type="text" id="adminKeyCode" placeholder="Ключ (оставьте пустым для генерации)"><button class="btn-auth" id="adminCreateKeyBtn">Создать ключ</button><div id="adminKeyResult"></div></div>`;
+        adminContent.innerHTML = html;
+        
+        document.querySelectorAll('.admin-view-license').forEach(btn => btn.addEventListener('click', async (e) => { const u = btn.dataset.username; const user = users[u]; if (user?.license_id && licenses[user.license_id]) alert(`Ключ: ${licenses[user.license_id].code}`); else alert(`Нет ключа`); }));
+        document.querySelectorAll('.admin-extend').forEach(btn => btn.addEventListener('click', async (e) => { const u = btn.dataset.username; const days = prompt('На сколько дней продлить?', '30'); if (!days) return; const user = users[u]; if (user?.license_id && licenses[user.license_id]) { const license = licenses[user.license_id]; const newExpiry = new Date(license.expires_at || new Date()); newExpiry.setDate(newExpiry.getDate() + parseInt(days)); await updateLicense(user.license_id, { expires_at: newExpiry.toISOString() }); alert(`Продлено на ${days} дней`); loadAdminPanel(); } else alert(`Нет активного ключа`); }));
+        document.querySelectorAll('.admin-remove').forEach(btn => btn.addEventListener('click', async (e) => { const u = btn.dataset.username; if (confirm(`Удалить лицензию у ${u}?`)) { const user = users[u]; if (user?.license_id) { await deleteLicense(user.license_id); await database.ref('users/' + u + '/license_id').remove(); alert(`Лицензия удалена`); loadAdminPanel(); } } }));
+        document.querySelectorAll('.admin-changepass').forEach(btn => btn.addEventListener('click', async (e) => { const u = btn.dataset.username; const newPass = prompt(`Новый пароль для ${u}:`); if (newPass && newPass.length >= 3) { await database.ref('users/' + u + '/password').set(hashPassword(newPass)); alert(`Пароль изменен`); } else if (newPass) alert('Пароль минимум 3 символа'); }));
+        document.getElementById('adminCreateKeyBtn')?.addEventListener('click', async () => {
+          const type = document.getElementById('adminKeyType').value;
+          let code = document.getElementById('adminKeyCode').value.trim().toUpperCase();
+          if (!code) { const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789'; code = Array(4).fill().map(() => Array(4).fill().map(() => chars[Math.floor(Math.random() * chars.length)]).join('')).join('-'); }
+          await database.ref('licenses').push({ code, type, status: 'inactive', created_at: new Date().toISOString() });
+          document.getElementById('adminKeyResult').innerHTML = `<span style="color:#7c3aed;">✅ Ключ создан: ${code}</span>`;
+          setTimeout(() => loadAdminPanel(), 1000);
         });
-      });
-
-      document.querySelectorAll('.modal-card').forEach(card => {
-        card.addEventListener('click', (e) => e.stopPropagation());
-      });
-
+      }
+      
+      const adminMenuItemElem = document.getElementById('adminMenuItem');
+      const observer = new MutationObserver(() => { if (currentUser && currentUser.username === 'Nevora' && document.getElementById('admin').classList.contains('active')) loadAdminPanel(); });
+      observer.observe(document.getElementById('admin'), { attributes: true, attributeFilter: ['class'] });
+      
+      [authModal, paymentModal, logoutModal, agreementModal].forEach(modal => { modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); }); });
+      
       updateActivationSection();
       updateLauncherButton();
     })();
