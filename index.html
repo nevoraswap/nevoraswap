@@ -396,15 +396,26 @@
       position: absolute;
       top: 15px;
       right: 20px;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       cursor: pointer;
       color: #aaa;
       z-index: 10;
-      background: transparent;
-      border: none;
-      padding: 5px;
+      background: rgba(30, 30, 42, 0.6);
+      border: 1px solid #7c3aed;
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
     }
-    .close-modal:hover { color: #ef4444; transform: scale(1.1); }
+    .close-modal:hover { 
+      color: #ef4444; 
+      border-color: #ef4444;
+      transform: scale(1.05);
+      background: rgba(239, 68, 68, 0.15);
+    }
 
     .modal-tabs {
       display: flex;
@@ -772,7 +783,7 @@
 
   <div class="modal-overlay" id="changePasswordModal"><div class="modal-card"><button class="close-modal" id="closePasswordModal">✖</button><h2>Смена пароля</h2><div class="password-field"><input type="password" id="oldPassword" placeholder="Текущий пароль"><button class="password-toggle" onclick="togglePassword('oldPassword')">👁️</button></div><div class="password-field"><input type="password" id="newPassword" placeholder="Новый пароль"><button class="password-toggle" onclick="togglePassword('newPassword')">👁️</button></div><div class="password-field"><input type="password" id="confirmNewPassword" placeholder="Подтвердите пароль"><button class="password-toggle" onclick="togglePassword('confirmNewPassword')">👁️</button></div><div id="passwordError" class="error-text"></div><button id="confirmPasswordBtn">Сменить пароль</button></div></div>
 
-  <div class="modal-overlay" id="paymentModal"><div class="modal-card"><button class="close-modal" id="closePaymentModal">------✖</button><h2 id="paymentTitle">12 часов</h2><p id="paymentPrice" style="font-size:2rem; text-align:center;">24 ₽</p><div class="payment-actions"><a href="#" id="funpayLink" target="_blank" class="payment-btn">FunPay</a><button class="payment-btn" id="adminPayBtn">Admin</button></div></div></div>
+  <div class="modal-overlay" id="paymentModal"><div class="modal-card"><button class="close-modal" id="closePaymentModal">✖</button><h2 id="paymentTitle">12 часов</h2><p id="paymentPrice" style="font-size:2rem; text-align:center;">24 ₽</p><div class="payment-actions"><a href="#" id="funpayLink" target="_blank" class="payment-btn">FunPay</a><button class="payment-btn" id="adminPayBtn">Admin</button></div></div></div>
 
   <div class="modal-overlay" id="logoutConfirmModal"><div class="modal-card"><button class="close-modal" id="closeLogoutModal">✖</button><h2>Выход из аккаунта</h2><p style="text-align:center; color:#aaa; margin:1rem 0;">Вы уверены, что хотите выйти?</p><div class="modal-buttons"><button id="confirmLogoutBtn" class="confirm-btn">Выйти</button><button id="cancelLogoutBtn" class="cancel-btn">Отмена</button></div></div></div>
 
@@ -930,6 +941,14 @@
       let currentLicense = null;
       let isKeyVisible = false;
       let currentCaptcha = '';
+      
+      // Функция для проверки активной лицензии
+      function hasActiveLicense() {
+        return currentLicense && 
+               currentLicense.status === 'active' && 
+               currentLicense.expires_at && 
+               !isExpired(currentLicense);
+      }
       
       function generateCaptcha() {
         const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
@@ -1122,7 +1141,7 @@
             avatar.classList.add('profile-avatar-admin');
             avatar.classList.remove('profile-avatar-active', 'profile-avatar-expired');
             adminBadgeElem.style.display = 'inline-block';
-          } else if (currentLicense && !isExpired(currentLicense)) {
+          } else if (hasActiveLicense()) {
             avatar.classList.add('profile-avatar-active');
             avatar.classList.remove('profile-avatar-expired', 'profile-avatar-admin');
             adminBadgeElem.style.display = 'none';
@@ -1176,7 +1195,7 @@
         const timerText = document.getElementById('timerText');
         const remainingDisplay = document.getElementById('remainingTimeDisplay');
         
-        if (currentLicense && !isExpired(currentLicense)) {
+        if (hasActiveLicense()) {
           const remaining = getRemainingTime(currentLicense);
           const total = getTotalMinutes(currentLicense.type);
           const elapsed = total - remaining.totalMinutes;
@@ -1193,6 +1212,8 @@
           timerText.innerText = '0%';
           remainingDisplay.innerText = '⏱️ Лицензия не активна';
         }
+        // Обновляем кнопку скачивания после изменения лицензии
+        updateLauncherButton();
       }
       
       function updateActivationSection() {
@@ -1202,8 +1223,9 @@
           card.innerHTML = `<div style="text-align:center;"><div style="font-size:2.5rem;">🔐</div><h3>Требуется авторизация</h3><button class="btn-auth" onclick="document.getElementById('showAuthModalBtn').click()">Войти</button></div>`;
           return;
         }
-        if (currentLicense && !isExpired(currentLicense)) {
-          card.innerHTML = `<div style="text-align:center;"><div style="font-size:2rem;">✅</div><h3>У вас уже есть активная лицензия</h3><button class="btn-auth" onclick="document.querySelector('.menu-item[data-section=\'profile\']').click()">Перейти в профиль</button></div>`;
+        // Если есть активная лицензия - показываем сообщение и кнопку перехода в профиль
+        if (hasActiveLicense()) {
+          card.innerHTML = `<div style="text-align:center;"><div style="font-size:2rem;">✅</div><h3>У вас уже есть активная лицензия</h3><p style="color:#aaa; margin:0.5rem 0;">Новый ключ можно активировать только после истечения текущего</p><button class="btn-auth" onclick="document.querySelector('.menu-item[data-section=\'profile\']').click()">Перейти в профиль</button></div>`;
         } else {
           card.innerHTML = `<div style="text-align:center;"><div style="font-size:2.5rem;">🔑</div><h3>Введите лицензионный ключ</h3></div><input type="text" id="activationKey" placeholder="XXXXXX-XXXXXX-XXXXXX-XXXXXX" style="width:100%; padding:0.9rem; background:#1e1e2a; border:2px solid #7c3aed; border-radius:50px; color:white; text-align:center; text-transform:uppercase;"><div style="display:flex; gap:0.8rem; margin-top:1.5rem;"><button class="payment-btn" id="activateBtn">Активировать</button><button class="payment-btn" id="checkKeyBtn">Проверить</button></div><div id="activationStatus" style="margin-top:1.2rem; text-align:center;"></div>`;
         }
@@ -1212,18 +1234,27 @@
       function updateLauncherButton() {
         const btn = document.getElementById('launcherMainBtn');
         const status = document.getElementById('launcherStatus');
-        const hasActive = currentLicense && !isExpired(currentLicense);
+        const active = hasActiveLicense();
+        
         if (btn) {
-          if (hasActive) {
+          if (active) {
             btn.disabled = false;
             btn.style.opacity = '1';
             btn.style.pointerEvents = 'auto';
-            status.innerText = '✅ Доступно для скачивания';
+            btn.style.cursor = 'pointer';
+            if (status) {
+              status.innerText = '✅ Доступно для скачивания';
+              status.style.color = '#22c55e';
+            }
           } else {
             btn.disabled = true;
             btn.style.opacity = '0.4';
             btn.style.pointerEvents = 'none';
-            status.innerText = '❌ Требуется активная лицензия';
+            btn.style.cursor = 'not-allowed';
+            if (status) {
+              status.innerText = '❌ Требуется активная лицензия';
+              status.style.color = '#ef4444';
+            }
           }
         }
       }
@@ -1349,7 +1380,7 @@
       document.getElementById('cancelLogoutBtn').addEventListener('click', () => document.getElementById('logoutConfirmModal').classList.remove('active'));
       document.getElementById('closeLogoutModal').addEventListener('click', () => document.getElementById('logoutConfirmModal').classList.remove('active'));
       
-      // АКТИВАЦИЯ КЛЮЧА
+      // АКТИВАЦИЯ КЛЮЧА (с проверкой на уже активную лицензию)
       document.addEventListener('click', async (e) => {
         if (e.target.id === 'activateBtn') {
           const key = document.getElementById('activationKey')?.value;
@@ -1357,7 +1388,8 @@
           if (!key) { statusDiv.innerHTML = '<span style="color:#ef4444;">Введите ключ</span>'; return; }
           if (!currentUser) { statusDiv.innerHTML = '<span style="color:#ef4444;">Сначала войдите</span>'; return; }
           
-          if (currentLicense && !isExpired(currentLicense)) {
+          // Проверка на уже активную лицензию
+          if (hasActiveLicense()) {
             statusDiv.innerHTML = '<span style="color:#ffa500;">У вас уже есть активная лицензия! Нельзя активировать новый ключ.</span>';
             return;
           }
@@ -1385,7 +1417,10 @@
           await database.ref('users/' + currentUser.username + '/license_id').set(license.id);
           statusDiv.innerHTML = `<span style="color:#7c3aed;">✅ Активировано до ${expires.toLocaleDateString()}</span>`;
           showToast('✅ Лицензия успешно активирована!', 'success');
-          setTimeout(() => updateProfileUI(), 1000);
+          setTimeout(() => {
+            updateProfileUI();
+            updateLauncherButton();
+          }, 500);
         }
         if (e.target.id === 'checkKeyBtn') {
           const key = document.getElementById('activationKey')?.value;
@@ -1596,6 +1631,7 @@
         setInterval(() => {
           if (currentUser && currentLicense) {
             updateProfileUI();
+            updateLauncherButton();
           }
         }, 60000);
       })();
