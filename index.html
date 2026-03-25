@@ -44,24 +44,34 @@
       #canvas-bg { opacity: 0.5; }
     }
 
-    /* Общие стили для кнопок с эффектом свечения */
+    /* Общие стили для ВСЕХ кнопок с эффектом свечения */
     .menu-toggle, .menu-item, .btn-auth, .btn-outline, .price-card, .key-btn, 
     .support-btn, .payment-btn, .modal-tab, .close-modal, .logout-btn, #activateBtn, 
     #checkKeyBtn, #loginBtn, #registerBtn, #profileLoginBtn, #activateNewKeyBtn, 
     #launcherMainBtn:not(:disabled), .password-toggle, .agreement-clickable,
-    .review-btn, .change-password-btn, .stat-card, .captcha-refresh {
+    .review-btn, .change-password-btn, .stat-card, .captcha-refresh,
+    #confirmPasswordBtn, #closeAgreementBtn, #closeAgreementModal, #closeAuthModal,
+    #closePasswordModal, #closePaymentModal, #closeLogoutModal, #adminCreateKeyBtn,
+    #adminSearchKeyBtn, .admin-view-key, .admin-extend, .admin-reduce, .admin-remove,
+    .confirm-btn, .cancel-btn {
       position: relative;
       transition: all 0.2s ease;
       z-index: 1;
     }
 
+    /* Общий псевдоэлемент для свечения */
     .menu-toggle::before, .menu-item::before, .btn-auth::before, .btn-outline::before,
     .price-card::before, .key-btn::before, .support-btn::before, .payment-btn::before,
     .modal-tab::before, .close-modal::before, .logout-btn::before, #activateBtn::before,
     #checkKeyBtn::before, #loginBtn::before, #registerBtn::before, #profileLoginBtn::before,
     #activateNewKeyBtn::before, #launcherMainBtn:not(:disabled)::before,
     .password-toggle::before, .agreement-clickable::before, .review-btn::before,
-    .change-password-btn::before, .stat-card::before, .captcha-refresh::before {
+    .change-password-btn::before, .stat-card::before, .captcha-refresh::before,
+    #confirmPasswordBtn::before, #closeAgreementBtn::before, #closeAgreementModal::before,
+    #closeAuthModal::before, #closePasswordModal::before, #closePaymentModal::before,
+    #closeLogoutModal::before, #adminCreateKeyBtn::before, #adminSearchKeyBtn::before,
+    .admin-view-key::before, .admin-extend::before, .admin-reduce::before, .admin-remove::before,
+    .confirm-btn::before, .cancel-btn::before {
       content: '';
       position: absolute;
       top: -2px;
@@ -84,6 +94,7 @@
       100% { background-position: 0% 50%; }
     }
 
+    /* Ховер эффект для всех элементов */
     .menu-toggle:hover::before, .menu-item:hover::before, .btn-auth:hover::before,
     .btn-outline:hover:not(:disabled)::before, .price-card:hover::before,
     .key-btn:hover::before, .support-btn:hover::before, .payment-btn:hover::before,
@@ -92,7 +103,14 @@
     #registerBtn:hover::before, #profileLoginBtn:hover::before, #activateNewKeyBtn:hover::before,
     #launcherMainBtn:not(:disabled):hover::before, .password-toggle:hover::before,
     .agreement-clickable:hover::before, .review-btn:hover::before,
-    .change-password-btn:hover::before, .stat-card:hover::before, .captcha-refresh:hover::before {
+    .change-password-btn:hover::before, .stat-card:hover::before, .captcha-refresh:hover::before,
+    #confirmPasswordBtn:hover::before, #closeAgreementBtn:hover::before,
+    #closeAgreementModal:hover::before, #closeAuthModal:hover::before,
+    #closePasswordModal:hover::before, #closePaymentModal:hover::before,
+    #closeLogoutModal:hover::before, #adminCreateKeyBtn:hover::before,
+    #adminSearchKeyBtn:hover::before, .admin-view-key:hover::before,
+    .admin-extend:hover::before, .admin-reduce:hover::before, .admin-remove:hover::before,
+    .confirm-btn:hover::before, .cancel-btn:hover::before {
       opacity: 1;
     }
 
@@ -112,7 +130,9 @@
 
     .btn-auth, .btn-outline, .payment-btn, .support-btn, .key-btn, #activateBtn,
     #checkKeyBtn, #loginBtn, #registerBtn, #profileLoginBtn, #activateNewKeyBtn,
-    #launcherMainBtn, .logout-btn, .review-btn, .change-password-btn, .captcha-refresh {
+    #launcherMainBtn, .logout-btn, .review-btn, .change-password-btn, .captcha-refresh,
+    #confirmPasswordBtn, #closeAgreementBtn, #adminCreateKeyBtn, #adminSearchKeyBtn,
+    .admin-view-key, .admin-extend, .admin-reduce, .admin-remove, .confirm-btn, .cancel-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -132,7 +152,8 @@
     }
 
     #loginBtn, #registerBtn, #profileLoginBtn, #activateNewKeyBtn, #launcherMainBtn,
-    .btn-auth, .btn-outline, .review-btn, .change-password-btn {
+    .btn-auth, .btn-outline, .review-btn, .change-password-btn, #confirmPasswordBtn,
+    #closeAgreementBtn, #adminCreateKeyBtn {
       background: transparent !important;
       border: 2px solid #7c3aed !important;
       color: white !important;
@@ -140,6 +161,12 @@
       border-radius: 40px !important;
       font-size: 1rem !important;
       min-height: 44px;
+    }
+
+    .admin-view-key, .admin-extend, .admin-reduce, .admin-remove {
+      padding: 0.3rem 0.8rem !important;
+      font-size: 0.75rem !important;
+      min-height: 32px;
     }
 
     .menu-toggle {
@@ -215,7 +242,11 @@
       width: 100%;
       max-width: 1400px;
       margin: 0 auto;
-      padding: 1rem 1rem 1rem 70px;
+      padding: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .main-content { padding: 1rem; }
     }
 
     .top-bar {
@@ -306,7 +337,7 @@
     }
     .profile-avatar-active { border-color: #22c55e; background: #22c55e20; }
     .profile-avatar-expired { border-color: #ef4444; background: #ef444420; }
-    .profile-login { font-size: 1.3rem; font-weight: 600; color: white; }
+    .profile-login { font-size: 1.3rem; font-weight: 600; color: white; word-break: break-all; }
     .profile-badge { display: inline-block; padding: 0.2rem 0.8rem; border-radius: 30px; background: #7c3aed20; border: 1px solid #7c3aed; color: #b39ddb; font-size: 0.8rem; }
     .owner-badge { background: #eab30820; border-color: #eab308; color: #eab308; }
 
@@ -318,7 +349,7 @@
       border: 1px solid #7c3aed;
     }
 
-    .license-type { font-size: 1.5rem; font-weight: 700; color: #7c3aed; margin-bottom: 0.5rem; }
+    .license-type { font-size: 1.5rem; font-weight: 700; color: #7c3aed; margin-bottom: 0.5rem; word-break: break-word; }
     .license-key { font-family: 'Courier New', monospace; background: #0a0a0f; padding: 0.8rem 1rem; border-radius: 16px; border: 1px solid #2a2a3a; color: #b39ddb; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
     .license-key-blur { filter: blur(4px); user-select: none; }
     .key-btn { background: transparent; border-radius: 30px; padding: 0.3rem 0.8rem; font-size: 0.75rem; min-height: 36px; border: 2px solid #7c3aed; }
@@ -369,8 +400,11 @@
       cursor: pointer;
       color: #aaa;
       z-index: 10;
+      background: transparent;
+      border: none;
+      padding: 5px;
     }
-    .close-modal:hover { color: #ef4444; }
+    .close-modal:hover { color: #ef4444; transform: scale(1.1); }
 
     .modal-tabs {
       display: flex;
@@ -408,21 +442,30 @@
 
     .password-field { position: relative; width: 100%; margin: 0.8rem 0; }
     .password-field input { width: 100%; padding: 1rem 3rem 1rem 1.2rem !important; margin: 0 !important; }
-    .password-toggle { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #7c3aed; cursor: pointer; font-size: 1.2rem; padding: 8px; border-radius: 50%; }
+    .password-toggle { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #7c3aed; cursor: pointer; font-size: 1.2rem; padding: 8px; border-radius: 50%; background: transparent; border: none; }
 
     .payment-actions { display: flex; gap: 0.8rem; margin-top: 1.5rem; flex-wrap: wrap; justify-content: center; }
     .payment-btn { flex: 1 1 120px; text-align: center; padding: 0.8rem 1rem; border-radius: 40px; background: transparent; font-size: 1rem; font-weight: 600; min-height: 50px; border: 2px solid #7c3aed; }
 
-    footer { margin-top: 3rem; padding: 1.5rem; background: rgba(10,10,15,0.7); backdrop-filter: blur(4px); border-radius: 30px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    footer { 
+      margin-top: 3rem; 
+      padding: 1.5rem; 
+      background: rgba(10,10,15,0.7); 
+      backdrop-filter: blur(4px); 
+      border-radius: 30px; 
+      display: flex; 
+      justify-content: space-between; 
+      flex-wrap: wrap; 
+      gap: 1rem; 
+    }
 
     .agreement-box {
       max-width: 1400px;
       margin: 1.5rem auto;
-      margin-left: 70px;
       padding: 1.2rem;
       background: #0c0c14;
       border-radius: 30px;
-      width: calc(100% - 85px);
+      text-align: center;
     }
 
     .error-text { color: #ef4444; font-size: 0.85rem; margin-top: 0.3rem; text-align: center; }
@@ -453,8 +496,9 @@
       text-align: center;
       border: 1px solid #2a2a3a;
       cursor: default;
+      transition: all 0.2s ease;
     }
-    .stat-card::before { display: none; }
+    .stat-card:hover { transform: translateY(-2px); border-color: #7c3aed; }
     .stat-value { font-size: 2rem; font-weight: bold; color: #7c3aed; }
     .stat-label { font-size: 0.8rem; color: #888; margin-top: 0.3rem; }
     
@@ -475,7 +519,7 @@
     .review-stars { color: #eab308; margin: 0.3rem 0; }
     .review-text { color: #aaa; font-size: 0.9rem; }
     .star-rating { display: flex; gap: 5px; justify-content: center; margin: 0.5rem 0; }
-    .star { cursor: pointer; font-size: 1.5rem; color: #444; transition: 0.2s; }
+    .star { cursor: pointer; font-size: 1.5rem; color: #444; transition: 0.2s; background: transparent; border: none; }
     .star.active { color: #eab308; }
     .star:hover { color: #eab308; transform: scale(1.1); }
     
@@ -634,7 +678,7 @@
           </div>
           <div style="margin-top:1rem; text-align:center; display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
             <button class="btn-outline" id="activateNewKeyBtn">➕ Активировать новый ключ</button>
-            <button class="btn-outline" id="changePasswordBtn">🔑 Сменить пароль</button>
+            <button class="change-password-btn" id="changePasswordBtn">🔑 Сменить пароль</button>
           </div>
           <button class="logout-btn" id="logoutBtn">Выйти из аккаунта</button>
         </div>
@@ -699,11 +743,11 @@
         <div id="addReviewSection" style="margin-top: 1rem;">
           <h4>Оставить отзыв</h4>
           <div class="star-rating" id="starRating">
-            <span class="star" data-rating="1">★</span>
-            <span class="star" data-rating="2">★</span>
-            <span class="star" data-rating="3">★</span>
-            <span class="star" data-rating="4">★</span>
-            <span class="star" data-rating="5">★</span>
+            <button class="star" data-rating="1">★</button>
+            <button class="star" data-rating="2">★</button>
+            <button class="star" data-rating="3">★</button>
+            <button class="star" data-rating="4">★</button>
+            <button class="star" data-rating="5">★</button>
           </div>
           <textarea id="reviewText" placeholder="Ваш отзыв..." style="width:100%; padding:0.8rem; background:#1e1e2a; border:1px solid #2a2a3a; border-radius:16px; color:white; margin:0.5rem 0; resize:vertical;" rows="3"></textarea>
           <button id="submitReviewBtn" class="review-btn">Отправить отзыв</button>
@@ -719,18 +763,18 @@
     <footer><div>NEVORA SWAP</div><div>© 2026</div></footer>
   </div>
 
-  <div class="agreement-box"><h3 class="agreement-clickable" style="color:#b39ddb; cursor:pointer;" id="agreementBtn">📜 Пользовательское соглашение</h3></div>
+  <div class="agreement-box"><button class="agreement-clickable" id="agreementBtn" style="background:transparent; border:none; cursor:pointer; color:#b39ddb; font-size:1.1rem;">📜 Пользовательское соглашение</button></div>
 
   <!-- Модалки -->
-  <div class="modal-overlay" id="agreementModal"><div class="modal-card"><div class="close-modal" id="closeAgreementModal">✖</div><h2>📜 Пользовательское соглашение</h2><div style="color:#aaa;"><p><strong>1. Общие положения</strong><br>Используя NEVORA SWAP, вы соглашаетесь с условиями.</p><p><strong>2. Запрещенные действия</strong><br>❌ Запрещена передача лицензии<br>❌ Запрещено взламывать программу</p><p><strong>3. Ответственность</strong><br>Администрация вправе заблокировать подписку без возврата средств.</p></div><button class="btn-auth" id="closeAgreementBtn">Закрыть</button></div></div>
+  <div class="modal-overlay" id="agreementModal"><div class="modal-card"><button class="close-modal" id="closeAgreementModal">✖</button><h2>📜 Пользовательское соглашение</h2><div style="color:#aaa;"><p><strong>1. Общие положения</strong><br>Используя NEVORA SWAP, вы соглашаетесь с условиями.</p><p><strong>2. Запрещенные действия</strong><br>❌ Запрещена передача лицензии<br>❌ Запрещено взламывать программу</p><p><strong>3. Ответственность</strong><br>Администрация вправе заблокировать подписку без возврата средств.</p></div><button class="btn-auth" id="closeAgreementBtn">Закрыть</button></div></div>
 
-  <div class="modal-overlay" id="authModal"><div class="modal-card"><div class="close-modal" id="closeAuthModal">✖</div><div class="modal-tabs"><button class="modal-tab active" id="loginTab">Вход</button><button class="modal-tab" id="registerTab">Регистрация</button></div><div id="authForms"><div id="loginForm"><input type="text" placeholder="Логин" id="loginUsername"><div class="password-field"><input type="password" placeholder="Пароль" id="loginPassword"><span class="password-toggle" onclick="togglePassword('loginPassword')">👁️</span></div><div id="loginError" class="error-text"></div><button id="loginBtn">Войти</button></div><div id="registerForm" style="display:none;"><input type="text" placeholder="Логин (3-15 символов)" id="regUsername"><div class="password-field"><input type="password" placeholder="Пароль" id="regPassword"><span class="password-toggle" onclick="togglePassword('regPassword')">👁️</span></div><div class="password-field"><input type="password" placeholder="Повторите пароль" id="regPasswordConfirm"><span class="password-toggle" onclick="togglePassword('regPasswordConfirm')">👁️</span></div><div id="registerError" class="error-text"></div><div id="captchaContainer" class="captcha-container"></div><button id="registerBtn">Зарегистрироваться</button></div></div></div></div>
+  <div class="modal-overlay" id="authModal"><div class="modal-card"><button class="close-modal" id="closeAuthModal">✖</button><div class="modal-tabs"><button class="modal-tab active" id="loginTab">Вход</button><button class="modal-tab" id="registerTab">Регистрация</button></div><div id="authForms"><div id="loginForm"><input type="text" placeholder="Логин" id="loginUsername"><div class="password-field"><input type="password" placeholder="Пароль" id="loginPassword"><button class="password-toggle" onclick="togglePassword('loginPassword')">👁️</button></div><div id="loginError" class="error-text"></div><button id="loginBtn">Войти</button></div><div id="registerForm" style="display:none;"><input type="text" placeholder="Логин (3-15 символов)" id="regUsername"><div class="password-field"><input type="password" placeholder="Пароль" id="regPassword"><button class="password-toggle" onclick="togglePassword('regPassword')">👁️</button></div><div class="password-field"><input type="password" placeholder="Повторите пароль" id="regPasswordConfirm"><button class="password-toggle" onclick="togglePassword('regPasswordConfirm')">👁️</button></div><div id="registerError" class="error-text"></div><div id="captchaContainer" class="captcha-container"></div><button id="registerBtn">Зарегистрироваться</button></div></div></div></div>
 
-  <div class="modal-overlay" id="changePasswordModal"><div class="modal-card"><div class="close-modal" id="closePasswordModal">✖</div><h2>Смена пароля</h2><div class="password-field"><input type="password" id="oldPassword" placeholder="Текущий пароль"><span class="password-toggle" onclick="togglePassword('oldPassword')">👁️</span></div><div class="password-field"><input type="password" id="newPassword" placeholder="Новый пароль"><span class="password-toggle" onclick="togglePassword('newPassword')">👁️</span></div><div class="password-field"><input type="password" id="confirmNewPassword" placeholder="Подтвердите пароль"><span class="password-toggle" onclick="togglePassword('confirmNewPassword')">👁️</span></div><div id="passwordError" class="error-text"></div><button id="confirmPasswordBtn">Сменить пароль</button></div></div>
+  <div class="modal-overlay" id="changePasswordModal"><div class="modal-card"><button class="close-modal" id="closePasswordModal">✖</button><h2>Смена пароля</h2><div class="password-field"><input type="password" id="oldPassword" placeholder="Текущий пароль"><button class="password-toggle" onclick="togglePassword('oldPassword')">👁️</button></div><div class="password-field"><input type="password" id="newPassword" placeholder="Новый пароль"><button class="password-toggle" onclick="togglePassword('newPassword')">👁️</button></div><div class="password-field"><input type="password" id="confirmNewPassword" placeholder="Подтвердите пароль"><button class="password-toggle" onclick="togglePassword('confirmNewPassword')">👁️</button></div><div id="passwordError" class="error-text"></div><button id="confirmPasswordBtn">Сменить пароль</button></div></div>
 
-  <div class="modal-overlay" id="paymentModal"><div class="modal-card"><div class="close-modal" id="closePaymentModal">✖</div><h2 id="paymentTitle">12 часов</h2><p id="paymentPrice" style="font-size:2rem; text-align:center;">24 ₽</p><div class="payment-actions"><a href="#" id="funpayLink" target="_blank" class="payment-btn">FunPay</a><button class="payment-btn" id="adminPayBtn">Admin</button></div></div></div>
+  <div class="modal-overlay" id="paymentModal"><div class="modal-card"><button class="close-modal" id="closePaymentModal">------✖</button><h2 id="paymentTitle">12 часов</h2><p id="paymentPrice" style="font-size:2rem; text-align:center;">24 ₽</p><div class="payment-actions"><a href="#" id="funpayLink" target="_blank" class="payment-btn">FunPay</a><button class="payment-btn" id="adminPayBtn">Admin</button></div></div></div>
 
-  <div class="modal-overlay" id="logoutConfirmModal"><div class="modal-card"><div class="close-modal" id="closeLogoutModal">✖</div><h2>Выход из аккаунта</h2><p style="text-align:center; color:#aaa; margin:1rem 0;">Вы уверены, что хотите выйти?</p><div class="modal-buttons"><button id="confirmLogoutBtn" class="confirm-btn">Выйти</button><button id="cancelLogoutBtn" class="cancel-btn">Отмена</button></div></div></div>
+  <div class="modal-overlay" id="logoutConfirmModal"><div class="modal-card"><button class="close-modal" id="closeLogoutModal">✖</button><h2>Выход из аккаунта</h2><p style="text-align:center; color:#aaa; margin:1rem 0;">Вы уверены, что хотите выйти?</p><div class="modal-buttons"><button id="confirmLogoutBtn" class="confirm-btn">Выйти</button><button id="cancelLogoutBtn" class="cancel-btn">Отмена</button></div></div></div>
 
   <script>
     window.togglePassword = function(id) {
@@ -775,7 +819,6 @@
       firebase.initializeApp(firebaseConfig);
       const database = firebase.database();
       
-      // Уведомления
       function showToast(message, type = 'info') {
         const toast = document.createElement('div');
         toast.className = `toast-notification toast-${type}`;
@@ -883,7 +926,6 @@
         });
       });
       
-      // Глобальные переменные
       let currentUser = null;
       let currentLicense = null;
       let isKeyVisible = false;
@@ -1040,15 +1082,21 @@
           for (const [id, review] of Object.entries(reviews).reverse()) {
             html += `
               <div class="review-item">
-                <div class="review-author">${review.author}</div>
+                <div class="review-author">${escapeHtml(review.author)}</div>
                 <div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div>
-                <div class="review-text">${review.text}</div>
+                <div class="review-text">${escapeHtml(review.text)}</div>
                 <div style="font-size:0.7rem; color:#666;">${new Date(review.date).toLocaleDateString()}</div>
               </div>
             `;
           }
           container.innerHTML = html || '<p style="text-align:center; color:#888;">Пока нет отзывов. Будьте первым!</p>';
         } catch(e) { console.error(e); }
+      }
+      
+      function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
       }
       
       function updateUI() {
@@ -1064,13 +1112,12 @@
         if (currentUser) {
           authBtns.style.display = 'none';
           userGreeting.style.display = 'block';
-          userGreeting.innerText = `Привет, ${currentUser.username}`;
+          userGreeting.innerHTML = `Привет, ${escapeHtml(currentUser.username)}`;
           userGreeting.onclick = () => document.querySelector('.menu-item[data-section="profile"]').click();
           profileNotLogged.style.display = 'none';
           profileLogged.style.display = 'block';
-          document.getElementById('profileLoginDisplay').innerText = currentUser.username;
+          document.getElementById('profileLoginDisplay').innerHTML = escapeHtml(currentUser.username);
           
-          // Обновляем аватар в зависимости от статуса
           if (currentUser.is_admin) {
             avatar.classList.add('profile-avatar-admin');
             avatar.classList.remove('profile-avatar-active', 'profile-avatar-expired');
@@ -1088,7 +1135,6 @@
             adminBadgeElem.style.display = 'none';
           }
           
-          // OWNER бейдж
           if (currentUser.username === 'Nevora') {
             ownerBadge.style.display = 'inline-block';
           } else {
@@ -1274,7 +1320,7 @@
         document.getElementById('loginUsername').value = '';
         document.getElementById('loginPassword').value = '';
         errorDiv.textContent = '';
-        showToast(`✅ Добро пожаловать, ${username}!`, 'success');
+        showToast(`✅ Добро пожаловать, ${escapeHtml(username)}!`, 'success');
       });
       
       document.getElementById('confirmPasswordBtn').addEventListener('click', async () => {
@@ -1303,7 +1349,7 @@
       document.getElementById('cancelLogoutBtn').addEventListener('click', () => document.getElementById('logoutConfirmModal').classList.remove('active'));
       document.getElementById('closeLogoutModal').addEventListener('click', () => document.getElementById('logoutConfirmModal').classList.remove('active'));
       
-      // АКТИВАЦИЯ КЛЮЧА (с проверкой на уже активную лицензию)
+      // АКТИВАЦИЯ КЛЮЧА
       document.addEventListener('click', async (e) => {
         if (e.target.id === 'activateBtn') {
           const key = document.getElementById('activationKey')?.value;
@@ -1311,7 +1357,6 @@
           if (!key) { statusDiv.innerHTML = '<span style="color:#ef4444;">Введите ключ</span>'; return; }
           if (!currentUser) { statusDiv.innerHTML = '<span style="color:#ef4444;">Сначала войдите</span>'; return; }
           
-          // Проверка на уже активную лицензию
           if (currentLicense && !isExpired(currentLicense)) {
             statusDiv.innerHTML = '<span style="color:#ffa500;">У вас уже есть активная лицензия! Нельзя активировать новый ключ.</span>';
             return;
@@ -1446,11 +1491,11 @@
           for (const [username, user] of Object.entries(users)) {
             const userLicense = user.license_id ? licenses[user.license_id] : null;
             const licenseStatus = userLicense ? (new Date(userLicense.expires_at) < new Date() ? '🔴 Истекла' : '🟢 Активна') : '⚫ Нет';
-            html += `<div class="admin-user-row"><div><strong>${username}</strong></div><div>📜 ${licenseStatus}</div>
-              <div><button class="key-btn admin-view-key" data-username="${username}">🔍 Ключ</button>
-              <button class="key-btn admin-extend" data-username="${username}">➕ Продлить</button>
-              <button class="key-btn admin-reduce" data-username="${username}">➖ Убавить</button>
-              <button class="key-btn admin-remove" data-username="${username}">🗑️ Удалить</button></div></div>`;
+            html += `<div class="admin-user-row"><div><strong>${escapeHtml(username)}</strong></div><div>📜 ${licenseStatus}</div>
+              <div><button class="admin-view-key" data-username="${username}">🔍 Ключ</button>
+              <button class="admin-extend" data-username="${username}">➕ Продлить</button>
+              <button class="admin-reduce" data-username="${username}">➖ Убавить</button>
+              <button class="admin-remove" data-username="${username}">🗑️ Удалить</button></div></div>`;
           }
           html += `</div></div><div class="admin-panel-card"><h3>➕ СОЗДАТЬ КЛЮЧ</h3><select id="adminKeyType"><option value="012h">12ч</option><option value="007d">7д</option><option value="030d">30д</option><option value="365d">1г</option></select>
             <input type="text" id="adminKeyCode" placeholder="Ключ (оставьте пустым)"><button class="btn-auth" id="adminCreateKeyBtn">Создать</button><div id="adminKeyResult"></div></div>`;
@@ -1548,7 +1593,6 @@
         loadStats();
         loadReviews();
         
-        // Обновление таймера каждую минуту
         setInterval(() => {
           if (currentUser && currentLicense) {
             updateProfileUI();
