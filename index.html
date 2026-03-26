@@ -53,7 +53,7 @@
     #confirmPasswordBtn, #closeAgreementBtn, #closeAgreementModal, #closeAuthModal,
     #closePasswordModal, #closePaymentModal, #closeLogoutModal, #adminCreateKeyBtn,
     #adminSearchKeyBtn, .admin-view-key, .admin-extend, .admin-reduce, .admin-remove,
-    .confirm-btn, .cancel-btn {
+    .confirm-btn, .cancel-btn, .user-greeting {
       position: relative;
       transition: all 0.2s ease;
       z-index: 1;
@@ -71,7 +71,7 @@
     #closeAuthModal::before, #closePasswordModal::before, #closePaymentModal::before,
     #closeLogoutModal::before, #adminCreateKeyBtn::before, #adminSearchKeyBtn::before,
     .admin-view-key::before, .admin-extend::before, .admin-reduce::before, .admin-remove::before,
-    .confirm-btn::before, .cancel-btn::before {
+    .confirm-btn::before, .cancel-btn::before, .user-greeting::before {
       content: '';
       position: absolute;
       top: -2px;
@@ -110,7 +110,7 @@
     #closeLogoutModal:hover::before, #adminCreateKeyBtn:hover::before,
     #adminSearchKeyBtn:hover::before, .admin-view-key:hover::before,
     .admin-extend:hover::before, .admin-reduce:hover::before, .admin-remove:hover::before,
-    .confirm-btn:hover::before, .cancel-btn:hover::before {
+    .confirm-btn:hover::before, .cancel-btn:hover::before, .user-greeting:hover::before {
       opacity: 1;
     }
 
@@ -392,6 +392,7 @@
       position: relative;
     }
 
+    /* Крестик в правом верхнем углу */
     .close-modal {
       position: absolute;
       top: 15px;
@@ -400,21 +401,20 @@
       cursor: pointer;
       color: #aaa;
       z-index: 10;
-      background: rgba(30, 30, 42, 0.6);
-      border: 1px solid #7c3aed;
-      border-radius: 50%;
+      background: transparent;
+      border: none;
       width: 34px;
       height: 34px;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.2s ease;
+      border-radius: 50%;
     }
     .close-modal:hover { 
       color: #ef4444; 
-      border-color: #ef4444;
-      transform: scale(1.05);
-      background: rgba(239, 68, 68, 0.15);
+      transform: scale(1.1);
+      background: rgba(239, 68, 68, 0.1);
     }
 
     .modal-tabs {
@@ -628,6 +628,68 @@
       background: #7c3aed20;
       transform: translateY(-2px);
     }
+
+    /* Стили для админ панели */
+    .admin-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .admin-stat-card {
+      background: #0a0a0f;
+      border-radius: 16px;
+      padding: 1rem;
+      text-align: center;
+      border: 1px solid #2a2a3a;
+    }
+    .admin-stat-value {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #7c3aed;
+    }
+    .admin-stat-label {
+      font-size: 0.7rem;
+      color: #888;
+    }
+    .admin-create-key {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+    .admin-create-key select, .admin-create-key input {
+      flex: 1;
+      padding: 0.8rem;
+      background: #1e1e2a;
+      border: 1px solid #7c3aed;
+      border-radius: 40px;
+      color: white;
+      font-size: 0.9rem;
+    }
+    .admin-create-key button {
+      padding: 0.8rem 1.5rem;
+    }
+    .search-result-card {
+      background: #0a0a0f;
+      border-radius: 16px;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-left: 3px solid #7c3aed;
+    }
+    .rank-badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      margin-left: 0.5rem;
+    }
+    .rank-owner { background: #eab308; color: #1a1a2a; }
+    .rank-admin { background: #7c3aed; color: white; }
+    .rank-active { background: #22c55e20; border: 1px solid #22c55e; color: #22c55e; }
+    .rank-expired { background: #ef444420; border: 1px solid #ef4444; color: #ef4444; }
+    .rank-none { background: #2a2a3a; color: #aaa; }
   </style>
 </head>
 <body>
@@ -637,15 +699,15 @@
   <div class="overlay" id="overlay"></div>
 
   <div class="side-menu" id="sideMenu">
-    <div class="menu-item active" data-section="nevoraswap">Nevoraswap</div>
-    <div class="menu-item" data-section="profile">Профиль</div>
-    <div class="menu-item" data-section="prices">Цены</div>
-    <div class="menu-item" data-section="activate">Активация</div>
-    <div class="menu-item" data-section="support">Поддержка</div>
-    <div class="menu-item" data-section="launcher">Скачать</div>
-    <div class="menu-item" data-section="stats">📊 Статистика</div>
+    <div class="menu-item active" data-section="nevoraswap">🏠 Nevoraswap</div>
+    <div class="menu-item" data-section="profile">👤 Профиль</div>
+    <div class="menu-item" data-section="prices">💰 Цены</div>
+    <div class="menu-item" data-section="activate">🔑 Активация</div>
+    <div class="menu-item" data-section="support">💬 Поддержка</div>
+    <div class="menu-item" data-section="launcher">📥 Скачать</div>
+    <div class="menu-item" data-section="stats">📈 Статистика</div>
     <div class="menu-item" data-section="reviews">⭐ Отзывы</div>
-    <div class="menu-item" id="adminMenuItem" data-section="admin" style="display:none;">🔧 Админ панель</div>
+    <div class="menu-item" id="adminMenuItem" data-section="admin" style="display:none;">⚙️ Админ панель</div>
   </div>
 
   <div class="main-content">
@@ -665,7 +727,7 @@
           <div style="background:#14141f; border-radius:20px; padding:1.2rem;"><div style="color:#7c3aed; font-size:1.3rem;">🖱️ Bulova Helper</div><p style="color:#aaa; font-size:0.95rem;">Сложная механика для булавы с автоматической синхронизацией</p></div>
           <div style="background:#14141f; border-radius:20px; padding:1.2rem;"><div style="color:#7c3aed; font-size:1.3rem;">🔒 Защита HWID</div><p style="color:#aaa; font-size:0.95rem;">Привязка к устройству и защита от повторного запуска</p></div>
         </div>
-        <div style="text-align:center; margin-top:1.5rem;"><a href="https://t.me/nevoraswap" target="_blank" class="support-btn" style="display:inline-block;">Telegram канал</a></div>
+        <div style="text-align:center; margin-top:1.5rem;"><a href="https://t.me/nevoraswap" target="_blank" class="support-btn" style="display:inline-block;">💬 Telegram канал</a></div>
       </div>
     </div>
 
@@ -715,7 +777,7 @@
       <h2 class="section-title">Поддержка</h2>
       <div class="card">
         <p>Свяжитесь с нами любым удобным способом:</p>
-        <div class="support-buttons"><a href="https://t.me/vergyTG" target="_blank" class="support-btn">Админ @vergyTG</a><a href="https://t.me/nevoraswap" target="_blank" class="support-btn">Канал @nevoraswap</a></div>
+        <div class="support-buttons"><a href="https://t.me/vergyTG" target="_blank" class="support-btn">📩 Админ @vergyTG</a><a href="https://t.me/nevoraswap" target="_blank" class="support-btn">📢 Канал @nevoraswap</a></div>
         <div style="margin-top:1.5rem; padding:1.2rem; background:#14141f; border-radius:20px;">
           <h4 style="color:#7c3aeb;">❓ Часто задаваемые вопросы</h4>
           <div><div style="font-weight:bold; color:#b39ddb;">🔹 Как активировать ключ?</div><p style="color:#aaa;">Купите ключ в разделе "Цены", затем введите его в разделе "Активация".</p></div>
@@ -728,7 +790,7 @@
     <div id="launcher" class="section">
       <h2 class="section-title">Скачать лаунчер</h2>
       <div class="card" style="text-align:center;">
-        <div style="font-size:2.5rem; color:#7c3aed;">⬇️</div>
+        <div style="font-size:2.5rem; color:#7c3aed;">📦</div>
         <h3>Nevora Swap Launcher</h3>
         <p style="color:#aaa;">Windows 10/11</p>
         <a href="https://drive.google.com/file/d/1Y_xFhEen-xb1KRKWwb62pOsf79pZHGf4/view?usp=drive_link" id="launcherMainBtn" class="btn-outline" style="font-size:1.3rem; padding:0.8rem 2rem; text-decoration: none; display: inline-block;" download>СКАЧАТЬ</a>
@@ -737,7 +799,7 @@
     </div>
     
     <div id="stats" class="section">
-      <h2 class="section-title">📊 Статистика</h2>
+      <h2 class="section-title">Статистика</h2>
       <div class="card">
         <div class="stats-grid" id="statsGrid">
           <div class="stat-card"><div class="stat-value" id="statUsers">0</div><div class="stat-label">Всего пользователей</div></div>
@@ -748,7 +810,7 @@
     </div>
     
     <div id="reviews" class="section">
-      <h2 class="section-title">⭐ Отзывы</h2>
+      <h2 class="section-title">Отзывы</h2>
       <div class="card">
         <div id="reviewsList" class="reviews-list"></div>
         <div id="addReviewSection" style="margin-top: 1rem;">
@@ -767,7 +829,7 @@
     </div>
     
     <div id="admin" class="section">
-      <h2 class="section-title">🔧 Административная панель</h2>
+      <h2 class="section-title">⚙️ Административная панель</h2>
       <div class="card"><div id="adminContent"><p style="text-align:center;">Загрузка...</p></div></div>
     </div>
 
@@ -776,16 +838,16 @@
 
   <div class="agreement-box"><button class="agreement-clickable" id="agreementBtn" style="background:transparent; border:none; cursor:pointer; color:#b39ddb; font-size:1.1rem;">📜 Пользовательское соглашение</button></div>
 
-  <!-- Модалки -->
-  <div class="modal-overlay" id="agreementModal"><div class="modal-card"><button class="close-modal" id="closeAgreementModal">✖</button><h2>📜 Пользовательское соглашение</h2><div style="color:#aaa;"><p><strong>1. Общие положения</strong><br>Используя NEVORA SWAP, вы соглашаетесь с условиями.</p><p><strong>2. Запрещенные действия</strong><br>❌ Запрещена передача лицензии<br>❌ Запрещено взламывать программу</p><p><strong>3. Ответственность</strong><br>Администрация вправе заблокировать подписку без возврата средств.</p></div><button class="btn-auth" id="closeAgreementBtn">Закрыть</button></div></div>
+  <!-- Модальные окна - КРЕСТИКИ В ПРАВОМ ВЕРХНЕМ УГЛУ -->
+  <div class="modal-overlay" id="agreementModal"><div class="modal-card"><button class="close-modal" id="closeAgreementModal">✖</button><h2 style="text-align:center; margin-top:0;">📜 Пользовательское соглашение</h2><div style="color:#aaa;"><p><strong>1. Общие положения</strong><br>Используя NEVORA SWAP, вы соглашаетесь с условиями.</p><p><strong>2. Запрещенные действия</strong><br>❌ Запрещена передача лицензии<br>❌ Запрещено взламывать программу</p><p><strong>3. Ответственность</strong><br>Администрация вправе заблокировать подписку без возврата средств.</p></div><button class="btn-auth" id="closeAgreementBtn">Закрыть</button></div></div>
 
   <div class="modal-overlay" id="authModal"><div class="modal-card"><button class="close-modal" id="closeAuthModal">✖</button><div class="modal-tabs"><button class="modal-tab active" id="loginTab">Вход</button><button class="modal-tab" id="registerTab">Регистрация</button></div><div id="authForms"><div id="loginForm"><input type="text" placeholder="Логин" id="loginUsername"><div class="password-field"><input type="password" placeholder="Пароль" id="loginPassword"><button class="password-toggle" onclick="togglePassword('loginPassword')">👁️</button></div><div id="loginError" class="error-text"></div><button id="loginBtn">Войти</button></div><div id="registerForm" style="display:none;"><input type="text" placeholder="Логин (3-15 символов)" id="regUsername"><div class="password-field"><input type="password" placeholder="Пароль" id="regPassword"><button class="password-toggle" onclick="togglePassword('regPassword')">👁️</button></div><div class="password-field"><input type="password" placeholder="Повторите пароль" id="regPasswordConfirm"><button class="password-toggle" onclick="togglePassword('regPasswordConfirm')">👁️</button></div><div id="registerError" class="error-text"></div><div id="captchaContainer" class="captcha-container"></div><button id="registerBtn">Зарегистрироваться</button></div></div></div></div>
 
-  <div class="modal-overlay" id="changePasswordModal"><div class="modal-card"><button class="close-modal" id="closePasswordModal">✖</button><h2>Смена пароля</h2><div class="password-field"><input type="password" id="oldPassword" placeholder="Текущий пароль"><button class="password-toggle" onclick="togglePassword('oldPassword')">👁️</button></div><div class="password-field"><input type="password" id="newPassword" placeholder="Новый пароль"><button class="password-toggle" onclick="togglePassword('newPassword')">👁️</button></div><div class="password-field"><input type="password" id="confirmNewPassword" placeholder="Подтвердите пароль"><button class="password-toggle" onclick="togglePassword('confirmNewPassword')">👁️</button></div><div id="passwordError" class="error-text"></div><button id="confirmPasswordBtn">Сменить пароль</button></div></div>
+  <div class="modal-overlay" id="changePasswordModal"><div class="modal-card"><button class="close-modal" id="closePasswordModal">✖</button><h2 style="text-align:center; margin-top:0;">Смена пароля</h2><div class="password-field"><input type="password" id="oldPassword" placeholder="Текущий пароль"><button class="password-toggle" onclick="togglePassword('oldPassword')">👁️</button></div><div class="password-field"><input type="password" id="newPassword" placeholder="Новый пароль"><button class="password-toggle" onclick="togglePassword('newPassword')">👁️</button></div><div class="password-field"><input type="password" id="confirmNewPassword" placeholder="Подтвердите пароль"><button class="password-toggle" onclick="togglePassword('confirmNewPassword')">👁️</button></div><div id="passwordError" class="error-text"></div><button id="confirmPasswordBtn">Сменить пароль</button></div></div>
 
-  <div class="modal-overlay" id="paymentModal"><div class="modal-card"><button class="close-modal" id="closePaymentModal">✖</button><h2 id="paymentTitle">12 часов</h2><p id="paymentPrice" style="font-size:2rem; text-align:center;">24 ₽</p><div class="payment-actions"><a href="#" id="funpayLink" target="_blank" class="payment-btn">FunPay</a><button class="payment-btn" id="adminPayBtn">Admin</button></div></div></div>
+  <div class="modal-overlay" id="paymentModal"><div class="modal-card"><button class="close-modal" id="closePaymentModal">✖</button><h2 id="paymentTitle" style="text-align:center; margin-top:0;">12 часов</h2><p id="paymentPrice" style="font-size:2rem; text-align:center;">24 ₽</p><div class="payment-actions"><a href="#" id="funpayLink" target="_blank" class="payment-btn">FunPay</a><button class="payment-btn" id="adminPayBtn">Admin</button></div></div></div>
 
-  <div class="modal-overlay" id="logoutConfirmModal"><div class="modal-card"><button class="close-modal" id="closeLogoutModal">✖</button><h2>Выход из аккаунта</h2><p style="text-align:center; color:#aaa; margin:1rem 0;">Вы уверены, что хотите выйти?</p><div class="modal-buttons"><button id="confirmLogoutBtn" class="confirm-btn">Выйти</button><button id="cancelLogoutBtn" class="cancel-btn">Отмена</button></div></div></div>
+  <div class="modal-overlay" id="logoutConfirmModal"><div class="modal-card"><button class="close-modal" id="closeLogoutModal">✖</button><h2 style="text-align:center; margin-top:0;">Выход из аккаунта</h2><p style="text-align:center; color:#aaa; margin:1rem 0;">Вы уверены, что хотите выйти?</p><div class="modal-buttons"><button id="confirmLogoutBtn" class="confirm-btn">Выйти</button><button id="cancelLogoutBtn" class="cancel-btn">Отмена</button></div></div></div>
 
   <script>
     window.togglePassword = function(id) {
@@ -942,7 +1004,6 @@
       let isKeyVisible = false;
       let currentCaptcha = '';
       
-      // Функция для проверки активной лицензии
       function hasActiveLicense() {
         return currentLicense && 
                currentLicense.status === 'active' && 
@@ -1212,7 +1273,6 @@
           timerText.innerText = '0%';
           remainingDisplay.innerText = '⏱️ Лицензия не активна';
         }
-        // Обновляем кнопку скачивания после изменения лицензии
         updateLauncherButton();
       }
       
@@ -1223,7 +1283,6 @@
           card.innerHTML = `<div style="text-align:center;"><div style="font-size:2.5rem;">🔐</div><h3>Требуется авторизация</h3><button class="btn-auth" onclick="document.getElementById('showAuthModalBtn').click()">Войти</button></div>`;
           return;
         }
-        // Если есть активная лицензия - показываем сообщение и кнопку перехода в профиль
         if (hasActiveLicense()) {
           card.innerHTML = `<div style="text-align:center;"><div style="font-size:2rem;">✅</div><h3>У вас уже есть активная лицензия</h3><p style="color:#aaa; margin:0.5rem 0;">Новый ключ можно активировать только после истечения текущего</p><button class="btn-auth" onclick="document.querySelector('.menu-item[data-section=\'profile\']').click()">Перейти в профиль</button></div>`;
         } else {
@@ -1380,7 +1439,7 @@
       document.getElementById('cancelLogoutBtn').addEventListener('click', () => document.getElementById('logoutConfirmModal').classList.remove('active'));
       document.getElementById('closeLogoutModal').addEventListener('click', () => document.getElementById('logoutConfirmModal').classList.remove('active'));
       
-      // АКТИВАЦИЯ КЛЮЧА (с проверкой на уже активную лицензию)
+      // АКТИВАЦИЯ КЛЮЧА
       document.addEventListener('click', async (e) => {
         if (e.target.id === 'activateBtn') {
           const key = document.getElementById('activationKey')?.value;
@@ -1388,7 +1447,6 @@
           if (!key) { statusDiv.innerHTML = '<span style="color:#ef4444;">Введите ключ</span>'; return; }
           if (!currentUser) { statusDiv.innerHTML = '<span style="color:#ef4444;">Сначала войдите</span>'; return; }
           
-          // Проверка на уже активную лицензию
           if (hasActiveLicense()) {
             statusDiv.innerHTML = '<span style="color:#ffa500;">У вас уже есть активная лицензия! Нельзя активировать новый ключ.</span>';
             return;
@@ -1519,35 +1577,122 @@
           const users = usersSnap.val() || {};
           const licenses = licensesSnap.val() || {};
           
-          let html = `<div class="admin-panel-card"><h3>🔍 ПОИСК ПО КЛЮЧУ</h3>
-            <div style="display:flex; gap:10px;"><input type="text" id="adminSearchKey" placeholder="Введите ключ" style="flex:1; padding:12px; background:#1e1e2a; border:1px solid #7c3aed; border-radius:20px;"><button class="key-btn" id="adminSearchKeyBtn">Найти</button></div>
-            <div id="adminSearchResult" style="margin-top:10px;"></div></div>`;
-          html += `<div class="admin-panel-card"><h3>👥 ПОЛЬЗОВАТЕЛИ (${Object.keys(users).length})</h3><div class="user-table">`;
-          for (const [username, user] of Object.entries(users)) {
-            const userLicense = user.license_id ? licenses[user.license_id] : null;
-            const licenseStatus = userLicense ? (new Date(userLicense.expires_at) < new Date() ? '🔴 Истекла' : '🟢 Активна') : '⚫ Нет';
-            html += `<div class="admin-user-row"><div><strong>${escapeHtml(username)}</strong></div><div>📜 ${licenseStatus}</div>
-              <div><button class="admin-view-key" data-username="${username}">🔍 Ключ</button>
-              <button class="admin-extend" data-username="${username}">➕ Продлить</button>
-              <button class="admin-reduce" data-username="${username}">➖ Убавить</button>
-              <button class="admin-remove" data-username="${username}">🗑️ Удалить</button></div></div>`;
+          let totalLicenses = 0;
+          let activeCount = 0;
+          for (const lic of Object.values(licenses)) {
+            totalLicenses++;
+            if (lic.status === 'active' && !isExpired(lic)) activeCount++;
           }
-          html += `</div></div><div class="admin-panel-card"><h3>➕ СОЗДАТЬ КЛЮЧ</h3><select id="adminKeyType"><option value="012h">12ч</option><option value="007d">7д</option><option value="030d">30д</option><option value="365d">1г</option></select>
-            <input type="text" id="adminKeyCode" placeholder="Ключ (оставьте пустым)"><button class="btn-auth" id="adminCreateKeyBtn">Создать</button><div id="adminKeyResult"></div></div>`;
+          
+          let html = `
+            <div class="admin-stats-grid">
+              <div class="admin-stat-card"><div class="admin-stat-value">${Object.keys(users).length}</div><div class="admin-stat-label">Пользователей</div></div>
+              <div class="admin-stat-card"><div class="admin-stat-value">${totalLicenses}</div><div class="admin-stat-label">Всего ключей</div></div>
+              <div class="admin-stat-card"><div class="admin-stat-value">${activeCount}</div><div class="admin-stat-label">Активных</div></div>
+            </div>
+            <div class="admin-panel-card"><h3>🔍 ПОИСК ПО КЛЮЧУ</h3>
+              <div style="display:flex; gap:10px;">
+                <input type="text" id="adminSearchKey" placeholder="Введите ключ" style="flex:1; padding:12px; background:#1e1e2a; border:1px solid #7c3aed; border-radius:20px;">
+                <button class="key-btn" id="adminSearchKeyBtn">Найти</button>
+              </div>
+              <div id="adminSearchResult" style="margin-top:10px;"></div>
+            </div>
+            <div class="admin-panel-card"><h3>👥 ПОЛЬЗОВАТЕЛИ</h3><div class="user-table" id="adminUsersList"></div></div>
+            <div class="admin-panel-card"><h3>➕ СОЗДАТЬ КЛЮЧ</h3>
+              <div class="admin-create-key">
+                <select id="adminKeyType">
+                  <option value="012h">12 часов</option>
+                  <option value="007d">7 дней</option>
+                  <option value="030d">30 дней</option>
+                  <option value="365d">1 год</option>
+                </select>
+                <input type="text" id="adminKeyCode" placeholder="Ключ (оставьте пустым)">
+                <button class="btn-auth" id="adminCreateKeyBtn">Создать</button>
+              </div>
+              <div id="adminKeyResult" style="margin-top:10px; text-align:center;"></div>
+            </div>
+          `;
           content.innerHTML = html;
           adminPanelLoaded = true;
+          
+          const usersList = [];
+          for (const [username, user] of Object.entries(users)) {
+            const userLicense = user.license_id ? licenses[user.license_id] : null;
+            let rank = 4;
+            if (username === 'Nevora') rank = 0;
+            else if (user.is_admin) rank = 1;
+            else if (userLicense && userLicense.status === 'active' && !isExpired(userLicense)) rank = 2;
+            else if (userLicense && isExpired(userLicense)) rank = 3;
+            usersList.push({ username, user, userLicense, rank });
+          }
+          usersList.sort((a, b) => a.rank - b.rank);
+          
+          const usersHtml = usersList.map(({ username, user, userLicense }) => {
+            let licenseStatus = '⚫ Нет';
+            let rankClass = 'rank-none';
+            let rankText = '';
+            
+            if (username === 'Nevora') {
+              rankClass = 'rank-owner';
+              rankText = '👑 OWNER';
+            } else if (user.is_admin) {
+              rankClass = 'rank-admin';
+              rankText = '⚙️ ADMIN';
+            } else if (userLicense && userLicense.status === 'active' && !isExpired(userLicense)) {
+              rankClass = 'rank-active';
+              rankText = '✅ Активна';
+              licenseStatus = '🟢 Активна';
+            } else if (userLicense && isExpired(userLicense)) {
+              rankClass = 'rank-expired';
+              rankText = '❌ Истекла';
+              licenseStatus = '🔴 Истекла';
+            }
+            
+            return `<div class="admin-user-row">
+              <div><strong>${escapeHtml(username)}</strong><span class="rank-badge ${rankClass}" style="margin-left:8px;">${rankText}</span><br><small>${user.created_at ? new Date(user.created_at).toLocaleDateString() : '?'}</small></div>
+              <div>📜 ${licenseStatus}</div>
+              <div>
+                <button class="admin-view-key" data-username="${username}">🔍 Ключ</button>
+                <button class="admin-extend" data-username="${username}">➕ Продлить</button>
+                <button class="admin-reduce" data-username="${username}">➖ Убавить</button>
+                <button class="admin-remove" data-username="${username}">🗑️ Удалить</button>
+              </div>
+            </div>`;
+          }).join('');
+          
+          document.getElementById('adminUsersList').innerHTML = usersHtml;
           
           document.getElementById('adminSearchKeyBtn')?.addEventListener('click', async () => {
             const searchKey = document.getElementById('adminSearchKey').value.trim().toUpperCase();
             const resultDiv = document.getElementById('adminSearchResult');
             if (!searchKey) { resultDiv.innerHTML = ''; return; }
+            
             let found = null;
+            let foundUser = null;
             for (const [lid, lic] of Object.entries(licenses)) {
-              if (lic.code === searchKey) { found = { ...lic, id: lid }; break; }
+              if (lic.code === searchKey) {
+                found = { ...lic, id: lid };
+                for (const [username, user] of Object.entries(users)) {
+                  if (user.license_id === lid) {
+                    foundUser = username;
+                    break;
+                  }
+                }
+                break;
+              }
             }
+            
             if (found) {
-              resultDiv.innerHTML = `<div style="background:#0a0a0f; padding:15px; border-radius:10px;"><strong>Ключ:</strong> ${found.code}<br><strong>Тип:</strong> ${found.type}<br><strong>Статус:</strong> ${found.status}<br><strong>Владелец:</strong> ${found.username || 'нет'}<br><strong>Истекает:</strong> ${found.expires_at ? new Date(found.expires_at).toLocaleString() : 'не активирован'}</div>`;
-            } else { resultDiv.innerHTML = '<div style="color:#ef4444;">Ключ не найден</div>'; }
+              resultDiv.innerHTML = `<div class="search-result-card">
+                <strong>🔑 Ключ:</strong> ${found.code}<br>
+                <strong>📦 Тип:</strong> ${found.type}<br>
+                <strong>📊 Статус:</strong> ${found.status}<br>
+                <strong>👤 Владелец:</strong> ${foundUser || 'не активирован'}<br>
+                <strong>⏰ Истекает:</strong> ${found.expires_at ? new Date(found.expires_at).toLocaleString() : 'не активирован'}
+              </div>`;
+            } else {
+              resultDiv.innerHTML = '<div style="color:#ef4444; padding:10px;">❌ Ключ не найден</div>';
+            }
           });
           
           document.querySelectorAll('.admin-view-key').forEach(btn => btn.onclick = () => {
