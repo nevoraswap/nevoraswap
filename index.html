@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>NEVORA SWAP — официальный сайт</title>
+  <title>NEVORA SWAP — Премиум подписки для Minecraft</title>
   
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -15,1776 +15,383 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Arial', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
-      -webkit-tap-highlight-color: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
-
-    html, body {
-      width: 100%;
-      min-height: 100vh;
-      background-color: #0a0a0f;
-      color: #e0e0e0;
+    body {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
       overflow-x: hidden;
-      position: relative;
     }
-
-    #canvas-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.8;
+    input, textarea, .license-key, .modal-card input, .activation-input {
+      user-select: text;
+      -webkit-user-select: text;
     }
-
-    @media (max-width: 768px) {
-      #canvas-bg { opacity: 0.5; }
-    }
-
-    /* Общие стили для ВСЕХ кнопок с эффектом свечения */
-    .menu-toggle, .menu-item, .btn-auth, .btn-outline, .price-card, .key-btn, 
-    .support-btn, .payment-btn, .modal-tab, .close-modal, .logout-btn, #activateBtn, 
-    #checkKeyBtn, #loginBtn, #registerBtn, #profileLoginBtn, #activateNewKeyBtn, 
-    #launcherMainBtn:not(:disabled), .password-toggle, .agreement-clickable,
-    .review-btn, .change-password-btn, .stat-card, .captcha-refresh,
-    #confirmPasswordBtn, #closeAgreementBtn, #closeAgreementModal, #closeAuthModal,
-    #closePasswordModal, #closePaymentModal, #closeLogoutModal, #adminCreateKeyBtn,
-    #adminSearchKeyBtn, .admin-view-key, .admin-extend, .admin-reduce, .admin-remove,
-    .confirm-btn, .cancel-btn, .user-greeting {
-      position: relative;
-      transition: all 0.2s ease;
-      z-index: 1;
-    }
-
-    /* Общий псевдоэлемент для свечения */
-    .menu-toggle::before, .menu-item::before, .btn-auth::before, .btn-outline::before,
-    .price-card::before, .key-btn::before, .support-btn::before, .payment-btn::before,
-    .modal-tab::before, .close-modal::before, .logout-btn::before, #activateBtn::before,
-    #checkKeyBtn::before, #loginBtn::before, #registerBtn::before, #profileLoginBtn::before,
-    #activateNewKeyBtn::before, #launcherMainBtn:not(:disabled)::before,
-    .password-toggle::before, .agreement-clickable::before, .review-btn::before,
-    .change-password-btn::before, .stat-card::before, .captcha-refresh::before,
-    #confirmPasswordBtn::before, #closeAgreementBtn::before, #closeAgreementModal::before,
-    #closeAuthModal::before, #closePasswordModal::before, #closePaymentModal::before,
-    #closeLogoutModal::before, #adminCreateKeyBtn::before, #adminSearchKeyBtn::before,
-    .admin-view-key::before, .admin-extend::before, .admin-reduce::before, .admin-remove::before,
-    .confirm-btn::before, .cancel-btn::before, .user-greeting::before {
-      content: '';
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: linear-gradient(45deg, #b39ddb, #e0b0ff, #c084fc, #b39ddb);
-      background-size: 300% 300%;
-      border-radius: inherit;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: -1;
-      filter: blur(8px);
-      animation: neonGlow 3s ease infinite;
-    }
-
-    @keyframes neonGlow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* Ховер эффект для всех элементов */
-    .menu-toggle:hover::before, .menu-item:hover::before, .btn-auth:hover::before,
-    .btn-outline:hover:not(:disabled)::before, .price-card:hover::before,
-    .key-btn:hover::before, .support-btn:hover::before, .payment-btn:hover::before,
-    .modal-tab:hover::before, .close-modal:hover::before, .logout-btn:hover::before,
-    #activateBtn:hover::before, #checkKeyBtn:hover::before, #loginBtn:hover::before,
-    #registerBtn:hover::before, #profileLoginBtn:hover::before, #activateNewKeyBtn:hover::before,
-    #launcherMainBtn:not(:disabled):hover::before, .password-toggle:hover::before,
-    .agreement-clickable:hover::before, .review-btn:hover::before,
-    .change-password-btn:hover::before, .stat-card:hover::before, .captcha-refresh:hover::before,
-    #confirmPasswordBtn:hover::before, #closeAgreementBtn:hover::before,
-    #closeAgreementModal:hover::before, #closeAuthModal:hover::before,
-    #closePasswordModal:hover::before, #closePaymentModal:hover::before,
-    #closeLogoutModal:hover::before, #adminCreateKeyBtn:hover::before,
-    #adminSearchKeyBtn:hover::before, .admin-view-key:hover::before,
-    .admin-extend:hover::before, .admin-reduce:hover::before, .admin-remove:hover::before,
-    .confirm-btn:hover::before, .cancel-btn:hover::before, .user-greeting:hover::before {
-      opacity: 1;
-    }
-
-    /* Анимация для админ-аватара */
-    @keyframes adminPulse {
-      0% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.7); border-color: #7c3aed; }
-      50% { box-shadow: 0 0 0 15px rgba(124, 58, 237, 0); border-color: #b39ddb; }
-      100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0); border-color: #7c3aed; }
-    }
-
-    .profile-avatar-admin {
-      animation: adminPulse 2s infinite;
-    }
-
-    .agreement-clickable { cursor: pointer; transition: all 0.2s ease; }
-    .agreement-clickable:hover { transform: translateY(-1px); }
-
-    .btn-auth, .btn-outline, .payment-btn, .support-btn, .key-btn, #activateBtn,
-    #checkKeyBtn, #loginBtn, #registerBtn, #profileLoginBtn, #activateNewKeyBtn,
-    #launcherMainBtn, .logout-btn, .review-btn, .change-password-btn, .captcha-refresh,
-    #confirmPasswordBtn, #closeAgreementBtn, #adminCreateKeyBtn, #adminSearchKeyBtn,
-    .admin-view-key, .admin-extend, .admin-reduce, .admin-remove, .confirm-btn, .cancel-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      border: 2px solid #7c3aed;
-      background: transparent !important;
-      color: white;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .captcha-refresh {
-      background: #1e1e2a !important;
-      padding: 0.5rem 1rem !important;
-      border-radius: 40px !important;
-      font-size: 0.9rem !important;
-    }
-
-    #loginBtn, #registerBtn, #profileLoginBtn, #activateNewKeyBtn, #launcherMainBtn,
-    .btn-auth, .btn-outline, .review-btn, .change-password-btn, #confirmPasswordBtn,
-    #closeAgreementBtn, #adminCreateKeyBtn {
-      background: transparent !important;
-      border: 2px solid #7c3aed !important;
-      color: white !important;
-      padding: 0.6rem 1.5rem !important;
-      border-radius: 40px !important;
-      font-size: 1rem !important;
-      min-height: 44px;
-    }
-
-    .admin-view-key, .admin-extend, .admin-reduce, .admin-remove {
-      padding: 0.3rem 0.8rem !important;
-      font-size: 0.75rem !important;
-      min-height: 32px;
-    }
-
-    .menu-toggle {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      width: 48px;
-      height: 48px;
-      background: rgba(20, 20, 30, 0.95);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      z-index: 1001;
-      border: 2px solid #7c3aed;
-    }
-
-    .menu-toggle span { width: 26px; height: 3px; background: #7c3aed; border-radius: 10px; }
-
-    .side-menu {
-      position: fixed;
-      top: 0;
-      left: -280px;
-      width: 260px;
-      height: 100vh;
-      background: rgba(12, 12, 20, 0.98);
-      backdrop-filter: blur(16px);
-      border-right: 2px solid #7c3aed;
-      z-index: 1000;
-      transition: left 0.25s ease;
-      padding: 80px 15px 30px;
-      box-shadow: 5px 0 30px black;
-    }
-
-    .side-menu.open { left: 0; }
-
-    .menu-item {
-      padding: 16px 20px;
-      margin: 6px 0;
-      border-radius: 40px;
-      color: #ccc;
-      font-size: 1.2rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: 0.2s;
-      border: 1px solid transparent;
-    }
-
-    .menu-item:hover { border-color: #7c3aed; }
-    .menu-item.active { background: #7c3aed20; border-color: #7c3aed; }
-
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.7);
-      z-index: 999;
-      display: none;
-      backdrop-filter: blur(3px);
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --bg: #0f0f23;
+      --card-bg: #1a1a2e;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #818cf8;
+      --success: #22c55e;
+      --error: #ef4444;
+      --warning: #eab308;
+      --transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
     }
     
-    .overlay.show { display: block; }
-
-    .main-content {
-      position: relative;
-      z-index: 10;
-      width: 100%;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 1rem;
-    }
-
-    @media (max-width: 768px) {
-      .main-content { padding: 1rem; }
-    }
-
-    .top-bar {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-      padding: 0.6rem 1.2rem;
-      background: rgba(10, 10, 15, 0.8);
-      backdrop-filter: blur(10px);
-      border-radius: 40px;
-      border: 1px solid #7c3aed40;
-      gap: 0.8rem;
-    }
-
-    .logo {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #7c3aed;
-      text-shadow: 0 0 8px #7c3aed;
-    }
-
-    .auth-buttons { display: flex; gap: 0.8rem; flex-wrap: wrap; flex: 1; justify-content: flex-end; }
-
-    .user-greeting {
-      color: #b39ddb;
-      font-size: 1rem;
-      font-weight: 500;
-      background: #1a1a2a;
-      padding: 0.5rem 1.2rem;
-      border-radius: 40px;
-      border: 1px solid #7c3aed;
-      cursor: pointer;
-    }
-
-    .section { display: none; animation: fade 0.2s; width: 100%; }
-    .section.active { display: block; }
-    @keyframes fade { 0% { opacity: 0; } 100% { opacity: 1; } }
-
-    .section-title {
-      font-size: 1.8rem;
-      margin-bottom: 1.5rem;
-      border-left: 5px solid #7c3aed;
-      padding-left: 1rem;
-    }
-
-    .card {
-      background: rgba(18, 18, 26, 0.9);
-      backdrop-filter: blur(8px);
-      border: 1px solid #2a2a3a;
-      border-radius: 28px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1rem;
-      margin: 1.5rem 0;
-    }
-
-    .price-card {
-      background: #14141f;
-      border-radius: 24px;
-      padding: 1.5rem 1rem;
-      text-align: center;
-      cursor: pointer;
-      border: 2px solid #7c3aed;
-    }
-
-    .price-card div:first-child { font-size: 1.6rem; font-weight: 600; }
-    .price-card div:last-child { font-size: 1.4rem; color: #7c3aed; margin-top: 0.3rem; }
-
-    .profile-header { display: flex; align-items: center; gap: 1.2rem; margin-bottom: 1.8rem; flex-wrap: wrap; }
-    .profile-avatar { 
-      width: 70px; 
-      height: 70px; 
-      border-radius: 35px; 
-      background: #1a1a2a; 
-      border: 3px solid #7c3aed; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      font-size: 2.2rem; 
-      transition: all 0.3s ease;
-    }
-    .profile-avatar-active { border-color: #22c55e; background: #22c55e20; }
-    .profile-avatar-expired { border-color: #ef4444; background: #ef444420; }
-    .profile-login { font-size: 1.3rem; font-weight: 600; color: white; word-break: break-all; }
-    .profile-badge { display: inline-block; padding: 0.2rem 0.8rem; border-radius: 30px; background: #7c3aed20; border: 1px solid #7c3aed; color: #b39ddb; font-size: 0.8rem; }
-    .owner-badge { background: #eab30820; border-color: #eab308; color: #eab308; }
-
-    .license-card {
-      background: #14141f;
-      border-radius: 24px;
-      padding: 1.5rem;
-      margin-top: 1.2rem;
-      border: 1px solid #7c3aed;
-    }
-
-    .license-type { font-size: 1.5rem; font-weight: 700; color: #7c3aed; margin-bottom: 0.5rem; word-break: break-word; }
-    .license-key { font-family: 'Courier New', monospace; background: #0a0a0f; padding: 0.8rem 1rem; border-radius: 16px; border: 1px solid #2a2a3a; color: #b39ddb; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
-    .license-key-blur { filter: blur(4px); user-select: none; }
-    .key-btn { background: transparent; border-radius: 30px; padding: 0.3rem 0.8rem; font-size: 0.75rem; min-height: 36px; border: 2px solid #7c3aed; }
-
-    .license-timer { display: flex; align-items: center; gap: 1rem; margin: 1.2rem 0; flex-wrap: wrap; }
-    .timer-progress { flex: 1; min-width: 120px; height: 8px; background: #2a2a3a; border-radius: 4px; overflow: hidden; }
-    .timer-fill { height: 100%; background: #7c3aed; width: 100%; transition: width 0.3s ease; }
-
-    .remaining-time { background: #0a0a0f; padding: 0.8rem; border-radius: 16px; text-align: center; margin-top: 0.5rem; font-size: 1.1rem; color: #b39ddb; }
-
-    .support-buttons { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.2rem; }
-    .support-btn { background: transparent; border-radius: 40px; padding: 0.8rem 1.5rem; font-size: 1.1rem; text-align: center; flex: 1 1 auto; min-height: 50px; border: 2px solid #7c3aed; }
-
-    .modal-overlay {
+    /* LOADER SCREEN - градиент заполняет статичную надпись */
+    .loader-screen {
       position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.96);
-      backdrop-filter: blur(12px);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      z-index: 9999;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 2000;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+      backdrop-filter: blur(0px);
+    }
+    .loader-screen.fade-out {
       opacity: 0;
       visibility: hidden;
-      transition: 0.2s;
-      padding: 15px;
     }
-
-    .modal-overlay.active { opacity: 1; visibility: visible; }
-
-    .modal-card {
-      background: #14141f;
-      border: 2px solid #7c3aed;
-      border-radius: 36px;
-      padding: 1.8rem 1.5rem;
-      max-width: 500px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      position: relative;
-    }
-
-    /* Крестик в правом верхнем углу */
-    .close-modal {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: #aaa;
-      z-index: 10;
-      background: transparent;
-      border: none;
-      width: 34px;
-      height: 34px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-      border-radius: 50%;
-    }
-    .close-modal:hover { 
-      color: #ef4444; 
-      transform: scale(1.1);
-      background: rgba(239, 68, 68, 0.1);
-    }
-
-    .modal-tabs {
-      display: flex;
-      gap: 0.8rem;
-      margin: 0.5rem 0 1.5rem;
-      justify-content: center;
-    }
-
-    .modal-tab {
-      background: transparent;
-      border: none;
-      color: #aaa;
-      font-size: 1.3rem;
-      font-weight: 600;
-      padding: 0.5rem 1.5rem;
-      cursor: pointer;
-      border-radius: 40px;
-      border: 2px solid #7c3aed;
-    }
-
-    .modal-tab.active { background: #7c3aed20; color: #b39ddb; }
-
-    .modal-card input {
-      width: 100%;
-      padding: 1rem 1.2rem;
-      margin: 0.8rem 0;
-      background: #1e1e2a;
-      border: 1px solid #3a3a55;
-      border-radius: 50px;
-      color: white;
-      font-size: 1rem;
-    }
-
-    .modal-card input:focus { border-color: #7c3aed; outline: none; }
-
-    .password-field { position: relative; width: 100%; margin: 0.8rem 0; }
-    .password-field input { width: 100%; padding: 1rem 3rem 1rem 1.2rem !important; margin: 0 !important; }
-    .password-toggle { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #7c3aed; cursor: pointer; font-size: 1.2rem; padding: 8px; border-radius: 50%; background: transparent; border: none; }
-
-    .payment-actions { display: flex; gap: 0.8rem; margin-top: 1.5rem; flex-wrap: wrap; justify-content: center; }
-    .payment-btn { flex: 1 1 120px; text-align: center; padding: 0.8rem 1rem; border-radius: 40px; background: transparent; font-size: 1rem; font-weight: 600; min-height: 50px; border: 2px solid #7c3aed; }
-
-    footer { 
-      margin-top: 3rem; 
-      padding: 1.5rem; 
-      background: rgba(10,10,15,0.7); 
-      backdrop-filter: blur(4px); 
-      border-radius: 30px; 
-      display: flex; 
-      justify-content: space-between; 
-      flex-wrap: wrap; 
-      gap: 1rem; 
-    }
-
-    .agreement-box {
-      max-width: 1400px;
-      margin: 1.5rem auto;
-      padding: 1.2rem;
-      background: #0c0c14;
-      border-radius: 30px;
+    .loader-content {
       text-align: center;
     }
-
-    .error-text { color: #ef4444; font-size: 0.85rem; margin-top: 0.3rem; text-align: center; }
-    .success-text { color: #22c55e; font-size: 0.85rem; margin-top: 0.3rem; text-align: center; }
-    .copy-notification { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #7c3aed; color: white; padding: 0.8rem 1.2rem; border-radius: 40px; font-size: 0.9rem; z-index: 3000; white-space: nowrap; animation: fadeInUp 0.3s ease; }
-    @keyframes fadeInUp { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
-    
-    .logout-btn { margin-top: 1.8rem; padding: 0.8rem 1.5rem; background: transparent; border-radius: 40px; color: #ef4444; font-size: 1rem; font-weight: 600; cursor: pointer; border: 2px solid #ef4444; }
-    .expired-badge { background: #ef444420; border: 1px solid #ef4444; color: #ef4444; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.8rem; display: inline-block; }
-    .important-note { background: #7c3aed20; border-left: 4px solid #7c3aed; padding: 1rem; border-radius: 16px; margin-top: 1rem; }
-    .admin-panel-card { background: #14141f; border-radius: 20px; padding: 1rem; margin-bottom: 1rem; border: 1px solid #7c3aed; }
-    .admin-user-row { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem; border-bottom: 1px solid #2a2a3a; flex-wrap: wrap; gap: 0.5rem; }
-    .user-table { max-height: 400px; overflow-y: auto; }
-    .btn-outline:disabled, #launcherMainBtn:disabled { opacity: 0.4; border-color: #555 !important; pointer-events: none; }
-    .admin-badge { background: #7c3aed; color: white; padding: 2px 8px; border-radius: 20px; font-size: 10px; margin-left: 8px; }
-    
-    /* Статистика */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
+    .loader-logo {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #2a2a4a, #2a2a4a, #2a2a4a);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 2px;
+      animation: fillGradient 2s ease forwards;
+    }
+    @keyframes fillGradient {
+      0% {
+        background: linear-gradient(135deg, #2a2a4a, #2a2a4a, #2a2a4a);
+        background-size: 300% 300%;
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+      50% {
+        background: linear-gradient(135deg, #6366f1, #818cf8, #a78bfa);
+        background-size: 300% 300%;
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+      100% {
+        background: linear-gradient(135deg, #6366f1, #818cf8, #a78bfa);
+        background-size: 300% 300%;
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+    }
+    .loader-sub {
       margin-top: 1rem;
-    }
-    .stat-card {
-      background: #14141f;
-      border-radius: 20px;
-      padding: 1.2rem;
-      text-align: center;
-      border: 1px solid #2a2a3a;
-      cursor: default;
-      transition: all 0.2s ease;
-    }
-    .stat-card:hover { transform: translateY(-2px); border-color: #7c3aed; }
-    .stat-value { font-size: 2rem; font-weight: bold; color: #7c3aed; }
-    .stat-label { font-size: 0.8rem; color: #888; margin-top: 0.3rem; }
-    
-    /* Отзывы */
-    .reviews-list {
-      max-height: 300px;
-      overflow-y: auto;
-      margin-bottom: 1rem;
-    }
-    .review-item {
-      background: #0a0a0f;
-      border-radius: 16px;
-      padding: 1rem;
-      margin-bottom: 0.8rem;
-      border-left: 3px solid #7c3aed;
-    }
-    .review-author { font-weight: bold; color: #b39ddb; }
-    .review-stars { color: #eab308; margin: 0.3rem 0; }
-    .review-text { color: #aaa; font-size: 0.9rem; }
-    .star-rating { display: flex; gap: 5px; justify-content: center; margin: 0.5rem 0; }
-    .star { cursor: pointer; font-size: 1.5rem; color: #444; transition: 0.2s; background: transparent; border: none; }
-    .star.active { color: #eab308; }
-    .star:hover { color: #eab308; transform: scale(1.1); }
-    
-    /* Капча */
-    .captcha-container {
-      background: #0a0a0f;
-      border-radius: 16px;
-      padding: 1rem;
-      text-align: center;
-      margin: 0.8rem 0;
-    }
-    .captcha-code {
-      font-family: monospace;
-      font-size: 1.8rem;
-      letter-spacing: 8px;
-      background: #1e1e2a;
-      padding: 0.8rem;
-      border-radius: 12px;
-      display: inline-block;
-      margin: 0.5rem 0;
-      user-select: none;
-      font-weight: bold;
-      color: #7c3aed;
-    }
-    .captcha-input {
-      width: 100%;
-      padding: 0.8rem;
-      margin-top: 0.8rem;
-      background: #1e1e2a;
-      border: 1px solid #7c3aed;
-      border-radius: 40px;
-      color: white;
-      text-align: center;
-      font-size: 1rem;
-    }
-    .captcha-note {
-      font-size: 0.7rem;
-      color: #666;
-      margin-top: 0.5rem;
-      text-align: center;
-    }
-    .captcha-refresh {
-      margin-left: 10px;
-      padding: 0.3rem 0.8rem !important;
-      font-size: 0.8rem !important;
-    }
-    
-    /* Уведомления */
-    .toast-notification {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: #1e1e2a;
-      border-left: 4px solid #7c3aed;
-      padding: 1rem 1.5rem;
-      border-radius: 12px;
-      z-index: 3000;
-      animation: slideIn 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-    @keyframes slideIn { from { right: -300px; opacity: 0; } to { right: 20px; opacity: 1; } }
-    .toast-success { border-left-color: #22c55e; }
-    .toast-error { border-left-color: #ef4444; }
-    .toast-info { border-left-color: #7c3aed; }
-    
-    /* Модальные кнопки */
-    .modal-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin-top: 1.5rem;
-    }
-    .modal-buttons button {
-      padding: 0.6rem 1.5rem;
-      border-radius: 40px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      border: 2px solid;
-      background: transparent;
-    }
-    .modal-buttons .confirm-btn {
-      border-color: #ef4444;
-      color: #ef4444;
-    }
-    .modal-buttons .confirm-btn:hover {
-      background: #ef444420;
-      transform: translateY(-2px);
-    }
-    .modal-buttons .cancel-btn {
-      border-color: #7c3aed;
-      color: #7c3aed;
-    }
-    .modal-buttons .cancel-btn:hover {
-      background: #7c3aed20;
-      transform: translateY(-2px);
-    }
-
-    /* Стили для админ панели */
-    .admin-stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .admin-stat-card {
-      background: #0a0a0f;
-      border-radius: 16px;
-      padding: 1rem;
-      text-align: center;
-      border: 1px solid #2a2a3a;
-    }
-    .admin-stat-value {
-      font-size: 1.8rem;
-      font-weight: bold;
-      color: #7c3aed;
-    }
-    .admin-stat-label {
-      font-size: 0.7rem;
-      color: #888;
-    }
-    .admin-create-key {
-      display: flex;
-      gap: 1rem;
-      align-items: flex-end;
-      flex-wrap: wrap;
-    }
-    .admin-create-key select, .admin-create-key input {
-      flex: 1;
-      padding: 0.8rem;
-      background: #1e1e2a;
-      border: 1px solid #7c3aed;
-      border-radius: 40px;
-      color: white;
+      color: var(--text-muted);
       font-size: 0.9rem;
+      letter-spacing: 1px;
+      opacity: 0;
+      animation: fadeInText 0.5s ease 1.5s forwards;
     }
-    .admin-create-key button {
-      padding: 0.8rem 1.5rem;
+    @keyframes fadeInText {
+      to { opacity: 1; }
     }
-    .search-result-card {
-      background: #0a0a0f;
-      border-radius: 16px;
-      padding: 1rem;
-      margin-top: 1rem;
-      border-left: 3px solid #7c3aed;
+    
+    #canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.6; }
+    header { position: sticky; top: 0; z-index: 100; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(99,102,241,0.2); backdrop-filter: blur(10px); background: rgba(15,15,35,0.8); flex-wrap: wrap; gap: 1rem; }
+    .logo { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    nav { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; position: relative; }
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+      padding-bottom: 8px;
+      transition: color 0.3s ease;
     }
-    .rank-badge {
-      display: inline-block;
-      padding: 0.2rem 0.6rem;
-      border-radius: 20px;
-      font-size: 0.7rem;
-      font-weight: bold;
-      margin-left: 0.5rem;
+    nav a:hover { color: var(--primary); }
+    nav a.active { color: var(--primary); }
+    /* Плавная линия под активной вкладкой */
+    .nav-underline {
+      position: absolute;
+      bottom: -1px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 2px;
+      transition: left 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1), width 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      pointer-events: none;
     }
-    .rank-owner { background: #eab308; color: #1a1a2a; }
-    .rank-admin { background: #7c3aed; color: white; }
-    .rank-active { background: #22c55e20; border: 1px solid #22c55e; color: #22c55e; }
-    .rank-expired { background: #ef444420; border: 1px solid #ef4444; color: #ef4444; }
-    .rank-none { background: #2a2a3a; color: #aaa; }
+    .btn { padding: 0.7rem 1.8rem; border-radius: 50px; border: none; font-weight: 600; cursor: pointer; transition: var(--transition); font-size: 0.95rem; }
+    .btn-primary { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; box-shadow: 0 4px 15px rgba(99,102,241,0.3); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99,102,241,0.4); }
+    .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+    .btn-outline:hover { background: var(--primary); color: white; }
+    .hero { position: relative; z-index: 10; text-align: center; padding: 6rem 2rem 4rem; max-width: 900px; margin: 0 auto; animation: fadeInUp 0.6s ease; }
+    .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1.5rem; background: linear-gradient(135deg, white, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.2; }
+    .hero p { font-size: 1.3rem; color: var(--text-muted); margin-bottom: 2.5rem; }
+    .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .section { position: relative; z-index: 10; display: none; opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .section.active { display: block; opacity: 1; transform: translateY(0); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .section-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 2rem; text-align: center; animation: fadeInUp 0.5s ease; }
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 4rem auto; }
+    .feature-card { background: var(--card-bg); padding: 2rem; border-radius: 20px; border: 1px solid rgba(99,102,241,0.2); transition: var(--transition); animation: fadeInUp 0.5s ease backwards; }
+    .feature-card:nth-child(1) { animation-delay: 0.1s; }
+    .feature-card:nth-child(2) { animation-delay: 0.2s; }
+    .feature-card:nth-child(3) { animation-delay: 0.3s; }
+    .feature-card:nth-child(4) { animation-delay: 0.4s; }
+    .feature-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(99,102,241,0.2); }
+    .feature-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .feature-card h3 { font-size: 1.5rem; margin-bottom: 0.8rem; color: var(--accent); }
+    .feature-card p { color: var(--text-muted); line-height: 1.7; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin: 2rem 0; }
+    @media (max-width: 1100px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .pricing-grid { grid-template-columns: 1fr; } }
+    .price-card { background: var(--card-bg); border-radius: 24px; padding: 1.8rem 1.2rem; border: 2px solid transparent; transition: var(--transition); cursor: pointer; text-align: center; position: relative; animation: fadeInUp 0.5s ease backwards; }
+    .price-card:nth-child(1) { animation-delay: 0.1s; }
+    .price-card:nth-child(2) { animation-delay: 0.2s; }
+    .price-card:nth-child(3) { animation-delay: 0.3s; }
+    .price-card:nth-child(4) { animation-delay: 0.4s; }
+    .price-card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 15px 40px rgba(99,102,241,0.3); }
+    .price-card.featured { border-color: var(--primary); background: linear-gradient(135deg, var(--card-bg), rgba(99,102,241,0.1)); }
+    .popular-badge { position: absolute; top: -10px; right: 10px; background: var(--success); color: white; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.7rem; font-weight: 600; }
+    .plan-name { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.8rem; color: var(--accent); }
+    .plan-price { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .plan-price span { font-size: 1rem; color: var(--text-muted); font-weight: 400; }
+    .plan-features { list-style: none; margin: 1.5rem 0; text-align: left; }
+    .plan-features li { padding: 0.5rem 0; color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+    .plan-features li:before { content: "✓"; color: var(--success); font-weight: bold; }
+    .payment-note { text-align: center; margin-top: 2rem; padding: 1rem; background: rgba(99,102,241,0.1); border-radius: 16px; color: var(--text-muted); font-size: 0.9rem; }
+    .profile-card { background: var(--card-bg); border-radius: 24px; padding: 2rem; margin: 2rem auto; max-width: 800px; }
+    .profile-header { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+    .profile-avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; border: 3px solid var(--primary); }
+    .profile-info h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .profile-badge { display: inline-block; padding: 0.3rem 0.8rem; border-radius: 20px; background: rgba(99,102,241,0.2); border: 1px solid var(--primary); font-size: 0.85rem; margin-right: 0.5rem; }
+    .license-info { background: rgba(10,10,15,0.5); border-radius: 20px; padding: 1.5rem; margin-top: 1.5rem; }
+    .license-key-container { background: var(--bg); border-radius: 16px; padding: 1rem; margin: 1rem 0; font-family: 'Courier New', monospace; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .license-key { font-size: 1.1rem; color: var(--accent); }
+    .license-key-blur { filter: blur(5px); user-select: none; }
+    .key-actions { display: flex; gap: 0.5rem; }
+    .key-btn { padding: 0.4rem 1rem; border-radius: 20px; border: 1px solid var(--primary); background: transparent; color: var(--primary); cursor: pointer; font-size: 0.85rem; transition: var(--transition); }
+    .key-btn:hover { background: var(--primary); color: white; }
+    .timer-bar { width: 100%; height: 8px; background: rgba(99,102,241,0.2); border-radius: 4px; overflow: hidden; margin: 1rem 0; }
+    .timer-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.3s ease; }
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 1rem; }
+    .modal-overlay.active { display: flex; }
+    .modal-card { background: var(--card-bg); border: 2px solid var(--primary); border-radius: 24px; padding: 2rem; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; animation: modalFadeIn 0.2s ease; }
+    @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    .close-modal { position: absolute; top: 1rem; right: 1rem; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); background: transparent; border: none; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: var(--transition); }
+    .close-modal:hover { color: var(--error); background: rgba(239,68,68,0.1); }
+    .modal-tabs { display: flex; gap: 1rem; margin-bottom: 2rem; justify-content: center; }
+    .modal-tab { background: transparent; border: 2px solid var(--primary); color: var(--text-muted); font-size: 1rem; font-weight: 600; padding: 0.6rem 1.5rem; cursor: pointer; border-radius: 30px; transition: var(--transition); }
+    .modal-tab.active { background: var(--primary); color: white; }
+    .modal-card input { width: 100%; padding: 1rem; margin: 0.8rem 0; background: rgba(10,10,15,0.8); border: 1px solid rgba(99,102,241,0.3); border-radius: 40px; color: var(--text); font-size: 1rem; }
+    .password-field { position: relative; width: 100%; }
+    .password-field input { padding-right: 3rem !important; margin: 0.8rem 0 !important; }
+    .password-toggle { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--primary); cursor: pointer; font-size: 1.2rem; }
+    .error-text { color: var(--error); font-size: 0.9rem; margin-top: 0.5rem; text-align: center; }
+    .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--card-bg); border-left: 4px solid var(--primary); padding: 1rem 1.5rem; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); z-index: 3000; animation: slideIn 0.3s ease; }
+    .toast.success { border-left-color: var(--success); }
+    .toast.error { border-left-color: var(--error); }
+    @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    footer { position: relative; z-index: 10; margin-top: 8rem; padding: 3rem 2rem; border-top: 1px solid rgba(99,102,241,0.2); text-align: center; color: var(--text-muted); }
+    .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-muted); text-decoration: none; transition: var(--transition); cursor: pointer; }
+    .footer-links a:hover { color: var(--primary); }
+    @media (max-width: 768px) { .hero h1 { font-size: 2.5rem; } .hero p { font-size: 1.1rem; } nav { display: none; } header { flex-direction: column; } }
+    .captcha-container { background: rgba(10,10,15,0.8); border-radius: 16px; padding: 1rem; text-align: center; margin: 1rem 0; }
+    .captcha-code { font-family: monospace; font-size: 1.8rem; letter-spacing: 8px; background: var(--card-bg); padding: 0.8rem; border-radius: 12px; display: inline-block; margin: 0.5rem 0; font-weight: bold; color: var(--accent); }
+    .captcha-refresh { margin-top: 0.5rem; padding: 0.4rem 1rem; border-radius: 20px; border: 1px solid var(--primary); background: transparent; color: var(--primary); cursor: pointer; transition: var(--transition); }
+    .admin-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+    .admin-stat-card { background: rgba(10,10,15,0.5); border-radius: 16px; padding: 1.5rem; text-align: center; border: 1px solid rgba(99,102,241,0.2); }
+    .admin-stat-value { font-size: 2rem; font-weight: bold; color: var(--accent); }
+    .admin-stat-label { font-size: 0.9rem; color: var(--text-muted); }
+    .admin-panel-card { background: var(--card-bg); border-radius: 20px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid rgba(99,102,241,0.2); }
+    .admin-user-row { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid rgba(99,102,241,0.1); flex-wrap: wrap; gap: 1rem; }
+    .admin-btn { padding: 0.4rem 1rem; border-radius: 20px; border: 1px solid var(--primary); background: transparent; color: var(--primary); cursor: pointer; font-size: 0.85rem; margin: 0.2rem; transition: var(--transition); }
+    .admin-btn:hover { background: var(--primary); color: white; }
+    .activation-input { width: 100%; padding: 1rem; background: rgba(10,10,15,0.8); border: 1px solid var(--primary); border-radius: 40px; color: white; text-align: center; font-size: 1rem; margin-top: 1rem; }
+    .search-filter { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; align-items: center; }
+    .search-filter input, .search-filter select { padding: 0.8rem 1.2rem; background: rgba(10,10,15,0.8); border: 1px solid var(--primary); border-radius: 40px; color: white; flex: 1; min-width: 150px; outline: none; transition: var(--transition); }
+    .search-filter input:focus, .search-filter select:focus { border-color: var(--accent); box-shadow: 0 0 8px rgba(99,102,241,0.3); }
+    .support-faq { margin-top: 1.5rem; padding: 1rem; background: rgba(99,102,241,0.05); border-radius: 20px; }
+    .support-faq-item { margin-bottom: 1rem; padding: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .support-faq-question { font-weight: 600; color: var(--accent); margin-bottom: 0.3rem; }
+    .support-faq-answer { color: var(--text-muted); font-size: 0.9rem; }
   </style>
 </head>
 <body>
-  <canvas id="canvas-bg"></canvas>
 
-  <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
-  <div class="overlay" id="overlay"></div>
-
-  <div class="side-menu" id="sideMenu">
-    <div class="menu-item active" data-section="nevoraswap">🏠 Nevoraswap</div>
-    <div class="menu-item" data-section="profile">👤 Профиль</div>
-    <div class="menu-item" data-section="prices">💰 Цены</div>
-    <div class="menu-item" data-section="activate">🔑 Активация</div>
-    <div class="menu-item" data-section="support">💬 Поддержка</div>
-    <div class="menu-item" data-section="launcher">📥 Скачать</div>
-    <div class="menu-item" data-section="stats">📈 Статистика</div>
-    <div class="menu-item" data-section="reviews">⭐ Отзывы</div>
-    <div class="menu-item" id="adminMenuItem" data-section="admin" style="display:none;">⚙️ Админ панель</div>
+<div class="loader-screen" id="loaderScreen">
+  <div class="loader-content">
+    <div class="loader-logo">NEVORA SWAP</div>
+    <div class="loader-sub">загрузка платформы...</div>
   </div>
+</div>
 
-  <div class="main-content">
-    <div class="top-bar">
-      <div class="logo">NEVORA SWAP</div>
-      <div class="auth-buttons" id="authButtons"><button class="btn-auth" id="showAuthModalBtn">Вход / Регистрация</button></div>
-      <div class="user-greeting" id="userGreeting" style="display: none;"></div>
-    </div>
+<canvas id="canvas-bg"></canvas>
+<header>
+  <div class="logo">NEVORA SWAP</div>
+  <nav id="mainNav">
+    <a data-section="home" onclick="showSection('home')">Главная</a>
+    <a data-section="features" onclick="showSection('features')">Возможности</a>
+    <a data-section="pricing" onclick="showSection('pricing')">Цены</a>
+    <a data-section="profile" onclick="showSection('profile')">Профиль</a>
+    <a data-section="support" onclick="showSection('support')">Поддержка</a>
+    <a data-section="launcher" onclick="showSection('launcher')">Скачать</a>
+    <a id="adminNavLink" data-section="admin" onclick="showSection('admin')" style="display:none;">Админ</a>
+    <div class="nav-underline" id="navUnderline"></div>
+  </nav>
+  <div id="authButtons"><button class="btn btn-primary" onclick="openAuthModal()">Вход / Регистрация</button></div>
+  <div id="userGreeting" style="display:none;"><span class="btn btn-outline" onclick="showSection('profile')" id="greetingText"></span></div>
+</header>
 
-    <div id="nevoraswap" class="section active">
-      <h2 class="section-title">О продукте</h2>
-      <div class="card">
-        <p style="font-size:1.1rem; margin-bottom:1.2rem;">Nevora Swap — профессиональный инструмент для автоматического переключения предметов в инвентаре, подходит для всех версий начиная от 1.12.2 заканчивая новейшими.</p>
-        <div class="important-note"><strong style="color:#7c3aed;">❗ ВАЖНО:</strong> Nevora Swap НЕ МОД, поэтому он не запрещен на серверах, в том числе и на Funtime. Данная программа работает поверх Minecraft, что означает, что она не внедряется в процесс игры, то есть не является читом.</div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:1rem; margin-top:1.5rem;">
-          <div style="background:#14141f; border-radius:20px; padding:1.2rem;"><div style="color:#7c3aed; font-size:1.3rem;">⚡ Мгновенный свап</div><p style="color:#aaa; font-size:0.95rem;">Быстрое переключение предметов с настраиваемой задержкой</p></div>
-          <div style="background:#14141f; border-radius:20px; padding:1.2rem;"><div style="color:#7c3aed; font-size:1.3rem;">🖱️ Bulova Helper</div><p style="color:#aaa; font-size:0.95rem;">Сложная механика для булавы с автоматической синхронизацией</p></div>
-          <div style="background:#14141f; border-radius:20px; padding:1.2rem;"><div style="color:#7c3aed; font-size:1.3rem;">🔒 Защита HWID</div><p style="color:#aaa; font-size:0.95rem;">Привязка к устройству и защита от повторного запуска</p></div>
-        </div>
-        <div style="text-align:center; margin-top:1.5rem;"><a href="https://t.me/nevoraswap" target="_blank" class="support-btn" style="display:inline-block;">💬 Telegram канал</a></div>
-      </div>
-    </div>
+<div id="home" class="section active"><section class="hero"><h1>Автоматизация для Minecraft</h1><p>Nevora Swap — профессиональный инструмент для автоматического переключения предметов в инвентаре. Работает поверх Minecraft, не является модом и не запрещён на серверах.</p><div class="hero-buttons" id="heroButtons"></div></section></div>
 
-    <div id="profile" class="section">
-      <h2 class="section-title">Профиль</h2>
-      <div class="card">
-        <div id="profileNotLogged" style="text-align:center; padding:1.5rem;"><div style="font-size:2.5rem; color:#7c3aed;">🔐</div><h3>Войдите в аккаунт</h3><button class="btn-auth" id="profileLoginBtn">Вход / Регистрация</button></div>
-        <div id="profileLogged" style="display:none;">
-          <div class="profile-header">
-            <div class="profile-avatar" id="profileAvatar"><span>👤</span></div>
-            <div class="profile-info">
-              <div class="profile-login" id="profileLoginDisplay"></div>
-              <div><span class="profile-badge" id="profileStatusBadge">Активный пользователь</span><span id="ownerBadge" class="owner-badge" style="display:none;">👑 OWNER</span><span id="adminBadge" class="admin-badge" style="display:none;">ADMIN</span></div>
-            </div>
-          </div>
-          <div class="license-card" id="licenseInfo">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;"><span class="license-type" id="licenseType">Активная лицензия</span><span class="expired-badge" id="expiredBadge" style="display:none;">Истекла</span></div>
-            <div class="license-key-container"><div class="license-key"><span id="licenseKeyDisplay" class="license-key-blur">---- ---- ---- ----</span><div class="key-actions"><span class="key-btn" id="toggleKeyBtn">👁️ показать</span><span class="key-btn" id="copyKeyBtn">📋 копировать</span></div></div></div>
-            <div class="license-timer"><div class="timer-progress"><div class="timer-fill" id="timerProgress" style="width:100%"></div></div><span class="timer-text" id="timerText">100%</span></div>
-            <div class="remaining-time" id="remainingTimeDisplay">Осталось: -- дн. -- ч. -- мин.</div>
-          </div>
-          <div style="margin-top:1rem; text-align:center; display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
-            <button class="btn-outline" id="activateNewKeyBtn">➕ Активировать новый ключ</button>
-            <button class="change-password-btn" id="changePasswordBtn">🔑 Сменить пароль</button>
-          </div>
-          <button class="logout-btn" id="logoutBtn">Выйти из аккаунта</button>
-        </div>
-      </div>
-    </div>
+<div id="features" class="section"><div class="container"><h2 class="section-title">Возможности</h2><div class="features"><div class="feature-card"><div class="feature-icon">⚡</div><h3>AutoSwap</h3><p>Меняет талисман, сферу и другие предметы из инвентаря в пределах ±50 миллисекунд. Мгновенная реакция и плавная работа.</p></div><div class="feature-card"><div class="feature-icon">🖱️</div><h3>Bulova Helper</h3><p>Сложная механика, которая выполняет последовательность действий: опускает камеру вниз → кидает заряд ветра → прыгает → берёт булаву в руки. Вам остаётся только попасть по оппоненту!</p></div><div class="feature-card"><div class="feature-icon">🔒</div><h3>Защита HWID</h3><p>Привязка к устройству и защита от повторного запуска. Ваша лицензия надёжно привязана к вашему ПК.</p></div><div class="feature-card"><div class="feature-icon">📊</div><h3>Статистика</h3><p>Подробная аналитика всех ваших действий в программе: количество свапов, эффективность и многое другое.</p></div></div></div></div>
 
-    <div id="prices" class="section">
-      <h2 class="section-title">Цены</h2>
-      <div class="pricing-grid">
-        <div class="price-card" data-days="12 часов" data-type="012h" data-price="24" data-funpay="https://funpay.com/lots/offer?id=65952691"><div>12ч</div><div>24 ₽</div></div>
-        <div class="price-card" data-days="7 дней" data-type="007d" data-price="59" data-funpay="https://funpay.com/lots/offer?id=65952858"><div>7д</div><div>59 ₽</div></div>
-        <div class="price-card" data-days="30 дней" data-type="030d" data-price="119" data-funpay="https://funpay.com/lots/offer?id=65952723"><div>30д</div><div>119 ₽</div></div>
-        <div class="price-card" data-days="365 дней" data-type="365d" data-price="249" data-funpay="https://funpay.com/lots/offer?id=64199862"><div>365д</div><div>249 ₽</div></div>
-      </div>
-    </div>
+<div id="pricing" class="section"><div class="container"><h2 class="section-title">Выберите свой тариф</h2><div class="pricing-grid"><div class="price-card" data-days="12 часов" data-type="012h" data-price="24" data-funpay="https://funpay.com/lots/offer?id=65952691"><div class="plan-name">AutoSwap Basic</div><div class="plan-price">₽24 <span>/12ч</span></div><ul class="plan-features"><li>Время подписки: 12 часов</li><li>Полный функционал</li><li>Поддержка 24/7</li></ul></div><div class="price-card" data-days="7 дней" data-type="007d" data-price="59" data-funpay="https://funpay.com/lots/offer?id=65952858"><div class="plan-name">AutoSwap Plus</div><div class="plan-price">₽59 <span>/7д</span></div><ul class="plan-features"><li>Время подписки: 7 дней</li><li>Полный функционал</li><li>Поддержка 24/7</li></ul></div><div class="price-card featured" data-days="30 дней" data-type="030d" data-price="119" data-funpay="https://funpay.com/lots/offer?id=65952723"><span class="popular-badge">Популярный</span><div class="plan-name">NevoraSwap Pro</div><div class="plan-price">₽119 <span>/30д</span></div><ul class="plan-features"><li>Время подписки: 30 дней</li><li>Полный функционал</li><li>Поддержка 24/7</li><li>Бесплатный сброс HWID</li></ul></div><div class="price-card" data-days="1 год" data-type="365d" data-price="249" data-funpay="https://funpay.com/lots/offer?id=64199862"><div class="plan-name">Enterprise</div><div class="plan-price">₽249 <span>/год</span></div><ul class="plan-features"><li>Время подписки: 1 год</li><li>Полный функционал</li><li>Поддержка 24/7</li><li>Бесплатный сброс HWID</li></ul></div></div><div class="payment-note">✅ После оплаты вы получите: все туториалы по установке, а также индивидуальный ключ, который можно будет активировать в профиле.</div></div></div>
 
-    <div id="activate" class="section">
-      <h2 class="section-title">Активация ключа</h2>
-      <div class="card" style="max-width:500px; margin:0 auto;" id="activateCard"></div>
-    </div>
+<div id="profile" class="section"><div class="container"><h2 class="section-title">Профиль</h2><div id="profileNotLogged" style="text-align:center; padding:3rem;"><div style="font-size:3rem;">🔐</div><h3>Войдите в аккаунт</h3><p style="color:var(--text-muted); margin:1rem 0;">Получите доступ ко всем функциям</p><button class="btn btn-primary" onclick="openAuthModal()">Войти</button></div><div id="profileLogged" style="display:none;"><div class="profile-card"><div class="profile-header"><div class="profile-avatar" id="profileAvatar">👤</div><div class="profile-info"><h3 id="profileUsername"></h3><div><span class="profile-badge" id="profileStatus">Активный пользователь</span><span id="adminBadge" class="profile-badge" style="background:var(--warning); display:none;">ADMIN</span></div></div></div><div class="license-info"><h4>Активная лицензия</h4><div class="license-key-container"><span class="license-key license-key-blur" id="licenseKey">---- ---- ---- ----</span><div class="key-actions"><button class="key-btn" id="toggleKeyBtn">👁️ показать</button><button class="key-btn" id="copyKeyBtn">📋 копировать</button></div></div><div class="timer-bar"><div class="timer-fill" id="timerFill" style="width:100%"></div></div><p id="remainingTime" style="text-align:center; color:var(--text-muted);">⏱️ Осталось: -- дн. -- ч. -- мин.</p></div><div style="margin-top:1.5rem;"><input type="text" id="activationKeyInput" class="activation-input" placeholder="XXXXXX-XXXXXX-XXXXXX-XXXXXX" style="text-transform:uppercase;"><button class="btn btn-primary" id="activateKeyBtn" style="width:100%; margin-top:0.8rem;">Активировать ключ</button></div><div style="margin-top:2rem; text-align:center;"><button class="btn btn-outline" onclick="showSection('pricing')">➕ Продлить подписку</button><button class="btn btn-outline" id="logoutBtn" style="border-color:var(--error); color:var(--error); margin-left:1rem;">Выйти</button></div></div></div></div></div>
 
-    <div id="support" class="section">
-      <h2 class="section-title">Поддержка</h2>
-      <div class="card">
-        <p>Свяжитесь с нами любым удобным способом:</p>
-        <div class="support-buttons"><a href="https://t.me/vergyTG" target="_blank" class="support-btn">📩 Админ @vergyTG</a><a href="https://t.me/nevoraswap" target="_blank" class="support-btn">📢 Канал @nevoraswap</a></div>
-        <div style="margin-top:1.5rem; padding:1.2rem; background:#14141f; border-radius:20px;">
-          <h4 style="color:#7c3aeb;">❓ Часто задаваемые вопросы</h4>
-          <div><div style="font-weight:bold; color:#b39ddb;">🔹 Как активировать ключ?</div><p style="color:#aaa;">Купите ключ в разделе "Цены", затем введите его в разделе "Активация".</p></div>
-          <div><div style="font-weight:bold; color:#b39ddb;">🔹 Что делать, если вызвали на проверку?</div><p style="color:#aaa;">Просто закрываете программу. Если спросят — говорите, что это AHK скрипт.</p></div>
-          <div><div style="font-weight:bold; color:#b39ddb;">🔹 Как скачать лаунчер?</div><p style="color:#aaa;">Войдите в аккаунт и активируйте лицензию, после этого кнопка скачивания станет доступна.</p></div>
-        </div>
-      </div>
-    </div>
+<div id="support" class="section"><div class="container"><h2 class="section-title">Поддержка</h2><div class="profile-card"><p>Свяжитесь с нами любым удобным способом:</p><div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem;"><a href="https://t.me/vergyTG" target="_blank" class="btn btn-primary" style="text-decoration:none; text-align:center;">📩 Админ @vergyTG</a><a href="https://t.me/nevoraswap" target="_blank" class="btn btn-outline" style="text-decoration:none; text-align:center;">📢 Канал @nevoraswap</a></div><div class="support-faq"><h4 style="color:var(--accent); margin-bottom:1rem;">❓ Часто задаваемые вопросы</h4><div class="support-faq-item"><div class="support-faq-question">🔹 Как активировать ключ?</div><div class="support-faq-answer">Купите ключ в разделе "Цены", затем введите его в разделе "Профиль".</div></div><div class="support-faq-item"><div class="support-faq-question">🔹 Что делать, если вызвали на проверку?</div><div class="support-faq-answer">Просто закрываете программу. Если спросят — говорите, что это AHK скрипт.</div></div><div class="support-faq-item"><div class="support-faq-question">🔹 Как скачать лаунчер?</div><div class="support-faq-answer">Войдите в аккаунт и активируйте лицензию, после этого кнопка скачивания станет доступна.</div></div></div></div></div></div>
 
-    <div id="launcher" class="section">
-      <h2 class="section-title">Скачать лаунчер</h2>
-      <div class="card" style="text-align:center;">
-        <div style="font-size:2.5rem; color:#7c3aed;">📦</div>
-        <h3>Nevora Swap Launcher</h3>
-        <p style="color:#aaa;">Windows 10/11</p>
-        <a href="https://drive.google.com/file/d/1Y_xFhEen-xb1KRKWwb62pOsf79pZHGf4/view?usp=drive_link" id="launcherMainBtn" class="btn-outline" style="font-size:1.3rem; padding:0.8rem 2rem; text-decoration: none; display: inline-block;" download>СКАЧАТЬ</a>
-        <p style="margin-top:1rem; color:#aaa;" id="launcherStatus">Доступно после входа и активации лицензии</p>
-      </div>
-    </div>
-    
-    <div id="stats" class="section">
-      <h2 class="section-title">Статистика</h2>
-      <div class="card">
-        <div class="stats-grid" id="statsGrid">
-          <div class="stat-card"><div class="stat-value" id="statUsers">0</div><div class="stat-label">Всего пользователей</div></div>
-          <div class="stat-card"><div class="stat-value" id="statActiveLicenses">0</div><div class="stat-label">Активных лицензий</div></div>
-          <div class="stat-card"><div class="stat-value" id="statTotalActivations">0</div><div class="stat-label">Всего активаций</div></div>
-        </div>
-      </div>
-    </div>
-    
-    <div id="reviews" class="section">
-      <h2 class="section-title">Отзывы</h2>
-      <div class="card">
-        <div id="reviewsList" class="reviews-list"></div>
-        <div id="addReviewSection" style="margin-top: 1rem;">
-          <h4>Оставить отзыв</h4>
-          <div class="star-rating" id="starRating">
-            <button class="star" data-rating="1">★</button>
-            <button class="star" data-rating="2">★</button>
-            <button class="star" data-rating="3">★</button>
-            <button class="star" data-rating="4">★</button>
-            <button class="star" data-rating="5">★</button>
-          </div>
-          <textarea id="reviewText" placeholder="Ваш отзыв..." style="width:100%; padding:0.8rem; background:#1e1e2a; border:1px solid #2a2a3a; border-radius:16px; color:white; margin:0.5rem 0; resize:vertical;" rows="3"></textarea>
-          <button id="submitReviewBtn" class="review-btn">Отправить отзыв</button>
-        </div>
-      </div>
-    </div>
-    
-    <div id="admin" class="section">
-      <h2 class="section-title">⚙️ Административная панель</h2>
-      <div class="card"><div id="adminContent"><p style="text-align:center;">Загрузка...</p></div></div>
-    </div>
+<div id="launcher" class="section"><div class="container"><h2 class="section-title">Скачать лаунчер</h2><div class="profile-card" style="text-align:center;"><div style="font-size:3rem;">📦</div><h3>Nevora Swap Launcher</h3><p>Windows 10/11</p><a href="https://drive.google.com/file/d/1Y_xFhEen-xb1KRKWwb62pOsf79pZHGf4/view" id="launcherMainBtn" class="btn btn-primary" style="display:inline-block; text-decoration:none;" target="_blank">СКАЧАТЬ</a><p id="launcherStatus" style="margin-top:1rem; color:var(--text-muted);">Доступно после входа и активации лицензии</p></div></div></div>
 
-    <footer><div>NEVORA SWAP</div><div>© 2026</div></footer>
-  </div>
+<div id="admin" class="section"><div class="container"><h2 class="section-title">⚙️ Административная панель</h2><div id="adminContent" class="profile-card"><p style="text-align:center;">Загрузка...</p></div></div></div>
 
-  <div class="agreement-box"><button class="agreement-clickable" id="agreementBtn" style="background:transparent; border:none; cursor:pointer; color:#b39ddb; font-size:1.1rem;">📜 Пользовательское соглашение</button></div>
+<footer><div class="footer-links"><a href="https://t.me/nevoraswap" target="_blank">Telegram</a><a href="#" onclick="openAgreementModal()">Политика</a></div><p>© 2026 NEVORA SWAP. Все права защищены.</p></footer>
 
-  <!-- Модальные окна - КРЕСТИКИ В ПРАВОМ ВЕРХНЕМ УГЛУ -->
-  <div class="modal-overlay" id="agreementModal"><div class="modal-card"><button class="close-modal" id="closeAgreementModal">✖</button><h2 style="text-align:center; margin-top:0;">📜 Пользовательское соглашение</h2><div style="color:#aaa;"><p><strong>1. Общие положения</strong><br>Используя NEVORA SWAP, вы соглашаетесь с условиями.</p><p><strong>2. Запрещенные действия</strong><br>❌ Запрещена передача лицензии<br>❌ Запрещено взламывать программу</p><p><strong>3. Ответственность</strong><br>Администрация вправе заблокировать подписку без возврата средств.</p></div><button class="btn-auth" id="closeAgreementBtn">Закрыть</button></div></div>
+<div class="modal-overlay" id="authModal"><div class="modal-card"><button class="close-modal" onclick="closeModal('authModal')">✖</button><div class="modal-tabs"><button class="modal-tab active" id="loginTabBtn" onclick="switchAuthTab('login')">Вход</button><button class="modal-tab" id="registerTabBtn" onclick="switchAuthTab('register')">Регистрация</button></div><div id="loginForm"><input type="text" id="loginUsername" placeholder="Логин" onkeypress="if(event.key==='Enter') login()"><div class="password-field"><input type="password" id="loginPassword" placeholder="Пароль" onkeypress="if(event.key==='Enter') login()"><button class="password-toggle" onclick="togglePassword('loginPassword')">👁️</button></div><div id="loginError" class="error-text"></div><button class="btn btn-primary" onclick="login()" style="width:100%;">Войти</button></div><div id="registerForm" style="display:none;"><input type="text" id="regUsername" placeholder="Логин (3-15 символов)" onkeypress="if(event.key==='Enter') register()"><div class="password-field"><input type="password" id="regPassword" placeholder="Пароль" onkeypress="if(event.key==='Enter') register()"><button class="password-toggle" onclick="togglePassword('regPassword')">👁️</button></div><div class="password-field"><input type="password" id="regPasswordConfirm" placeholder="Повторите пароль" onkeypress="if(event.key==='Enter') register()"><button class="password-toggle" onclick="togglePassword('regPasswordConfirm')">👁️</button></div><div id="captchaContainer" class="captcha-container"></div><div id="registerError" class="error-text"></div><button class="btn btn-primary" onclick="register()" style="width:100%;">Зарегистрироваться</button></div></div></div>
 
-  <div class="modal-overlay" id="authModal"><div class="modal-card"><button class="close-modal" id="closeAuthModal">✖</button><div class="modal-tabs"><button class="modal-tab active" id="loginTab">Вход</button><button class="modal-tab" id="registerTab">Регистрация</button></div><div id="authForms"><div id="loginForm"><input type="text" placeholder="Логин" id="loginUsername"><div class="password-field"><input type="password" placeholder="Пароль" id="loginPassword"><button class="password-toggle" onclick="togglePassword('loginPassword')">👁️</button></div><div id="loginError" class="error-text"></div><button id="loginBtn">Войти</button></div><div id="registerForm" style="display:none;"><input type="text" placeholder="Логин (3-15 символов)" id="regUsername"><div class="password-field"><input type="password" placeholder="Пароль" id="regPassword"><button class="password-toggle" onclick="togglePassword('regPassword')">👁️</button></div><div class="password-field"><input type="password" placeholder="Повторите пароль" id="regPasswordConfirm"><button class="password-toggle" onclick="togglePassword('regPasswordConfirm')">👁️</button></div><div id="registerError" class="error-text"></div><div id="captchaContainer" class="captcha-container"></div><button id="registerBtn">Зарегистрироваться</button></div></div></div></div>
+<div class="modal-overlay" id="paymentModal"><div class="modal-card"><button class="close-modal" onclick="closeModal('paymentModal')">✖</button><h2 id="paymentTitle" style="text-align:center;">Тариф</h2><p id="paymentPrice" style="font-size:3rem; text-align:center; font-weight:bold; color:var(--primary);">₽0</p><div style="display:grid; gap:1rem; margin-top:2rem;"><a href="#" id="funpayLink" target="_blank" class="btn btn-primary" style="text-decoration:none; text-align:center;">Оплатить через FunPay</a><button class="btn btn-outline" onclick="contactAdmin()">Связаться с администратором</button></div></div></div>
 
-  <div class="modal-overlay" id="changePasswordModal"><div class="modal-card"><button class="close-modal" id="closePasswordModal">✖</button><h2 style="text-align:center; margin-top:0;">Смена пароля</h2><div class="password-field"><input type="password" id="oldPassword" placeholder="Текущий пароль"><button class="password-toggle" onclick="togglePassword('oldPassword')">👁️</button></div><div class="password-field"><input type="password" id="newPassword" placeholder="Новый пароль"><button class="password-toggle" onclick="togglePassword('newPassword')">👁️</button></div><div class="password-field"><input type="password" id="confirmNewPassword" placeholder="Подтвердите пароль"><button class="password-toggle" onclick="togglePassword('confirmNewPassword')">👁️</button></div><div id="passwordError" class="error-text"></div><button id="confirmPasswordBtn">Сменить пароль</button></div></div>
+<div class="modal-overlay" id="agreementModal"><div class="modal-card"><button class="close-modal" onclick="closeModal('agreementModal')">✖</button><h2 style="text-align:center;">📜 Пользовательское соглашение</h2><div style="color:var(--text-muted);"><p><strong>1. Общие положения</strong><br>Используя NEVORA SWAP, вы соглашаетесь с условиями.</p><p><strong>2. Запрещенные действия</strong><br>❌ Запрещена передача лицензии третьим лицам<br>❌ Запрещено взламывать или модифицировать ПО</p><p><strong>3. Ответственность</strong><br>Администрация вправе заблокировать доступ без возврата средств.</p></div><button class="btn btn-primary" onclick="closeModal('agreementModal')" style="width:100%; margin-top:1.5rem;">Закрыть</button></div></div>
 
-  <div class="modal-overlay" id="paymentModal"><div class="modal-card"><button class="close-modal" id="closePaymentModal">✖</button><h2 id="paymentTitle" style="text-align:center; margin-top:0;">12 часов</h2><p id="paymentPrice" style="font-size:2rem; text-align:center;">24 ₽</p><div class="payment-actions"><a href="#" id="funpayLink" target="_blank" class="payment-btn">FunPay</a><button class="payment-btn" id="adminPayBtn">Admin</button></div></div></div>
+<script>
+  // Защита от открытия исходного кода и DevTools
+  (function() {
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'U') || (e.ctrlKey && e.shiftKey && e.key === 'J')) {
+        e.preventDefault();
+        return false;
+      }
+    });
+    const devtools = /./; devtools.toString = function() { this.opened = true; };
+    setInterval(() => { if (devtools.opened) { document.body.innerHTML = '<div style="text-align:center; margin-top:20%; color:white;"><h1>🔒 Доступ запрещен</h1></div>'; } }, 500);
+  })();
 
-  <div class="modal-overlay" id="logoutConfirmModal"><div class="modal-card"><button class="close-modal" id="closeLogoutModal">✖</button><h2 style="text-align:center; margin-top:0;">Выход из аккаунта</h2><p style="text-align:center; color:#aaa; margin:1rem 0;">Вы уверены, что хотите выйти?</p><div class="modal-buttons"><button id="confirmLogoutBtn" class="confirm-btn">Выйти</button><button id="cancelLogoutBtn" class="cancel-btn">Отмена</button></div></div></div>
+  // Функция для обновления позиции подчёркивания
+  function updateUnderline(activeLink) {
+    const underline = document.getElementById('navUnderline');
+    if (!underline || !activeLink) return;
+    const nav = document.getElementById('mainNav');
+    const navRect = nav.getBoundingClientRect();
+    const linkRect = activeLink.getBoundingClientRect();
+    underline.style.left = (linkRect.left - navRect.left) + 'px';
+    underline.style.width = linkRect.width + 'px';
+  }
 
-  <script>
-    window.togglePassword = function(id) {
-      const input = document.getElementById(id);
-      if (input) input.type = input.type === 'password' ? 'text' : 'password';
-    };
+  // Установка активной вкладки и обновление подчёркивания
+  function setActiveNavItem(sectionId) {
+    const navLinks = document.querySelectorAll('nav a[data-section]');
+    let activeLink = null;
+    navLinks.forEach(link => {
+      if (link.getAttribute('data-section') === sectionId) {
+        link.classList.add('active');
+        activeLink = link;
+      } else {
+        link.classList.remove('active');
+      }
+    });
+    if (activeLink) {
+      updateUnderline(activeLink);
+    }
+  }
 
-    // === ЗАЩИТА ОТ ИНСПЕКТОРА ===
-    (function() {
-      document.addEventListener('contextmenu', e => e.preventDefault());
-      document.addEventListener('selectstart', e => e.preventDefault());
-      document.addEventListener('keydown', e => {
-        if (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 'i' || e.key === 'I' || e.key === 'c' || e.key === 'C' || e.key === 's' || e.key === 'S')) {
-          e.preventDefault();
-          return false;
-        }
-        if (e.key === 'F12') { e.preventDefault(); return false; }
-        if (e.ctrlKey && e.shiftKey && e.key === 'J') { e.preventDefault(); return false; }
-      });
-      
-      let devtools = /./;
-      devtools.toString = function() { this.opened = true; };
-      setInterval(() => {
-        if (devtools.opened) {
-          document.body.innerHTML = '<div style="text-align:center; margin-top:20%;"><h1>🔒 Доступ запрещен</h1><p>Инструменты разработчика отключены</p></div>';
-        }
-      }, 1000);
-    })();
+  // Скрытие загрузочного экрана через 2 секунды
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const loader = document.getElementById('loaderScreen');
+      if (loader) {
+        loader.classList.add('fade-out');
+        setTimeout(() => { if(loader) loader.style.display = 'none'; }, 800);
+      }
+    }, 2000);
+  });
 
-    (function() {
-      // Конфигурация Firebase
-      const firebaseConfig = {
-        apiKey: "AIzaSyCbgkMW0F0Nb8THjhoCapueR0ccGTexoyk",
-        authDomain: "swap-3f785.firebaseapp.com",
-        databaseURL: "https://swap-3f785-default-rtdb.firebaseio.com",
-        projectId: "swap-3f785",
-        storageBucket: "swap-3f785.appspot.com",
-        messagingSenderId: "109876543210",
-        appId: "1:109876543210:web:abc123def456"
-      };
-      
-      firebase.initializeApp(firebaseConfig);
-      const database = firebase.database();
-      
-      function showToast(message, type = 'info') {
-        const toast = document.createElement('div');
-        toast.className = `toast-notification toast-${type}`;
-        toast.innerHTML = message;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 3000);
-      }
-      
-      // ФОН с взаимодействием мыши
-      const canvas = document.getElementById('canvas-bg');
-      const ctx = canvas.getContext('2d');
-      let width, height, particles = [];
-      let mouseX = 0, mouseY = 0;
-      let isMobile = /Android|webOS|iPhone|iPad|iPod/i.test(navigator.userAgent);
-      
-      function createParticles() {
-        particles = [];
-        const count = isMobile ? 80 : 200;
-        for (let i = 0; i < count; i++) {
-          particles.push({
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
-            baseX: Math.random() * window.innerWidth,
-            baseY: Math.random() * window.innerHeight,
-            size: Math.random() * (isMobile ? 3 : 4) + 1,
-            speed: 0.01 + Math.random() * 0.02,
-            vx: (Math.random() - 0.5) * 0.5,
-            vy: (Math.random() - 0.5) * 0.5
-          });
-        }
-      }
-      
-      function resizeCanvas() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
-        createParticles();
-      }
-      resizeCanvas();
-      window.addEventListener('resize', resizeCanvas);
-      
-      document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-      });
-      
-      function updateParticles() {
-        particles.forEach(p => {
-          let dxBase = p.baseX - p.x;
-          let dyBase = p.baseY - p.y;
-          p.x += dxBase * p.speed + p.vx;
-          p.y += dyBase * p.speed + p.vy;
-          
-          let dx = p.x - mouseX;
-          let dy = p.y - mouseY;
-          let dist = Math.hypot(dx, dy);
-          if (dist < 100) {
-            let force = (100 - dist) / 100 * 2;
-            let angle = Math.atan2(dy, dx);
-            p.x += Math.cos(angle) * force;
-            p.y += Math.sin(angle) * force;
-          }
-          
-          p.x = Math.min(width + 50, Math.max(-50, p.x));
-          p.y = Math.min(height + 50, Math.max(-50, p.y));
-        });
-      }
-      
-      function draw() {
-        ctx.clearRect(0, 0, width, height);
-        ctx.shadowBlur = isMobile ? 8 : 18;
-        ctx.shadowColor = '#b39ddb';
-        particles.forEach(p => {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          ctx.fillStyle = '#7c3aed';
-          ctx.fill();
-        });
-        ctx.shadowBlur = 0;
-      }
-      
-      function animate() { updateParticles(); draw(); requestAnimationFrame(animate); }
-      animate();
-      
-      // МЕНЮ
-      const menuToggle = document.getElementById('menuToggle');
-      const sideMenu = document.getElementById('sideMenu');
-      const overlay = document.getElementById('overlay');
-      menuToggle.addEventListener('click', () => { sideMenu.classList.toggle('open'); overlay.classList.toggle('show'); });
-      overlay.addEventListener('click', () => { sideMenu.classList.remove('open'); overlay.classList.remove('show'); });
-      
-      document.querySelectorAll('.menu-item').forEach(item => {
-        item.addEventListener('click', function() {
-          const sectionId = this.dataset.section;
-          document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
-          this.classList.add('active');
-          document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-          document.getElementById(sectionId).classList.add('active');
-          sideMenu.classList.remove('open');
-          overlay.classList.remove('show');
-          if (sectionId === 'admin' && window.currentUser?.is_admin) loadAdminPanel();
-          if (sectionId === 'stats') loadStats();
-          if (sectionId === 'reviews') loadReviews();
-        });
-      });
-      
-      let currentUser = null;
-      let currentLicense = null;
-      let isKeyVisible = false;
-      let currentCaptcha = '';
-      
-      function hasActiveLicense() {
-        return currentLicense && 
-               currentLicense.status === 'active' && 
-               currentLicense.expires_at && 
-               !isExpired(currentLicense);
-      }
-      
-      function generateCaptcha() {
-        const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
-        let captcha = '';
-        for (let i = 0; i < 6; i++) captcha += chars[Math.floor(Math.random() * chars.length)];
-        currentCaptcha = captcha;
-        return captcha;
-      }
-      
-      function renderCaptcha() {
-        const container = document.getElementById('captchaContainer');
-        if (!container) return;
-        const captcha = generateCaptcha();
-        container.innerHTML = `
-          <div class="captcha-code">${captcha}</div>
-          <div style="margin-top: 5px;">
-            <button class="captcha-refresh" onclick="window.refreshCaptcha()">🔄 Обновить капчу</button>
-          </div>
-          <input type="text" id="captchaInput" class="captcha-input" placeholder="Введите код с картинки">
-          <div class="captcha-note">Введите символы, которые видите на картинке</div>
-        `;
-      }
-      
-      window.refreshCaptcha = function() {
-        const container = document.getElementById('captchaContainer');
-        if (container) {
-          const captcha = generateCaptcha();
-          const codeDiv = container.querySelector('.captcha-code');
-          if (codeDiv) codeDiv.innerText = captcha;
-        }
-      };
-      
-      function hashPassword(pwd) { return CryptoJS.SHA256(pwd).toString(); }
-      function saveSession(username) { localStorage.setItem('nevora_session', username); }
-      function loadSession() { return localStorage.getItem('nevora_session'); }
-      function clearSession() { localStorage.removeItem('nevora_session'); currentUser = null; currentLicense = null; updateUI(); }
-      
-      async function generateFingerprint() {
-        try {
-          const components = [`cpu_${navigator.hardwareConcurrency || 'unknown'}`, `screen_${screen.width}x${screen.height}`, `lang_${navigator.language}`, `tz_${new Date().getTimezoneOffset()}`, "NEVORA_SECURE_SALT_2026"];
-          return CryptoJS.SHA512(components.join('|')).toString().substring(0, 64);
-        } catch { return CryptoJS.SHA512(Math.random().toString()).toString().substring(0, 64); }
-      }
-      
-      async function getUser(username) {
-        try { 
-          const snap = await database.ref('users/' + username).once('value'); 
-          return snap.val(); 
-        } catch (e) { 
-          console.error('Ошибка:', e); 
-          return null; 
-        }
-      }
-      
-      async function saveUser(username, data) {
-        try { 
-          await database.ref('users/' + username).set(data); 
-          return true; 
-        } catch (e) { 
-          console.error('Ошибка:', e); 
-          return false; 
-        }
-      }
-      
-      async function updateUser(username, data) {
-        try { 
-          await database.ref('users/' + username).update(data); 
-          return true; 
-        } catch (e) { 
-          return false; 
-        }
-      }
-      
-      async function getLicenseByCode(code) {
-        try {
-          const snap = await database.ref('licenses').once('value');
-          const licenses = snap.val();
-          if (!licenses) return null;
-          for (const [id, lic] of Object.entries(licenses)) {
-            if (lic.code && lic.code.toUpperCase() === code.toUpperCase()) return { ...lic, id };
-          }
-          return null;
-        } catch (e) { return null; }
-      }
-      
-      async function updateLicense(id, data) {
-        try { await database.ref('licenses/' + id).update(data); return true; } catch { return false; }
-      }
-      
-      async function deleteLicense(id) {
-        try { await database.ref('licenses/' + id).remove(); return true; } catch { return false; }
-      }
-      
-      function isExpired(license) {
-        if (!license || !license.expires_at) return false;
-        try { return new Date() > new Date(license.expires_at); } catch { return false; }
-      }
-      
-      function getRemainingTime(license) {
-        if (!license || !license.expires_at) return { days: 0, hours: 0, minutes: 0, totalMinutes: 0 };
-        const expiry = new Date(license.expires_at);
-        const now = new Date();
-        if (now > expiry) return { days: 0, hours: 0, minutes: 0, totalMinutes: 0 };
-        const diff = expiry - now;
-        const totalMinutes = Math.floor(diff / (1000 * 60));
-        return {
-          days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-          totalMinutes: totalMinutes
-        };
-      }
-      
-      function getTotalMinutes(type) {
-        switch(type) {
-          case '012h': return 12 * 60;
-          case '007d': return 7 * 24 * 60;
-          case '030d': return 30 * 24 * 60;
-          case '365d': return 365 * 24 * 60;
-          default: return 30 * 24 * 60;
-        }
-      }
-      
-      async function loadStats() {
-        try {
-          const usersSnap = await database.ref('users').once('value');
-          const licensesSnap = await database.ref('licenses').once('value');
-          const users = usersSnap.val() || {};
-          const licenses = licensesSnap.val() || {};
-          
-          let activeCount = 0;
-          let totalActivations = 0;
-          for (const lic of Object.values(licenses)) {
-            if (lic.status === 'active' && !isExpired(lic)) activeCount++;
-            if (lic.status === 'active') totalActivations++;
-          }
-          
-          document.getElementById('statUsers').innerText = Object.keys(users).length;
-          document.getElementById('statActiveLicenses').innerText = activeCount;
-          document.getElementById('statTotalActivations').innerText = totalActivations;
-        } catch(e) { console.error(e); }
-      }
-      
-      async function loadReviews() {
-        try {
-          const reviewsSnap = await database.ref('reviews').once('value');
-          const reviews = reviewsSnap.val() || {};
-          const container = document.getElementById('reviewsList');
-          let html = '';
-          for (const [id, review] of Object.entries(reviews).reverse()) {
-            html += `
-              <div class="review-item">
-                <div class="review-author">${escapeHtml(review.author)}</div>
-                <div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div>
-                <div class="review-text">${escapeHtml(review.text)}</div>
-                <div style="font-size:0.7rem; color:#666;">${new Date(review.date).toLocaleDateString()}</div>
-              </div>
-            `;
-          }
-          container.innerHTML = html || '<p style="text-align:center; color:#888;">Пока нет отзывов. Будьте первым!</p>';
-        } catch(e) { console.error(e); }
-      }
-      
-      function escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-      }
-      
-      function updateUI() {
-        const authBtns = document.getElementById('authButtons');
-        const userGreeting = document.getElementById('userGreeting');
-        const profileNotLogged = document.getElementById('profileNotLogged');
-        const profileLogged = document.getElementById('profileLogged');
-        const adminMenuItem = document.getElementById('adminMenuItem');
-        const avatar = document.getElementById('profileAvatar');
-        const ownerBadge = document.getElementById('ownerBadge');
-        const adminBadgeElem = document.getElementById('adminBadge');
-        
-        if (currentUser) {
-          authBtns.style.display = 'none';
-          userGreeting.style.display = 'block';
-          userGreeting.innerHTML = `Привет, ${escapeHtml(currentUser.username)}`;
-          userGreeting.onclick = () => document.querySelector('.menu-item[data-section="profile"]').click();
-          profileNotLogged.style.display = 'none';
-          profileLogged.style.display = 'block';
-          document.getElementById('profileLoginDisplay').innerHTML = escapeHtml(currentUser.username);
-          
-          if (currentUser.is_admin) {
-            avatar.classList.add('profile-avatar-admin');
-            avatar.classList.remove('profile-avatar-active', 'profile-avatar-expired');
-            adminBadgeElem.style.display = 'inline-block';
-          } else if (hasActiveLicense()) {
-            avatar.classList.add('profile-avatar-active');
-            avatar.classList.remove('profile-avatar-expired', 'profile-avatar-admin');
-            adminBadgeElem.style.display = 'none';
-          } else if (currentLicense && isExpired(currentLicense)) {
-            avatar.classList.add('profile-avatar-expired');
-            avatar.classList.remove('profile-avatar-active', 'profile-avatar-admin');
-            adminBadgeElem.style.display = 'none';
-          } else {
-            avatar.classList.remove('profile-avatar-active', 'profile-avatar-expired', 'profile-avatar-admin');
-            adminBadgeElem.style.display = 'none';
-          }
-          
-          if (currentUser.username === 'Nevora') {
-            ownerBadge.style.display = 'inline-block';
-          } else {
-            ownerBadge.style.display = 'none';
-          }
-          
-          if (currentUser.is_admin) adminMenuItem.style.display = 'block';
-          else adminMenuItem.style.display = 'none';
-          updateProfileUI();
-        } else {
-          authBtns.style.display = 'flex';
-          userGreeting.style.display = 'none';
-          profileNotLogged.style.display = 'block';
-          profileLogged.style.display = 'none';
-          adminMenuItem.style.display = 'none';
-        }
-        updateActivationSection();
-        updateLauncherButton();
-      }
-      
-      async function updateProfileUI() {
-        if (!currentUser) return;
-        const user = await getUser(currentUser.username);
-        if (user && user.license_id) {
-          const snap = await database.ref('licenses/' + user.license_id).once('value');
-          currentLicense = snap.val();
-          if (currentLicense) currentLicense.id = user.license_id;
-        } else currentLicense = null;
-        
-        if (currentLicense && isExpired(currentLicense)) {
-          await database.ref('users/' + currentUser.username + '/license_id').remove();
-          await deleteLicense(currentLicense.id);
-          currentLicense = null;
-        }
-        
-        const licenseType = document.getElementById('licenseType');
-        const licenseKey = document.getElementById('licenseKeyDisplay');
-        const timerProgress = document.getElementById('timerProgress');
-        const timerText = document.getElementById('timerText');
-        const remainingDisplay = document.getElementById('remainingTimeDisplay');
-        
-        if (hasActiveLicense()) {
-          const remaining = getRemainingTime(currentLicense);
-          const total = getTotalMinutes(currentLicense.type);
-          const elapsed = total - remaining.totalMinutes;
-          const percent = Math.max(0, Math.min(100, (elapsed / total) * 100));
-          licenseType.innerText = currentLicense.type === '012h' ? '12 часов' : currentLicense.type === '007d' ? '7 дней' : currentLicense.type === '030d' ? '30 дней' : '1 год';
-          licenseKey.innerText = currentLicense.code;
-          timerProgress.style.width = (100 - percent) + '%';
-          timerText.innerText = Math.round(100 - percent) + '%';
-          remainingDisplay.innerText = `⏱️ Осталось: ${remaining.days} дн. ${remaining.hours} ч. ${remaining.minutes} мин.`;
-        } else {
-          licenseType.innerText = 'Нет активной лицензии';
-          licenseKey.innerText = '---- ---- ---- ----';
-          timerProgress.style.width = '0%';
-          timerText.innerText = '0%';
-          remainingDisplay.innerText = '⏱️ Лицензия не активна';
-        }
-        updateLauncherButton();
-      }
-      
-      function updateActivationSection() {
-        const card = document.getElementById('activateCard');
-        if (!card) return;
-        if (!currentUser) {
-          card.innerHTML = `<div style="text-align:center;"><div style="font-size:2.5rem;">🔐</div><h3>Требуется авторизация</h3><button class="btn-auth" onclick="document.getElementById('showAuthModalBtn').click()">Войти</button></div>`;
-          return;
-        }
-        if (hasActiveLicense()) {
-          card.innerHTML = `<div style="text-align:center;"><div style="font-size:2rem;">✅</div><h3>У вас уже есть активная лицензия</h3><p style="color:#aaa; margin:0.5rem 0;">Новый ключ можно активировать только после истечения текущего</p><button class="btn-auth" onclick="document.querySelector('.menu-item[data-section=\'profile\']').click()">Перейти в профиль</button></div>`;
-        } else {
-          card.innerHTML = `<div style="text-align:center;"><div style="font-size:2.5rem;">🔑</div><h3>Введите лицензионный ключ</h3></div><input type="text" id="activationKey" placeholder="XXXXXX-XXXXXX-XXXXXX-XXXXXX" style="width:100%; padding:0.9rem; background:#1e1e2a; border:2px solid #7c3aed; border-radius:50px; color:white; text-align:center; text-transform:uppercase;"><div style="display:flex; gap:0.8rem; margin-top:1.5rem;"><button class="payment-btn" id="activateBtn">Активировать</button><button class="payment-btn" id="checkKeyBtn">Проверить</button></div><div id="activationStatus" style="margin-top:1.2rem; text-align:center;"></div>`;
-        }
-      }
-      
-      function updateLauncherButton() {
-        const btn = document.getElementById('launcherMainBtn');
-        const status = document.getElementById('launcherStatus');
-        const active = hasActiveLicense();
-        
-        if (btn) {
-          if (active) {
-            btn.disabled = false;
-            btn.style.opacity = '1';
-            btn.style.pointerEvents = 'auto';
-            btn.style.cursor = 'pointer';
-            if (status) {
-              status.innerText = '✅ Доступно для скачивания';
-              status.style.color = '#22c55e';
-            }
-          } else {
-            btn.disabled = true;
-            btn.style.opacity = '0.4';
-            btn.style.pointerEvents = 'none';
-            btn.style.cursor = 'not-allowed';
-            if (status) {
-              status.innerText = '❌ Требуется активная лицензия';
-              status.style.color = '#ef4444';
-            }
-          }
-        }
-      }
-      
-      // АВТОРИЗАЦИЯ
-      const authModal = document.getElementById('authModal');
-      const changePassModal = document.getElementById('changePasswordModal');
-      
-      document.getElementById('showAuthModalBtn')?.addEventListener('click', () => { renderCaptcha(); authModal.classList.add('active'); });
-      document.getElementById('profileLoginBtn')?.addEventListener('click', () => { renderCaptcha(); authModal.classList.add('active'); });
-      document.getElementById('closeAuthModal')?.addEventListener('click', () => authModal.classList.remove('active'));
-      document.getElementById('closePasswordModal')?.addEventListener('click', () => changePassModal.classList.remove('active'));
-      document.getElementById('changePasswordBtn')?.addEventListener('click', () => changePassModal.classList.add('active'));
-      
-      let loginTab = document.getElementById('loginTab');
-      let registerTab = document.getElementById('registerTab');
-      let loginForm = document.getElementById('loginForm');
-      let registerForm = document.getElementById('registerForm');
-      
-      loginTab.addEventListener('click', () => {
-        loginTab.classList.add('active');
-        registerTab.classList.remove('active');
-        loginForm.style.display = 'block';
-        registerForm.style.display = 'none';
-      });
-      registerTab.addEventListener('click', () => {
-        registerTab.classList.add('active');
-        loginTab.classList.remove('active');
-        registerForm.style.display = 'block';
-        loginForm.style.display = 'none';
-        renderCaptcha();
-      });
-      
-      document.getElementById('registerBtn').addEventListener('click', async () => {
-        const username = document.getElementById('regUsername').value.trim();
-        const password = document.getElementById('regPassword').value.trim();
-        const confirm = document.getElementById('regPasswordConfirm').value.trim();
-        const captchaInput = document.getElementById('captchaInput')?.value.trim();
-        const errorDiv = document.getElementById('registerError');
-        
-        if (username.length < 3) { errorDiv.textContent = 'Логин минимум 3 символа'; return; }
-        if (username.length > 15) { errorDiv.textContent = 'Логин максимум 15 символов'; return; }
-        if (!/^[A-Za-z0-9]+$/.test(username)) { errorDiv.textContent = 'Только латиница и цифры'; return; }
-        if (password.length < 3) { errorDiv.textContent = 'Пароль минимум 3 символа'; return; }
-        if (password !== confirm) { errorDiv.textContent = 'Пароли не совпадают'; return; }
-        if (captchaInput !== currentCaptcha) { errorDiv.textContent = 'Неверный код капчи'; renderCaptcha(); return; }
-        
-        errorDiv.textContent = 'Проверка...';
-        
-        const existing = await getUser(username);
-        if (existing) { errorDiv.textContent = 'Логин уже занят'; return; }
-        
-        const userData = {
-          username: username,
-          password: hashPassword(password),
-          created_at: new Date().toISOString(),
-          is_admin: (username === 'Nevora')
-        };
-        
-        const saved = await saveUser(username, userData);
-        if (saved) {
-          currentUser = userData;
-          saveSession(username);
-          updateUI();
-          authModal.classList.remove('active');
-          document.getElementById('regUsername').value = '';
-          document.getElementById('regPassword').value = '';
-          document.getElementById('regPasswordConfirm').value = '';
-          errorDiv.textContent = '';
-          showToast('✅ Регистрация успешна!', 'success');
-        } else {
-          errorDiv.textContent = 'Ошибка при сохранении. Проверьте подключение.';
-        }
-      });
-      
-      document.getElementById('loginBtn').addEventListener('click', async () => {
-        const username = document.getElementById('loginUsername').value.trim();
-        const password = document.getElementById('loginPassword').value.trim();
-        const errorDiv = document.getElementById('loginError');
-        
-        if (!username) { errorDiv.textContent = 'Введите логин'; return; }
-        if (!password) { errorDiv.textContent = 'Введите пароль'; return; }
-        
-        errorDiv.textContent = 'Вход...';
-        
-        const user = await getUser(username);
-        if (!user) { errorDiv.textContent = 'Пользователь не найден'; return; }
-        if (user.password !== hashPassword(password)) { errorDiv.textContent = 'Неверный пароль'; return; }
-        
-        currentUser = user;
-        saveSession(username);
-        updateUI();
-        authModal.classList.remove('active');
-        document.getElementById('loginUsername').value = '';
-        document.getElementById('loginPassword').value = '';
-        errorDiv.textContent = '';
-        showToast(`✅ Добро пожаловать, ${escapeHtml(username)}!`, 'success');
-      });
-      
-      document.getElementById('confirmPasswordBtn').addEventListener('click', async () => {
-        if (!currentUser) return;
-        const oldPass = document.getElementById('oldPassword').value.trim();
-        const newPass = document.getElementById('newPassword').value.trim();
-        const confirmNew = document.getElementById('confirmNewPassword').value.trim();
-        const errorDiv = document.getElementById('passwordError');
-        
-        const user = await getUser(currentUser.username);
-        if (user.password !== hashPassword(oldPass)) { errorDiv.textContent = 'Неверный текущий пароль'; return; }
-        if (newPass.length < 3) { errorDiv.textContent = 'Новый пароль минимум 3 символа'; return; }
-        if (newPass !== confirmNew) { errorDiv.textContent = 'Пароли не совпадают'; return; }
-        
-        await updateUser(currentUser.username, { password: hashPassword(newPass) });
-        errorDiv.textContent = '';
-        showToast('✅ Пароль успешно изменен!', 'success');
-        changePassModal.classList.remove('active');
-        document.getElementById('oldPassword').value = '';
-        document.getElementById('newPassword').value = '';
-        document.getElementById('confirmNewPassword').value = '';
-      });
-      
-      document.getElementById('logoutBtn')?.addEventListener('click', () => document.getElementById('logoutConfirmModal').classList.add('active'));
-      document.getElementById('confirmLogoutBtn').addEventListener('click', () => { clearSession(); document.getElementById('logoutConfirmModal').classList.remove('active'); showToast('👋 Вы вышли из аккаунта', 'info'); });
-      document.getElementById('cancelLogoutBtn').addEventListener('click', () => document.getElementById('logoutConfirmModal').classList.remove('active'));
-      document.getElementById('closeLogoutModal').addEventListener('click', () => document.getElementById('logoutConfirmModal').classList.remove('active'));
-      
-      // АКТИВАЦИЯ КЛЮЧА
-      document.addEventListener('click', async (e) => {
-        if (e.target.id === 'activateBtn') {
-          const key = document.getElementById('activationKey')?.value;
-          const statusDiv = document.getElementById('activationStatus');
-          if (!key) { statusDiv.innerHTML = '<span style="color:#ef4444;">Введите ключ</span>'; return; }
-          if (!currentUser) { statusDiv.innerHTML = '<span style="color:#ef4444;">Сначала войдите</span>'; return; }
-          
-          if (hasActiveLicense()) {
-            statusDiv.innerHTML = '<span style="color:#ffa500;">У вас уже есть активная лицензия! Нельзя активировать новый ключ.</span>';
-            return;
-          }
-          
-          statusDiv.innerHTML = '<span style="color:#7c3aed;">Проверка ключа...</span>';
-          const license = await getLicenseByCode(key);
-          if (!license) { statusDiv.innerHTML = '<span style="color:#ef4444;">Ключ не найден</span>'; return; }
-          if (license.status === 'active') { statusDiv.innerHTML = '<span style="color:#ffa500;">Ключ уже используется</span>'; return; }
-          
-          statusDiv.innerHTML = '<span style="color:#7c3aed;">Активация...</span>';
-          const fingerprint = await generateFingerprint();
-          const now = new Date();
-          let expires = new Date();
-          if (license.type === '012h') expires.setHours(now.getHours() + 12);
-          else if (license.type === '007d') expires.setDate(now.getDate() + 7);
-          else if (license.type === '030d') expires.setDate(now.getDate() + 30);
-          else expires.setDate(now.getDate() + 365);
-          
-          await updateLicense(license.id, { 
-            status: 'active', 
-            fingerprint, 
-            expires_at: expires.toISOString(), 
-            username: currentUser.username 
-          });
-          await database.ref('users/' + currentUser.username + '/license_id').set(license.id);
-          statusDiv.innerHTML = `<span style="color:#7c3aed;">✅ Активировано до ${expires.toLocaleDateString()}</span>`;
-          showToast('✅ Лицензия успешно активирована!', 'success');
-          setTimeout(() => {
-            updateProfileUI();
-            updateLauncherButton();
-          }, 500);
-        }
-        if (e.target.id === 'checkKeyBtn') {
-          const key = document.getElementById('activationKey')?.value;
-          const statusDiv = document.getElementById('activationStatus');
-          if (!key) { statusDiv.innerHTML = '<span style="color:#ef4444;">Введите ключ</span>'; return; }
-          const license = await getLicenseByCode(key);
-          if (license) statusDiv.innerHTML = '<span style="color:#7c3aed;">✅ Ключ готов к активации</span>';
-          else statusDiv.innerHTML = '<span style="color:#ef4444;">❌ Ключ не найден</span>';
-        }
-      });
-      
-      document.getElementById('activateNewKeyBtn')?.addEventListener('click', () => document.querySelector('.menu-item[data-section="activate"]').click());
-      
-      // ОТЗЫВЫ
-      let selectedRating = 5;
-      document.querySelectorAll('.star').forEach(star => {
-        star.addEventListener('click', () => {
-          selectedRating = parseInt(star.dataset.rating);
-          document.querySelectorAll('.star').forEach(s => {
-            if (parseInt(s.dataset.rating) <= selectedRating) s.classList.add('active');
-            else s.classList.remove('active');
-          });
-        });
-      });
-      
-      document.getElementById('submitReviewBtn')?.addEventListener('click', async () => {
-        if (!currentUser) {
-          showToast('❌ Войдите в аккаунт, чтобы оставить отзыв', 'error');
-          return;
-        }
-        const text = document.getElementById('reviewText').value.trim();
-        if (!text) {
-          showToast('❌ Введите текст отзыва', 'error');
-          return;
-        }
-        await database.ref('reviews').push({
-          author: currentUser.username,
-          rating: selectedRating,
-          text: text,
-          date: new Date().toISOString()
-        });
-        showToast('✅ Отзыв отправлен!', 'success');
-        document.getElementById('reviewText').value = '';
-        loadReviews();
-      });
-      
-      // ЦЕНЫ
-      const paymentModal = document.getElementById('paymentModal');
-      document.querySelectorAll('.price-card').forEach(card => {
-        card.addEventListener('click', () => {
-          document.getElementById('paymentTitle').innerText = card.dataset.days;
-          document.getElementById('paymentPrice').innerText = card.dataset.price + ' ₽';
-          document.getElementById('funpayLink').href = card.dataset.funpay;
-          paymentModal.classList.add('active');
-        });
-      });
-      document.getElementById('closePaymentModal')?.addEventListener('click', () => paymentModal.classList.remove('active'));
-      document.getElementById('adminPayBtn')?.addEventListener('click', () => window.open('https://t.me/vergyTG', '_blank'));
-      
-      // СОГЛАШЕНИЕ
-      const agreementModal = document.getElementById('agreementModal');
-      document.getElementById('agreementBtn')?.addEventListener('click', () => agreementModal.classList.add('active'));
-      document.getElementById('closeAgreementModal')?.addEventListener('click', () => agreementModal.classList.remove('active'));
-      document.getElementById('closeAgreementBtn')?.addEventListener('click', () => agreementModal.classList.remove('active'));
-      
-      // КОПИРОВАНИЕ КЛЮЧА
-      document.getElementById('toggleKeyBtn')?.addEventListener('click', () => {
-        const keySpan = document.getElementById('licenseKeyDisplay');
-        isKeyVisible = !isKeyVisible;
-        if (isKeyVisible) { keySpan.classList.remove('license-key-blur'); document.getElementById('toggleKeyBtn').innerText = '👁️ скрыть'; }
-        else { keySpan.classList.add('license-key-blur'); document.getElementById('toggleKeyBtn').innerText = '👁️ показать'; }
-      });
-      document.getElementById('copyKeyBtn')?.addEventListener('click', () => {
-        if (currentLicense?.code) {
-          navigator.clipboard.writeText(currentLicense.code);
-          showToast('✅ Ключ скопирован', 'success');
-        }
-      });
-      
-      // АДМИН ПАНЕЛЬ
-      let adminPanelLoaded = false;
-      async function loadAdminPanel() {
-        if (!currentUser || !currentUser.is_admin) {
-          const content = document.getElementById('adminContent');
-          if (content) content.innerHTML = '<p style="text-align:center; color:#ef4444;">⛔ Доступ запрещен. Только для администратора.</p>';
-          return;
-        }
-        if (adminPanelLoaded) return;
-        const content = document.getElementById('adminContent');
-        if (!content) return;
-        content.innerHTML = '<p style="text-align:center; color:#7c3aed;">⏳ Загрузка данных...</p>';
-        
-        try {
-          const usersSnap = await database.ref('users').once('value');
-          const licensesSnap = await database.ref('licenses').once('value');
-          const users = usersSnap.val() || {};
-          const licenses = licensesSnap.val() || {};
-          
-          let totalLicenses = 0;
-          let activeCount = 0;
-          for (const lic of Object.values(licenses)) {
-            totalLicenses++;
-            if (lic.status === 'active' && !isExpired(lic)) activeCount++;
-          }
-          
-          let html = `
-            <div class="admin-stats-grid">
-              <div class="admin-stat-card"><div class="admin-stat-value">${Object.keys(users).length}</div><div class="admin-stat-label">Пользователей</div></div>
-              <div class="admin-stat-card"><div class="admin-stat-value">${totalLicenses}</div><div class="admin-stat-label">Всего ключей</div></div>
-              <div class="admin-stat-card"><div class="admin-stat-value">${activeCount}</div><div class="admin-stat-label">Активных</div></div>
-            </div>
-            <div class="admin-panel-card"><h3>🔍 ПОИСК ПО КЛЮЧУ</h3>
-              <div style="display:flex; gap:10px;">
-                <input type="text" id="adminSearchKey" placeholder="Введите ключ" style="flex:1; padding:12px; background:#1e1e2a; border:1px solid #7c3aed; border-radius:20px;">
-                <button class="key-btn" id="adminSearchKeyBtn">Найти</button>
-              </div>
-              <div id="adminSearchResult" style="margin-top:10px;"></div>
-            </div>
-            <div class="admin-panel-card"><h3>👥 ПОЛЬЗОВАТЕЛИ</h3><div class="user-table" id="adminUsersList"></div></div>
-            <div class="admin-panel-card"><h3>➕ СОЗДАТЬ КЛЮЧ</h3>
-              <div class="admin-create-key">
-                <select id="adminKeyType">
-                  <option value="012h">12 часов</option>
-                  <option value="007d">7 дней</option>
-                  <option value="030d">30 дней</option>
-                  <option value="365d">1 год</option>
-                </select>
-                <input type="text" id="adminKeyCode" placeholder="Ключ (оставьте пустым)">
-                <button class="btn-auth" id="adminCreateKeyBtn">Создать</button>
-              </div>
-              <div id="adminKeyResult" style="margin-top:10px; text-align:center;"></div>
-            </div>
-          `;
-          content.innerHTML = html;
-          adminPanelLoaded = true;
-          
-          const usersList = [];
-          for (const [username, user] of Object.entries(users)) {
-            const userLicense = user.license_id ? licenses[user.license_id] : null;
-            let rank = 4;
-            if (username === 'Nevora') rank = 0;
-            else if (user.is_admin) rank = 1;
-            else if (userLicense && userLicense.status === 'active' && !isExpired(userLicense)) rank = 2;
-            else if (userLicense && isExpired(userLicense)) rank = 3;
-            usersList.push({ username, user, userLicense, rank });
-          }
-          usersList.sort((a, b) => a.rank - b.rank);
-          
-          const usersHtml = usersList.map(({ username, user, userLicense }) => {
-            let licenseStatus = '⚫ Нет';
-            let rankClass = 'rank-none';
-            let rankText = '';
-            
-            if (username === 'Nevora') {
-              rankClass = 'rank-owner';
-              rankText = '👑 OWNER';
-            } else if (user.is_admin) {
-              rankClass = 'rank-admin';
-              rankText = '⚙️ ADMIN';
-            } else if (userLicense && userLicense.status === 'active' && !isExpired(userLicense)) {
-              rankClass = 'rank-active';
-              rankText = '✅ Активна';
-              licenseStatus = '🟢 Активна';
-            } else if (userLicense && isExpired(userLicense)) {
-              rankClass = 'rank-expired';
-              rankText = '❌ Истекла';
-              licenseStatus = '🔴 Истекла';
-            }
-            
-            return `<div class="admin-user-row">
-              <div><strong>${escapeHtml(username)}</strong><span class="rank-badge ${rankClass}" style="margin-left:8px;">${rankText}</span><br><small>${user.created_at ? new Date(user.created_at).toLocaleDateString() : '?'}</small></div>
-              <div>📜 ${licenseStatus}</div>
-              <div>
-                <button class="admin-view-key" data-username="${username}">🔍 Ключ</button>
-                <button class="admin-extend" data-username="${username}">➕ Продлить</button>
-                <button class="admin-reduce" data-username="${username}">➖ Убавить</button>
-                <button class="admin-remove" data-username="${username}">🗑️ Удалить</button>
-              </div>
-            </div>`;
-          }).join('');
-          
-          document.getElementById('adminUsersList').innerHTML = usersHtml;
-          
-          document.getElementById('adminSearchKeyBtn')?.addEventListener('click', async () => {
-            const searchKey = document.getElementById('adminSearchKey').value.trim().toUpperCase();
-            const resultDiv = document.getElementById('adminSearchResult');
-            if (!searchKey) { resultDiv.innerHTML = ''; return; }
-            
-            let found = null;
-            let foundUser = null;
-            for (const [lid, lic] of Object.entries(licenses)) {
-              if (lic.code === searchKey) {
-                found = { ...lic, id: lid };
-                for (const [username, user] of Object.entries(users)) {
-                  if (user.license_id === lid) {
-                    foundUser = username;
-                    break;
-                  }
-                }
-                break;
-              }
-            }
-            
-            if (found) {
-              resultDiv.innerHTML = `<div class="search-result-card">
-                <strong>🔑 Ключ:</strong> ${found.code}<br>
-                <strong>📦 Тип:</strong> ${found.type}<br>
-                <strong>📊 Статус:</strong> ${found.status}<br>
-                <strong>👤 Владелец:</strong> ${foundUser || 'не активирован'}<br>
-                <strong>⏰ Истекает:</strong> ${found.expires_at ? new Date(found.expires_at).toLocaleString() : 'не активирован'}
-              </div>`;
-            } else {
-              resultDiv.innerHTML = '<div style="color:#ef4444; padding:10px;">❌ Ключ не найден</div>';
-            }
-          });
-          
-          document.querySelectorAll('.admin-view-key').forEach(btn => btn.onclick = () => {
-            const user = users[btn.dataset.username];
-            if (user?.license_id && licenses[user.license_id]) alert(`Ключ: ${licenses[user.license_id].code}`);
-            else alert('Нет ключа');
-          });
-          
-          document.querySelectorAll('.admin-extend').forEach(btn => btn.onclick = async () => {
-            const days = prompt('На сколько дней продлить? (можно отрицательное)', '1');
-            if (!days) return;
-            const user = users[btn.dataset.username];
-            if (user?.license_id && licenses[user.license_id]) {
-              const newExpiry = new Date(licenses[user.license_id].expires_at || new Date());
-              newExpiry.setDate(newExpiry.getDate() + parseInt(days));
-              await updateLicense(user.license_id, { expires_at: newExpiry.toISOString() });
-              alert(`✅ Лицензия изменена на ${Math.abs(parseInt(days))} дней`);
-              adminPanelLoaded = false; loadAdminPanel();
-            } else alert('Нет ключа');
-          });
-          
-          document.querySelectorAll('.admin-reduce').forEach(btn => btn.onclick = async () => {
-            const days = prompt('На сколько дней уменьшить?', '1');
-            if (!days) return;
-            const user = users[btn.dataset.username];
-            if (user?.license_id && licenses[user.license_id]) {
-              const newExpiry = new Date(licenses[user.license_id].expires_at || new Date());
-              newExpiry.setDate(newExpiry.getDate() - parseInt(days));
-              await updateLicense(user.license_id, { expires_at: newExpiry.toISOString() });
-              alert(`✅ Уменьшено на ${days} дней`);
-              adminPanelLoaded = false; loadAdminPanel();
-            } else alert('Нет ключа');
-          });
-          
-          document.querySelectorAll('.admin-remove').forEach(btn => btn.onclick = async () => {
-            if (confirm('Удалить лицензию?')) {
-              const user = users[btn.dataset.username];
-              if (user?.license_id) {
-                await deleteLicense(user.license_id);
-                await database.ref('users/' + btn.dataset.username + '/license_id').remove();
-                alert('Лицензия удалена');
-                adminPanelLoaded = false; loadAdminPanel();
-              } else alert('Нет ключа');
-            }
-          });
-          
-          document.getElementById('adminCreateKeyBtn')?.addEventListener('click', async () => {
-            const type = document.getElementById('adminKeyType').value;
-            let code = document.getElementById('adminKeyCode').value.trim().toUpperCase();
-            if (!code) {
-              const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
-              code = Array(4).fill().map(() => Array(4).fill().map(() => chars[Math.floor(Math.random() * chars.length)]).join('')).join('-');
-            }
-            await database.ref('licenses').push({ code, type, status: 'pending', created_at: new Date().toISOString() });
-            document.getElementById('adminKeyResult').innerHTML = `<span style="color:#7c3aed;">✅ Ключ создан: ${code}</span>`;
-            setTimeout(() => { document.getElementById('adminKeyResult').innerHTML = ''; adminPanelLoaded = false; loadAdminPanel(); }, 2000);
-          });
-        } catch(e) { content.innerHTML = '<p style="color:#ef4444;">Ошибка загрузки</p>'; }
-      }
-      
-      const adminSection = document.getElementById('admin');
-      if (adminSection) {
-        const adminObserver = new MutationObserver(() => {
-          if (adminSection.classList.contains('active') && currentUser?.is_admin) { adminPanelLoaded = false; loadAdminPanel(); }
-        });
-        adminObserver.observe(adminSection, { attributes: true, attributeFilter: ['class'] });
-      }
-      
-      // ВОССТАНОВЛЕНИЕ СЕССИИ
-      (async () => {
-        const saved = loadSession();
-        if (saved) {
-          const user = await getUser(saved);
-          if (user) { currentUser = user; updateUI(); }
-        }
-        updateActivationSection();
-        updateLauncherButton();
-        loadStats();
-        loadReviews();
-        
-        setInterval(() => {
-          if (currentUser && currentLicense) {
-            updateProfileUI();
-            updateLauncherButton();
-          }
-        }, 60000);
-      })();
-      
-      [authModal, paymentModal, agreementModal, changePassModal, document.getElementById('logoutConfirmModal')].forEach(modal => {
-        if (modal) modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
-      });
-    })();
-  </script>
+  const firebaseConfig = { apiKey: "AIzaSyCbgkMW0F0Nb8THjhoCapueR0ccGTexoyk", authDomain: "swap-3f785.firebaseapp.com", databaseURL: "https://swap-3f785-default-rtdb.firebaseio.com", projectId: "swap-3f785", storageBucket: "swap-3f785.appspot.com", messagingSenderId: "109876543210", appId: "1:109876543210:web:abc123def456" };
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+  let currentUser = null, currentLicense = null, isKeyVisible = false, currentCaptcha = '';
+  function showToast(msg, type='info'){ const t=document.createElement('div'); t.className=`toast ${type}`; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+  function escapeHtml(t){ const d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
+  function hashPassword(pwd){ return CryptoJS.SHA256(pwd).toString(); }
+  function saveSession(u){ localStorage.setItem('nevora_session',u); }
+  function loadSession(){ return localStorage.getItem('nevora_session'); }
+  function clearSession(){ localStorage.removeItem('nevora_session'); currentUser=null; currentLicense=null; updateUI(); }
+  async function generateFingerprint(){ try{ return CryptoJS.SHA512(`cpu_${navigator.hardwareConcurrency}|screen_${screen.width}x${screen.height}|NEVORA_SALT`).toString().substring(0,64); }catch(e){ return CryptoJS.SHA512(Math.random().toString()).toString().substring(0,64); } }
+  function generateCaptcha(){ const c='ABCDEFGHJKLMNPQRSTUVWXYZ0123456789'; let r=''; for(let i=0;i<6;i++) r+=c[Math.floor(Math.random()*c.length)]; currentCaptcha=r; return r; }
+  function renderCaptcha(){ const cont=document.getElementById('captchaContainer'); if(!cont) return; const cap=generateCaptcha(); cont.innerHTML=`<div class="captcha-code">${cap}</div><button class="captcha-refresh" onclick="refreshCaptcha()">🔄 Обновить</button><input type="text" id="captchaInput" placeholder="Введите код" style="margin-top:0.5rem; width:100%; padding:0.6rem; border-radius:40px; background:#1a1a2e; border:1px solid var(--primary); color:white; text-align:center;">`; }
+  window.refreshCaptcha=function(){ const cont=document.getElementById('captchaContainer'); if(cont){ const newCap=generateCaptcha(); const codeDiv=cont.querySelector('.captcha-code'); if(codeDiv) codeDiv.innerText=newCap; const inp=document.getElementById('captchaInput'); if(inp) inp.value=''; } };
+  async function getUser(u){ const snap=await database.ref('users/'+u).once('value'); return snap.val(); }
+  async function saveUser(u,d){ await database.ref('users/'+u).set(d); return true; }
+  async function updateUser(u,d){ await database.ref('users/'+u).update(d); return true; }
+  async function getLicenseByCode(code){ const snap=await database.ref('licenses').once('value'); const lic=snap.val(); if(!lic) return null; for(const [id,l] of Object.entries(lic)) if(l.code && l.code.toUpperCase()===code.toUpperCase()) return {...l,id}; return null; }
+  async function updateLicense(id,data){ await database.ref('licenses/'+id).update(data); return true; }
+  async function deleteLicense(id){ await database.ref('licenses/'+id).remove(); return true; }
+  function isExpired(lic){ return lic && lic.expires_at && new Date() > new Date(lic.expires_at); }
+  function getRemainingTime(lic){ if(!lic||!lic.expires_at) return {days:0,hours:0,minutes:0,totalMinutes:0}; const expiry=new Date(lic.expires_at), now=new Date(); if(now>expiry) return {days:0,hours:0,minutes:0,totalMinutes:0}; const diff=expiry-now; return {days:Math.floor(diff/86400000), hours:Math.floor((diff%86400000)/3600000), minutes:Math.floor((diff%3600000)/60000), totalMinutes:Math.floor(diff/60000)}; }
+  function getTotalMinutes(type){ if(type==='012h') return 12*60; if(type==='007d') return 7*24*60; if(type==='030d') return 30*24*60; if(type==='365d') return 365*24*60; return 30*24*60; }
+  function hasActiveLicense(){ return currentLicense && currentLicense.status==='active' && currentLicense.expires_at && !isExpired(currentLicense); }
+  function updateHeroButton(){ const container=document.getElementById('heroButtons'); if(!container) return; if(currentUser){ container.innerHTML='<button class="btn btn-outline" onclick="showSection(\'features\')">Узнать больше</button>'; }else{ container.innerHTML='<button class="btn btn-primary" onclick="openAuthModal()">Зарегистрироваться</button>'; } }
+  function showSection(id){ 
+    const sections=document.querySelectorAll('.section'); 
+    sections.forEach(s=>{ if(s.id===id){ s.classList.add('active'); }else{ s.classList.remove('active'); } }); 
+    setActiveNavItem(id);
+    if(id==='admin' && currentUser?.is_admin) loadAdminPanel(); 
+  }
+  function openAuthModal(){ document.getElementById('authModal').classList.add('active'); renderCaptcha(); }
+  function closeModal(id){ document.getElementById(id).classList.remove('active'); }
+  function switchAuthTab(tab){ const loginForm=document.getElementById('loginForm'), regForm=document.getElementById('registerForm'), loginTab=document.getElementById('loginTabBtn'), regTab=document.getElementById('registerTabBtn'); if(tab==='login'){ loginTab.classList.add('active'); regTab.classList.remove('active'); loginForm.style.display='block'; regForm.style.display='none'; }else{ regTab.classList.add('active'); loginTab.classList.remove('active'); regForm.style.display='block'; loginForm.style.display='none'; renderCaptcha(); } }
+  function togglePassword(id){ const inp=document.getElementById(id); if(inp) inp.type=inp.type==='password'?'text':'password'; }
+  function contactAdmin(){ window.open('https://t.me/vergyTG','_blank'); }
+  function openAgreementModal(){ document.getElementById('agreementModal').classList.add('active'); }
+  async function updateUI(){ const authDiv=document.getElementById('authButtons'), greetingDiv=document.getElementById('userGreeting'), greetingText=document.getElementById('greetingText'), profileNot=document.getElementById('profileNotLogged'), profileLogged=document.getElementById('profileLogged'), adminLink=document.getElementById('adminNavLink'), adminBadgeSpan=document.getElementById('adminBadge'); if(currentUser){ authDiv.style.display='none'; greetingDiv.style.display='block'; greetingText.textContent=`👤 ${escapeHtml(currentUser.username)}`; profileNot.style.display='none'; profileLogged.style.display='block'; document.getElementById('profileUsername').textContent=escapeHtml(currentUser.username); if(currentUser.is_admin){ adminLink.style.display='inline'; adminBadgeSpan.style.display='inline-block'; }else{ adminLink.style.display='none'; adminBadgeSpan.style.display='none'; } await updateProfileUI(); }else{ authDiv.style.display='block'; greetingDiv.style.display='none'; profileNot.style.display='block'; profileLogged.style.display='none'; adminLink.style.display='none'; } updateHeroButton(); updateLauncherButton(); }
+  async function updateProfileUI(){ if(!currentUser) return; const user=await getUser(currentUser.username); if(user&&user.license_id){ const snap=await database.ref('licenses/'+user.license_id).once('value'); currentLicense=snap.val(); if(currentLicense) currentLicense.id=user.license_id; }else currentLicense=null; if(currentLicense&&isExpired(currentLicense)){ await database.ref('users/'+currentUser.username+'/license_id').remove(); await deleteLicense(currentLicense.id); currentLicense=null; } const keySpan=document.getElementById('licenseKey'), fill=document.getElementById('timerFill'), remainSpan=document.getElementById('remainingTime'); if(hasActiveLicense()){ const rem=getRemainingTime(currentLicense), total=getTotalMinutes(currentLicense.type), elapsed=total-rem.totalMinutes, percent=Math.max(0,Math.min(100,(elapsed/total)*100)); const names={'012h':'AutoSwap Basic (12ч)','007d':'AutoSwap Plus (7д)','030d':'NevoraSwap Pro (30д)','365d':'Enterprise (1 год)'}; document.querySelector('.license-info h4').textContent=names[currentLicense.type]||'Активная лицензия'; keySpan.textContent=currentLicense.code; fill.style.width=(100-percent)+'%'; remainSpan.textContent=`⏱️ Осталось: ${rem.days} дн. ${rem.hours} ч. ${rem.minutes} мин.`; }else{ document.querySelector('.license-info h4').textContent='Нет активной лицензии'; keySpan.textContent='---- ---- ---- ----'; fill.style.width='0%'; remainSpan.textContent='⏱️ Лицензия не активна'; } updateLauncherButton(); }
+  function updateLauncherButton(){ const btn=document.getElementById('launcherMainBtn'), status=document.getElementById('launcherStatus'); const active=hasActiveLicense(); if(btn){ if(active){ btn.style.opacity='1'; btn.style.pointerEvents='auto'; if(status) status.textContent='✅ Доступно для скачивания'; }else{ btn.style.opacity='0.4'; btn.style.pointerEvents='none'; if(status) status.textContent='❌ Требуется активная лицензия'; } } }
+  document.getElementById('toggleKeyBtn')?.addEventListener('click',()=>{ const ks=document.getElementById('licenseKey'); isKeyVisible=!isKeyVisible; if(isKeyVisible){ ks.classList.remove('license-key-blur'); document.getElementById('toggleKeyBtn').textContent='👁️ скрыть'; }else{ ks.classList.add('license-key-blur'); document.getElementById('toggleKeyBtn').textContent='👁️ показать'; } });
+  document.getElementById('copyKeyBtn')?.addEventListener('click',()=>{ if(currentLicense?.code){ navigator.clipboard.writeText(currentLicense.code); showToast('✅ Ключ скопирован','success'); } });
+  document.getElementById('logoutBtn')?.addEventListener('click',()=>{ if(confirm('Выйти?')){ clearSession(); showToast('👋 Вы вышли','info'); showSection('home'); } });
+  document.getElementById('activateKeyBtn')?.addEventListener('click',async()=>{ if(!currentUser){ showToast('Сначала войдите','error'); return; } if(hasActiveLicense()){ showToast('У вас уже есть активная лицензия!','error'); return; } const key=document.getElementById('activationKeyInput').value.trim().toUpperCase(); if(!key){ showToast('Введите ключ','error'); return; } const license=await getLicenseByCode(key); if(!license){ showToast('Ключ не найден','error'); return; } if(license.status==='active'){ showToast('Ключ уже используется','error'); return; } const fingerprint=await generateFingerprint(); const now=new Date(); let expires=new Date(); if(license.type==='012h') expires.setHours(now.getHours()+12); else if(license.type==='007d') expires.setDate(now.getDate()+7); else if(license.type==='030d') expires.setDate(now.getDate()+30); else expires.setDate(now.getDate()+365); await updateLicense(license.id,{status:'active',fingerprint,expires_at:expires.toISOString(),username:currentUser.username}); await database.ref('users/'+currentUser.username+'/license_id').set(license.id); showToast('✅ Лицензия активирована!','success'); await updateProfileUI(); });
+  async function register(){ const u=document.getElementById('regUsername').value.trim(), p=document.getElementById('regPassword').value.trim(), c=document.getElementById('regPasswordConfirm').value.trim(), captcha=document.getElementById('captchaInput')?.value.trim(), err=document.getElementById('registerError'); if(u.length<3){ err.textContent='❌ Логин минимум 3 символа'; return; } if(!/^[A-Za-z0-9]+$/.test(u)){ err.textContent='❌ Только латиница и цифры'; return; } if(p.length<3){ err.textContent='❌ Пароль минимум 3 символа'; return; } if(p!==c){ err.textContent='❌ Пароли не совпадают'; return; } if(captcha!==currentCaptcha){ err.textContent='❌ Неверная капча'; refreshCaptcha(); return; } const existing=await getUser(u); if(existing){ err.textContent='❌ Логин занят'; return; } const userData={username:u,password:hashPassword(p),created_at:new Date().toISOString(),is_admin:(u==='Nevora')}; await saveUser(u,userData); currentUser=userData; saveSession(u); updateUI(); closeModal('authModal'); showToast('✅ Регистрация успешна!','success'); }
+  async function login(){ const u=document.getElementById('loginUsername').value.trim(), p=document.getElementById('loginPassword').value.trim(), err=document.getElementById('loginError'); if(!u||!p){ err.textContent='❌ Заполните поля'; return; } const user=await getUser(u); if(!user){ err.textContent='❌ Пользователь не найден'; return; } if(user.password!==hashPassword(p)){ err.textContent='❌ Неверный пароль'; return; } currentUser=user; saveSession(u); updateUI(); closeModal('authModal'); showToast(`✅ Добро пожаловать, ${escapeHtml(u)}!`,'success'); }
+  document.querySelectorAll('.price-card').forEach(card=>{ card.addEventListener('click',()=>{ const days=card.dataset.days, price=card.dataset.price, link=card.dataset.funpay; document.getElementById('paymentTitle').innerText=days; document.getElementById('paymentPrice').innerHTML=`₽${price}`; document.getElementById('funpayLink').href=link; document.getElementById('paymentModal').classList.add('active'); }); });
+  async function loadAdminPanel(){ if(!currentUser?.is_admin){ document.getElementById('adminContent').innerHTML='<p style="color:var(--error); text-align:center;">⛔ Доступ запрещен</p>'; return; } const content=document.getElementById('adminContent'); content.innerHTML='<p style="text-align:center;">Загрузка...</p>'; const usersSnap=await database.ref('users').once('value'); const licSnap=await database.ref('licenses').once('value'); const users=usersSnap.val()||{}, licenses=licSnap.val()||{}; let total=0,activeCount=0; for(const l of Object.values(licenses)){ total++; if(l.status==='active'&&!isExpired(l)) activeCount++; } let html=`<div class="admin-stats-grid"><div class="admin-stat-card"><div class="admin-stat-value">${Object.keys(users).length}</div><div class="admin-stat-label">Пользователей</div></div><div class="admin-stat-card"><div class="admin-stat-value">${total}</div><div class="admin-stat-label">Всего ключей</div></div><div class="admin-stat-card"><div class="admin-stat-value">${activeCount}</div><div class="admin-stat-label">Активных</div></div></div><div class="admin-panel-card"><h3>➕ Создать ключ</h3><select id="adminKeyType" style="width:100%; padding:0.8rem; background:rgba(10,10,15,0.8); border:1px solid var(--primary); border-radius:40px; color:white; margin:0.5rem 0;"><option value="012h">12 часов</option><option value="007d">7 дней</option><option value="030d">30 дней</option><option value="365d">1 год</option></select><input type="text" id="adminKeyCode" placeholder="Ключ (оставьте пустым для автогенерации)" style="width:100%; padding:0.8rem; background:rgba(10,10,15,0.8); border:1px solid var(--primary); border-radius:40px; color:white;"><button class="btn btn-primary" id="adminCreateBtn" style="margin-top:0.8rem;">Создать ключ</button><div id="adminKeyResult" style="margin-top:0.8rem; text-align:center;"></div></div><div class="admin-panel-card"><h3>🔍 Поиск и фильтры</h3><div class="search-filter"><input type="text" id="adminSearchUsername" placeholder="Поиск по никнейму..."><select id="adminFilterStatus"><option value="all">Все пользователи</option><option value="active">С активной лицензией</option><option value="expired">С истекшей лицензией</option><option value="none">Без лицензии</option><option value="admin">Администраторы</option></select></div><div id="adminUsersList"></div></div>`; content.innerHTML=html; function renderUsersList(filter='all', search=''){ const usersList=[]; for(const [username,user] of Object.entries(users)){ const userLic=user.license_id?licenses[user.license_id]:null; let status='none'; if(username==='Nevora') status='owner'; else if(user.is_admin) status='admin'; else if(userLic&&userLic.status==='active'&&!isExpired(userLic)) status='active'; else if(userLic&&isExpired(userLic)) status='expired'; if(filter!=='all' && filter!==status) return; if(search && !username.toLowerCase().includes(search.toLowerCase())) return; let badge='', statusText='⚫ Нет'; if(username==='Nevora'){ badge='<span class="profile-badge" style="background:var(--warning);">👑 OWNER</span>'; statusText='👑 OWNER'; }else if(user.is_admin){ badge='<span class="profile-badge" style="background:var(--primary);">ADMIN</span>'; statusText='⚙️ ADMIN'; }else if(userLic&&userLic.status==='active'&&!isExpired(userLic)){ badge='<span class="profile-badge" style="background:var(--success);">✅ Активна</span>'; statusText='🟢 Активна'; }else if(userLic&&isExpired(userLic)){ badge='<span class="profile-badge" style="background:var(--error);">❌ Истекла</span>'; statusText='🔴 Истекла'; } usersList.push({username,user,userLic,badge,statusText}); } const container=document.getElementById('adminUsersList'); if(!container) return; if(usersList.length===0){ container.innerHTML='<p style="text-align:center; color:var(--text-muted);">Пользователи не найдены</p>'; return; } container.innerHTML=usersList.map(({username,user,userLic,badge,statusText})=>`<div class="admin-user-row"><div><strong>${escapeHtml(username)}</strong> ${badge}<br><small>${user.created_at?new Date(user.created_at).toLocaleDateString():'?'}</small></div><div>${statusText}</div><div><button class="admin-btn" onclick="window.viewUserKey('${username}')">🔍 Ключ</button><button class="admin-btn" onclick="window.extendUser('${username}')">➕ Продлить</button><button class="admin-btn" onclick="window.removeUserLic('${username}')" style="border-color:var(--error);color:var(--error);">🗑️ Удалить</button></div></div>`).join(''); } const searchInput=document.getElementById('adminSearchUsername'); const filterSelect=document.getElementById('adminFilterStatus'); if(searchInput) searchInput.addEventListener('input',()=>renderUsersList(filterSelect.value,searchInput.value)); if(filterSelect) filterSelect.addEventListener('change',()=>renderUsersList(filterSelect.value,searchInput?.value||'')); renderUsersList(); document.getElementById('adminCreateBtn')?.addEventListener('click',async()=>{ const type=document.getElementById('adminKeyType').value; let code=document.getElementById('adminKeyCode').value.trim().toUpperCase(); if(!code){ const ch='ABCDEFGHJKLMNPQRSTUVWXYZ0123456789'; code=Array(4).fill().map(()=>Array(4).fill().map(()=>ch[Math.floor(Math.random()*ch.length)]).join('')).join('-'); } await database.ref('licenses').push({code,type,status:'pending',created_at:new Date().toISOString()}); document.getElementById('adminKeyResult').innerHTML=`<span style="color:var(--success);">✅ Ключ создан: ${code}</span>`; setTimeout(()=>{ document.getElementById('adminKeyResult').innerHTML=''; loadAdminPanel(); },1500); }); }
+  window.viewUserKey=async(username)=>{ const user=await getUser(username); if(user?.license_id){ const snap=await database.ref('licenses/'+user.license_id).once('value'); const lic=snap.val(); if(lic) alert(`Ключ: ${lic.code}`); else alert('Нет ключа'); }else alert('Нет ключа'); };
+  window.extendUser=async(username)=>{ const days=prompt('На сколько дней продлить? (можно отрицательное)','7'); if(!days) return; const user=await getUser(username); if(user?.license_id){ const snap=await database.ref('licenses/'+user.license_id).once('value'); const lic=snap.val(); if(lic){ const newExp=new Date(lic.expires_at||new Date()); newExp.setDate(newExp.getDate()+parseInt(days)); await updateLicense(user.license_id,{expires_at:newExp.toISOString()}); alert(`✅ Лицензия изменена на ${days} дней`); loadAdminPanel(); }else alert('Нет лицензии'); }else alert('Нет лицензии'); };
+  window.removeUserLic=async(username)=>{ if(!confirm(`Удалить лицензию ${username}?`)) return; const user=await getUser(username); if(user?.license_id){ await deleteLicense(user.license_id); await database.ref('users/'+username+'/license_id').remove(); alert('Лицензия удалена'); loadAdminPanel(); }else alert('Нет лицензии'); };
+  (async()=>{ const saved=loadSession(); if(saved){ const u=await getUser(saved); if(u) currentUser=u; } updateUI(); setActiveNavItem('home'); window.addEventListener('resize', () => { const activeLink = document.querySelector('nav a.active'); if (activeLink) updateUnderline(activeLink); }); setInterval(()=>{ if(currentUser) updateProfileUI(); },60000); })();
+  document.querySelectorAll('.modal-overlay').forEach(m=>{ m.addEventListener('click',(e)=>{ if(e.target===m) m.classList.remove('active'); }); });
+  const canvas=document.getElementById('canvas-bg'), ctx=canvas.getContext('2d'); let particles=[], mx=0,my=0; function resizeCanvas(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; particles=[]; for(let i=0;i<150;i++) particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,baseX:Math.random()*canvas.width,baseY:Math.random()*canvas.height,size:Math.random()*3+1,speed:0.01+Math.random()*0.02,vx:(Math.random()-0.5)*0.5,vy:(Math.random()-0.5)*0.5}); } function animate(){ ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{ let dxBase=p.baseX-p.x, dyBase=p.baseY-p.y; p.x+=dxBase*p.speed+p.vx; p.y+=dyBase*p.speed+p.vy; let dx=p.x-mx, dy=p.y-my, dist=Math.hypot(dx,dy); if(dist<100){ let force=(100-dist)/100*2, ang=Math.atan2(dy,dx); p.x+=Math.cos(ang)*force; p.y+=Math.sin(ang)*force; } ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2); ctx.fillStyle='#6366f1'; ctx.fill(); }); requestAnimationFrame(animate); } window.addEventListener('resize',resizeCanvas); document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; }); resizeCanvas(); animate();
+</script>
 </body>
 </html>
