@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>NEVORA SWAP — подтверждение входа</title>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
@@ -12,122 +12,203 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Arial', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      user-select: none;
     }
-
+    
     body {
-      background-color: #0a0a0f;
-      color: #e0e0e0;
+      background: #0f0f23;
+      color: #e2e8f0;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
+      line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
     }
-
+    
+    /* Canvas background */
+    #canvas-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+    
     .container {
-      background: #14141f;
-      border: 2px solid #7c3aed;
-      border-radius: 30px;
+      position: relative;
+      z-index: 10;
+      background: #1a1a2e;
+      border: 2px solid #6366f1;
+      border-radius: 28px;
       padding: 2rem;
-      max-width: 400px;
+      max-width: 420px;
       width: 90%;
       text-align: center;
-      box-shadow: 0 0 30px #7c3aed40;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(99, 102, 241, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
+    
+    .container:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(99, 102, 241, 0.3);
+    }
+    
     .logo {
       font-size: 2rem;
-      font-weight: bold;
-      color: #7c3aed;
+      font-weight: 800;
+      background: linear-gradient(135deg, #6366f1, #818cf8, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       margin-bottom: 1.5rem;
+      letter-spacing: -0.5px;
     }
-
+    
     .code {
-      font-size: 3rem;
-      letter-spacing: 10px;
-      color: #7c3aed;
+      font-size: 2.8rem;
+      letter-spacing: 12px;
+      color: #818cf8;
       margin: 1.5rem 0;
       padding: 1rem;
-      background: #1e1e2a;
+      background: #0f0f23;
       border-radius: 20px;
-      font-family: 'Courier New', monospace;
+      font-family: 'Courier New', 'SF Mono', monospace;
+      font-weight: 700;
+      border: 1px solid #6366f1;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.2);
     }
-
+    
     .status {
-      color: #a0a0c0;
+      color: #94a3b8;
       margin: 1rem 0;
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
-
+    
     .btn {
       background: transparent;
-      border: 2px solid #7c3aed;
-      border-radius: 40px;
+      border: 2px solid #6366f1;
+      border-radius: 50px;
       padding: 0.8rem 2rem;
       color: white;
       font-size: 1rem;
+      font-weight: 600;
       cursor: pointer;
       width: 100%;
       margin: 0.5rem 0;
-      transition: 0.2s;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
-
+    
     .btn:hover {
-      background: #7c3aed20;
+      background: linear-gradient(135deg, #6366f1, #818cf8);
+      border-color: transparent;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
     }
-
+    
+    .btn:active {
+      transform: translateY(0);
+    }
+    
     .login-form, .register-form {
       margin-top: 1.5rem;
       text-align: left;
     }
-
+    
     input {
       width: 100%;
-      padding: 0.8rem;
-      margin: 0.5rem 0;
-      background: #1e1e2a;
-      border: 1px solid #3a3a55;
-      border-radius: 30px;
-      color: white;
+      padding: 0.9rem 1.2rem;
+      margin: 0.6rem 0;
+      background: #0f0f23;
+      border: 1px solid #2a2a3a;
+      border-radius: 50px;
+      color: #e2e8f0;
       font-size: 1rem;
+      transition: all 0.3s ease;
     }
-
+    
     input:focus {
-      border-color: #7c3aed;
+      border-color: #6366f1;
       outline: none;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
     }
-
+    
+    input::placeholder {
+      color: #5a6a8a;
+    }
+    
     .error {
       color: #ef4444;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       margin-top: 0.3rem;
       text-align: center;
     }
-
+    
     .tabs {
       display: flex;
       gap: 1rem;
-      margin: 1rem 0;
+      margin: 1rem 0 0.5rem;
     }
-
+    
     .tab {
       flex: 1;
-      padding: 0.5rem;
+      padding: 0.6rem;
       background: transparent;
-      border: 1px solid #3a3a55;
-      border-radius: 30px;
-      color: #a0a0c0;
+      border: 2px solid #2a2a3a;
+      border-radius: 50px;
+      color: #94a3b8;
       cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
     }
-
+    
     .tab.active {
-      border-color: #7c3aed;
-      color: #7c3aed;
-      background: #7c3aed20;
+      border-color: #6366f1;
+      color: #818cf8;
+      background: rgba(99, 102, 241, 0.1);
+    }
+    
+    .tab:hover {
+      border-color: #6366f1;
+      color: #a78bfa;
+    }
+    
+    .success-icon {
+      font-size: 3.5rem;
+      margin: 1rem 0;
+      animation: pulse 0.5s ease;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(0.8); opacity: 0; }
+      80% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    .success-title {
+      color: #22c55e;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .close-hint {
+      color: #64748b;
+      font-size: 0.85rem;
+      margin-top: 1rem;
     }
   </style>
 </head>
 <body>
+  <canvas id="canvas-bg"></canvas>
+  
   <div class="container">
     <div class="logo">NEVORA SWAP</div>
     
@@ -141,28 +222,113 @@
       </div>
 
       <div id="loginForm" class="login-form">
-        <input type="text" id="loginUsername" placeholder="Логин (3-15 символов)">
-        <input type="password" id="loginPassword" placeholder="Пароль">
+        <input type="text" id="loginUsername" placeholder="Логин (3-15 символов)" autocomplete="off">
+        <input type="password" id="loginPassword" placeholder="Пароль" autocomplete="off">
         <div id="loginError" class="error"></div>
         <button class="btn" onclick="handleLogin()">Войти и подтвердить</button>
       </div>
 
       <div id="registerForm" class="register-form" style="display: none;">
-        <input type="text" id="regUsername" placeholder="Логин (3-15 символов)">
-        <input type="password" id="regPassword" placeholder="Пароль">
+        <input type="text" id="regUsername" placeholder="Логин (3-15 символов)" autocomplete="off">
+        <input type="password" id="regPassword" placeholder="Пароль" autocomplete="off">
         <div id="registerError" class="error"></div>
         <button class="btn" onclick="handleRegister()">Зарегистрироваться и подтвердить</button>
       </div>
     </div>
 
     <div id="successSection" style="display: none;">
-      <div style="font-size: 3rem; color: #7c3aed; margin: 1rem 0;">✅</div>
-      <h3 style="color: #7c3aed;">Успешно!</h3>
+      <div class="success-icon">✅</div>
+      <div class="success-title">Успешно!</div>
       <p class="status">Можете закрыть это окно</p>
+      <div class="close-hint">окно закроется автоматически...</div>
     </div>
   </div>
 
   <script>
+    // Canvas background animation
+    (function() {
+      const canvas = document.getElementById('canvas-bg');
+      const ctx = canvas.getContext('2d');
+      let width, height, particles = [];
+      let mouseX = 0, mouseY = 0;
+      
+      function resizeCanvas() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+        createParticles();
+      }
+      
+      function createParticles() {
+        particles = [];
+        const count = Math.min(100, Math.floor(width * height / 15000));
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            baseX: Math.random() * width,
+            baseY: Math.random() * height,
+            size: Math.random() * 2.5 + 1,
+            speed: 0.008 + Math.random() * 0.015,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3
+          });
+        }
+      }
+      
+      function updateParticles() {
+        particles.forEach(p => {
+          let dxBase = p.baseX - p.x;
+          let dyBase = p.baseY - p.y;
+          p.x += dxBase * p.speed + p.vx;
+          p.y += dyBase * p.speed + p.vy;
+          
+          let dx = p.x - mouseX;
+          let dy = p.y - mouseY;
+          let dist = Math.hypot(dx, dy);
+          if (dist < 120) {
+            let force = (120 - dist) / 120 * 1.5;
+            let angle = Math.atan2(dy, dx);
+            p.x += Math.cos(angle) * force;
+            p.y += Math.sin(angle) * force;
+          }
+          
+          p.x = Math.min(width + 30, Math.max(-30, p.x));
+          p.y = Math.min(height + 30, Math.max(-30, p.y));
+        });
+      }
+      
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = '#6366f1';
+          ctx.shadowBlur = 12;
+          ctx.shadowColor = '#6366f1';
+          ctx.fill();
+        });
+        ctx.shadowBlur = 0;
+      }
+      
+      function animate() {
+        updateParticles();
+        draw();
+        requestAnimationFrame(animate);
+      }
+      
+      window.addEventListener('resize', () => {
+        resizeCanvas();
+      });
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+      resizeCanvas();
+      animate();
+    })();
+
     // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyCbgkMW0F0Nb8THjhoCapueR0ccGTexoyk",
@@ -247,6 +413,7 @@
       }
 
       document.getElementById('loginError').innerText = 'Проверка...';
+      document.getElementById('loginError').style.color = '#818cf8';
 
       try {
         const snapshot = await db.ref('users/' + username).once('value');
@@ -254,11 +421,13 @@
 
         if (!user) {
           document.getElementById('loginError').innerText = 'Пользователь не найден';
+          document.getElementById('loginError').style.color = '#ef4444';
           return;
         }
 
         if (user.password !== hashPassword(password)) {
           document.getElementById('loginError').innerText = 'Неверный пароль';
+          document.getElementById('loginError').style.color = '#ef4444';
           return;
         }
 
@@ -271,6 +440,7 @@
         showSuccess();
       } catch (error) {
         document.getElementById('loginError').innerText = 'Ошибка: ' + error.message;
+        document.getElementById('loginError').style.color = '#ef4444';
       }
     }
 
@@ -291,12 +461,14 @@
       }
 
       document.getElementById('registerError').innerText = 'Регистрация...';
+      document.getElementById('registerError').style.color = '#818cf8';
 
       try {
         // Проверяем, существует ли пользователь
         const exists = await db.ref('users/' + username).once('value').then(s => s.exists());
         if (exists) {
           document.getElementById('registerError').innerText = 'Пользователь уже существует';
+          document.getElementById('registerError').style.color = '#ef4444';
           return;
         }
 
@@ -316,6 +488,7 @@
         showSuccess();
       } catch (error) {
         document.getElementById('registerError').innerText = 'Ошибка: ' + error.message;
+        document.getElementById('registerError').style.color = '#ef4444';
       }
     }
 
