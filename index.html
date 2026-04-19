@@ -446,6 +446,34 @@
     .support-faq-question { font-weight: 600; color: var(--accent); margin-bottom: 0.2rem; font-size: 0.85rem; }
     .support-faq-answer { color: var(--text-muted); font-size: 0.8rem; }
     
+    /* Кнопка активации мода в профиле */
+    .mod-activation-btn {
+      margin-top: 0.5rem;
+      width: 100%;
+    }
+    .activation-code-display {
+      font-family: monospace;
+      font-size: 1.8rem;
+      letter-spacing: 4px;
+      background: var(--bg);
+      padding: 0.8rem;
+      border-radius: 12px;
+      text-align: center;
+      color: var(--accent);
+      margin: 1rem 0;
+      border: 1px solid var(--primary);
+    }
+    .copy-btn-small {
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      border: 1px solid var(--primary);
+      background: transparent;
+      color: var(--primary);
+      cursor: pointer;
+      font-size: 0.7rem;
+      margin-left: 0.5rem;
+    }
+    
     /* Мобильные стили */
     @media (max-width: 768px) {
       header { padding: 1rem; }
@@ -510,7 +538,7 @@
   </div>
 </header>
 
-<!-- Мобильная навигация (без смайликов) -->
+<!-- Мобильная навигация -->
 <div class="mobile-nav" id="mobileNav">
   <a data-section="home" onclick="showSection('home')">Главная</a>
   <a data-section="features" onclick="showSection('features')">Возможности</a>
@@ -527,7 +555,14 @@
 
 <div id="pricing" class="section"><div class="container"><h2 class="section-title">Выберите свой тариф</h2><div class="pricing-grid"><div class="price-card" data-days="12 часов" data-type="012h" data-price="24" data-funpay="https://funpay.com/lots/offer?id=65952691"><div class="plan-name">AutoSwap Basic</div><div class="plan-price">₽24 <span>/12ч</span></div><ul class="plan-features"><li>Время подписки: 12 часов</li><li>Полный функционал</li><li>Поддержка 24/7</li></ul></div><div class="price-card" data-days="7 дней" data-type="007d" data-price="59" data-funpay="https://funpay.com/lots/offer?id=65952858"><div class="plan-name">AutoSwap Plus</div><div class="plan-price">₽59 <span>/7д</span></div><ul class="plan-features"><li>Время подписки: 7 дней</li><li>Полный функционал</li><li>Поддержка 24/7</li></ul></div><div class="price-card featured" data-days="30 дней" data-type="030d" data-price="119" data-funpay="https://funpay.com/lots/offer?id=65952723"><span class="popular-badge">Популярный</span><div class="plan-name">NevoraSwap Pro</div><div class="plan-price">₽119 <span>/30д</span></div><ul class="plan-features"><li>Время подписки: 30 дней</li><li>Полный функционал</li><li>Поддержка 24/7</li><li>Бесплатный сброс HWID</li></ul></div><div class="price-card" data-days="1 год" data-type="365d" data-price="249" data-funpay="https://funpay.com/lots/offer?id=64199862"><div class="plan-name">Enterprise</div><div class="plan-price">₽249 <span>/год</span></div><ul class="plan-features"><li>Время подписки: 1 год</li><li>Полный функционал</li><li>Поддержка 24/7</li><li>Бесплатный сброс HWID</li></ul></div></div><div class="payment-note">✅ После оплаты вы получите: все туториалы по установке, а также индивидуальный ключ, который можно будет активировать в профиле.</div></div></div>
 
-<div id="profile" class="section"><div class="container"><h2 class="section-title">Профиль</h2><div id="profileNotLogged" style="text-align:center; padding:2rem;"><div style="font-size:2.5rem;">🔐</div><h3>Войдите в аккаунт</h3><p style="color:var(--text-muted); margin:0.8rem 0;">Получите доступ ко всем функциям</p><button class="btn btn-primary" onclick="openAuthModal()">Войти</button></div><div id="profileLogged" style="display:none;"><div class="profile-card"><div class="profile-header"><div class="profile-avatar" id="profileAvatar">👤</div><div class="profile-info"><h3 id="profileUsername"></h3><div><span class="profile-badge" id="profileStatus">Активный пользователь</span><span id="adminBadge" class="profile-badge" style="background:var(--warning); display:none;">ADMIN</span></div></div></div><div class="license-info"><h4>Активная лицензия</h4><div class="license-key-container"><span class="license-key license-key-blur" id="licenseKey">---- ---- ---- ----</span><div class="key-actions"><button class="key-btn" id="toggleKeyBtn">👁️ показать</button><button class="key-btn" id="copyKeyBtn">📋 копировать</button></div></div><div class="timer-bar"><div class="timer-fill" id="timerFill" style="width:100%"></div></div><p id="remainingTime" style="text-align:center; color:var(--text-muted); font-size:0.8rem;">⏱️ Осталось: -- дн. -- ч. -- мин.</p></div><div style="margin-top:1rem;"><input type="text" id="activationKeyInput" class="activation-input" placeholder="XXXXXX-XXXXXX-XXXXXX-XXXXXX" style="text-transform:uppercase;"><button class="btn btn-primary" id="activateKeyBtn" style="width:100%; margin-top:0.6rem;">Активировать ключ</button></div><div style="margin-top:1.5rem; text-align:center;"><button class="btn btn-outline" onclick="showSection('pricing')">➕ Продлить подписку</button><button class="btn btn-outline" id="logoutBtn" style="border-color:var(--error); color:var(--error); margin-left:0.5rem;">Выйти</button></div></div></div></div></div>
+<div id="profile" class="section"><div class="container"><h2 class="section-title">Профиль</h2><div id="profileNotLogged" style="text-align:center; padding:2rem;"><div style="font-size:2.5rem;">🔐</div><h3>Войдите в аккаунт</h3><p style="color:var(--text-muted); margin:0.8rem 0;">Получите доступ ко всем функциям</p><button class="btn btn-primary" onclick="openAuthModal()">Войти</button></div><div id="profileLogged" style="display:none;"><div class="profile-card"><div class="profile-header"><div class="profile-avatar" id="profileAvatar">👤</div><div class="profile-info"><h3 id="profileUsername"></h3><div><span class="profile-badge" id="profileStatus">Активный пользователь</span><span id="adminBadge" class="profile-badge" style="background:var(--warning); display:none;">ADMIN</span></div></div></div><div class="license-info"><h4>Активная лицензия</h4><div class="license-key-container"><span class="license-key license-key-blur" id="licenseKey">---- ---- ---- ----</span><div class="key-actions"><button class="key-btn" id="toggleKeyBtn">👁️ показать</button><button class="key-btn" id="copyKeyBtn">📋 копировать</button></div></div><div class="timer-bar"><div class="timer-fill" id="timerFill" style="width:100%"></div></div><p id="remainingTime" style="text-align:center; color:var(--text-muted); font-size:0.8rem;">⏱️ Осталось: -- дн. -- ч. -- мин.</p></div><div style="margin-top:1rem;"><input type="text" id="activationKeyInput" class="activation-input" placeholder="XXXXXX-XXXXXX-XXXXXX-XXXXXX" style="text-transform:uppercase;"><button class="btn btn-primary" id="activateKeyBtn" style="width:100%; margin-top:0.6rem;">Активировать ключ</button></div>
+  <!-- НОВАЯ КНОПКА АКТИВАЦИИ МОДА -->
+  <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid rgba(99,102,241,0.2);">
+    <h4 style="color:var(--accent); font-size:0.9rem; margin-bottom:0.5rem;">🔑 Активация мода</h4>
+    <p style="color:var(--text-muted); font-size:0.75rem; margin-bottom:0.5rem;">Если мод запросил активацию, введите код из мода и нажмите "Активировать мод"</p>
+    <button class="btn btn-outline mod-activation-btn" onclick="openModActivationModal()">🔓 Активировать мод</button>
+  </div>
+<div style="margin-top:1.5rem; text-align:center;"><button class="btn btn-outline" onclick="showSection('pricing')">➕ Продлить подписку</button><button class="btn btn-outline" id="logoutBtn" style="border-color:var(--error); color:var(--error); margin-left:0.5rem;">Выйти</button></div></div></div></div></div>
 
 <div id="support" class="section"><div class="container"><h2 class="section-title">Поддержка</h2><div class="profile-card"><p>Свяжитесь с нами любым удобным способом:</p><div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:0.8rem;"><a href="https://t.me/vergyTG" target="_blank" class="btn btn-primary" style="text-decoration:none; text-align:center; font-size:0.9rem;">📩 Админ @vergyTG</a><a href="https://t.me/nevoraswap" target="_blank" class="btn btn-outline" style="text-decoration:none; text-align:center; font-size:0.9rem;">📢 Канал @nevoraswap</a></div><div class="support-faq"><h4 style="color:var(--accent); margin-bottom:0.8rem; font-size:1rem;">❓ Часто задаваемые вопросы</h4><div class="support-faq-item"><div class="support-faq-question">🔹 Как активировать ключ?</div><div class="support-faq-answer">Купите ключ в разделе "Цены", затем введите его в разделе "Профиль".</div></div><div class="support-faq-item"><div class="support-faq-question">🔹 Что делать, если вызвали на проверку?</div><div class="support-faq-answer">Просто закрываете программу. Если спросят — говорите, что это AHK скрипт.</div></div><div class="support-faq-item"><div class="support-faq-question">🔹 Как скачать лаунчер?</div><div class="support-faq-answer">Войдите в аккаунт и активируйте лицензию, после этого кнопка скачивания станет доступна.</div></div></div></div></div></div>
 
@@ -542,6 +577,24 @@
 <div class="modal-overlay" id="paymentModal"><div class="modal-card"><button class="close-modal" onclick="closeModal('paymentModal')">✖</button><h2 id="paymentTitle" style="text-align:center; font-size:1.2rem;">Тариф</h2><p id="paymentPrice" style="font-size:2rem; text-align:center; font-weight:bold; color:var(--primary);">₽0</p><div style="display:grid; gap:0.8rem; margin-top:1.5rem;"><a href="#" id="funpayLink" target="_blank" class="btn btn-primary" style="text-decoration:none; text-align:center;">Оплатить через FunPay</a><button class="btn btn-outline" onclick="contactAdmin()">Связаться с администратором</button></div></div></div>
 
 <div class="modal-overlay" id="agreementModal"><div class="modal-card"><button class="close-modal" onclick="closeModal('agreementModal')">✖</button><h2 style="text-align:center; font-size:1.2rem;">📜 Пользовательское соглашение</h2><div style="color:var(--text-muted); font-size:0.85rem;"><p><strong>1. Общие положения</strong><br>Используя NEVORA SWAP, вы соглашаетесь с условиями.</p><p><strong>2. Запрещенные действия</strong><br>❌ Запрещена передача лицензии третьим лицам<br>❌ Запрещено взламывать или модифицировать ПО</p><p><strong>3. Ответственность</strong><br>Администрация вправе заблокировать доступ без возврата средств.</p></div><button class="btn btn-primary" onclick="closeModal('agreementModal')" style="width:100%; margin-top:1rem;">Закрыть</button></div></div>
+
+<!-- НОВОЕ МОДАЛЬНОЕ ОКНО АКТИВАЦИИ МОДА -->
+<div class="modal-overlay" id="modActivationModal">
+  <div class="modal-card">
+    <button class="close-modal" onclick="closeModal('modActivationModal')">✖</button>
+    <h2 style="text-align:center; font-size:1.2rem; margin-bottom:1rem;">🔑 Активация мода</h2>
+    <div style="color:var(--text-muted); font-size:0.8rem; text-align:center; margin-bottom:1rem;">
+      Введите код, который показал мод при первом запуске
+    </div>
+    <input type="text" id="modActivationCodeInput" placeholder="XXXX-XXXXXXXX" style="width:100%; padding:0.8rem; background:rgba(10,10,15,0.8); border:1px solid var(--primary); border-radius:40px; color:white; text-align:center; text-transform:uppercase; font-size:1rem;">
+    <div id="modActivationError" class="error-text"></div>
+    <div id="modActivationResult" style="margin:1rem 0; text-align:center;"></div>
+    <button class="btn btn-primary" onclick="activateMod()" style="width:100%;">Активировать</button>
+    <p style="color:var(--text-muted); font-size:0.7rem; text-align:center; margin-top:1rem;">
+      После активации мод будет привязан к вашему ПК
+    </p>
+  </div>
+</div>
 
 <script>
   // Мобильное меню
@@ -594,7 +647,6 @@
 
   // Установка активной вкладки
   function setActiveNavItem(sectionId) {
-    // Десктопные ссылки
     const desktopLinks = document.querySelectorAll('#desktopNav a[data-section]');
     let activeDesktopLink = null;
     desktopLinks.forEach(link => {
@@ -609,7 +661,6 @@
       updateUnderline(activeDesktopLink);
     }
     
-    // Мобильные ссылки
     const mobileLinks = document.querySelectorAll('#mobileNav a[data-section]');
     mobileLinks.forEach(link => {
       if (link.getAttribute('data-section') === sectionId) {
@@ -619,7 +670,6 @@
       }
     });
     
-    // Закрываем мобильное меню
     closeMobileMenu();
   }
 
@@ -681,6 +731,105 @@
   function togglePassword(id){ const inp=document.getElementById(id); if(inp) inp.type=inp.type==='password'?'text':'password'; }
   function contactAdmin(){ window.open('https://t.me/vergyTG','_blank'); }
   function openAgreementModal(){ document.getElementById('agreementModal').classList.add('active'); }
+  
+  // Функции для активации мода
+  function openModActivationModal() {
+    if (!currentUser) {
+      showToast('Сначала войдите в аккаунт', 'error');
+      return;
+    }
+    document.getElementById('modActivationModal').classList.add('active');
+    document.getElementById('modActivationCodeInput').value = '';
+    document.getElementById('modActivationError').textContent = '';
+    document.getElementById('modActivationResult').innerHTML = '';
+  }
+  
+  async function activateMod() {
+    if (!currentUser) {
+      showToast('Сначала войдите в аккаунт', 'error');
+      return;
+    }
+    
+    const modCode = document.getElementById('modActivationCodeInput').value.trim().toUpperCase();
+    const errorDiv = document.getElementById('modActivationError');
+    const resultDiv = document.getElementById('modActivationResult');
+    
+    if (!modCode) {
+      errorDiv.textContent = 'Введите код из мода';
+      return;
+    }
+    
+    errorDiv.textContent = '';
+    resultDiv.innerHTML = '<span style="color:var(--primary);">Проверка кода...</span>';
+    
+    try {
+      // Проверяем существование кода активации в Firebase
+      const activationSnap = await database.ref('activations/' + modCode).once('value');
+      const activation = activationSnap.val();
+      
+      if (!activation) {
+        errorDiv.textContent = 'Код не найден или устарел';
+        resultDiv.innerHTML = '';
+        return;
+      }
+      
+      // Проверяем, не истёк ли код (5 минут)
+      if (Date.now() - activation.createdAt > 300000) {
+        await database.ref('activations/' + modCode).remove();
+        errorDiv.textContent = 'Код истёк, перезапустите мод';
+        resultDiv.innerHTML = '';
+        return;
+      }
+      
+      // Генерируем ответный код для мода
+      const siteCode = generateSiteCode();
+      
+      // Обновляем запись в Firebase
+      await database.ref('activations/' + modCode).update({
+        siteCode: siteCode,
+        username: currentUser.username,
+        activatedAt: Date.now()
+      });
+      
+      // Показываем код пользователю
+      resultDiv.innerHTML = `
+        <div style="background:rgba(34,197,94,0.1); padding:1rem; border-radius:12px; border:1px solid var(--success);">
+          <p style="color:var(--success); font-weight:bold; margin-bottom:0.5rem;">✅ Код активации создан!</p>
+          <div class="activation-code-display" style="font-size:2rem;">${siteCode}</div>
+          <p style="color:var(--text-muted); font-size:0.75rem; margin-top:0.5rem;">
+            Введите этот код в поле мода и нажмите "Активировать"
+          </p>
+          <button class="copy-btn-small" onclick="copySiteCode('${siteCode}')">📋 Копировать</button>
+        </div>
+      `;
+      
+      showToast('Код активации создан!', 'success');
+      
+      // Удаляем код через 5 минут
+      setTimeout(async () => {
+        await database.ref('activations/' + modCode).remove();
+      }, 300000);
+      
+    } catch (e) {
+      errorDiv.textContent = 'Ошибка: ' + e.message;
+      resultDiv.innerHTML = '';
+    }
+  }
+  
+  function generateSiteCode() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
+    let code = '';
+    for (let i = 0; i < 8; i++) {
+      code += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return code;
+  }
+  
+  window.copySiteCode = function(code) {
+    navigator.clipboard.writeText(code);
+    showToast('Код скопирован!', 'success');
+  };
+  
   async function updateUI(){ const authDiv=document.getElementById('authButtons'), greetingDiv=document.getElementById('userGreeting'), greetingText=document.getElementById('greetingText'), profileNot=document.getElementById('profileNotLogged'), profileLogged=document.getElementById('profileLogged'), adminLink=document.getElementById('adminNavLink'), adminLinkMobile=document.getElementById('adminNavLinkMobile'), adminBadgeSpan=document.getElementById('adminBadge'); if(currentUser){ authDiv.style.display='none'; greetingDiv.style.display='block'; greetingText.textContent=`👤 ${escapeHtml(currentUser.username)}`; profileNot.style.display='none'; profileLogged.style.display='block'; document.getElementById('profileUsername').textContent=escapeHtml(currentUser.username); if(currentUser.is_admin){ if(adminLink) adminLink.style.display='inline-block'; if(adminLinkMobile) adminLinkMobile.style.display='block'; adminBadgeSpan.style.display='inline-block'; }else{ if(adminLink) adminLink.style.display='none'; if(adminLinkMobile) adminLinkMobile.style.display='none'; adminBadgeSpan.style.display='none'; } await updateProfileUI(); }else{ authDiv.style.display='block'; greetingDiv.style.display='none'; profileNot.style.display='block'; profileLogged.style.display='none'; if(adminLink) adminLink.style.display='none'; if(adminLinkMobile) adminLinkMobile.style.display='none'; } updateHeroButton(); updateLauncherButton(); }
   async function updateProfileUI(){ if(!currentUser) return; const user=await getUser(currentUser.username); if(user&&user.license_id){ const snap=await database.ref('licenses/'+user.license_id).once('value'); currentLicense=snap.val(); if(currentLicense) currentLicense.id=user.license_id; }else currentLicense=null; if(currentLicense&&isExpired(currentLicense)){ await database.ref('users/'+currentUser.username+'/license_id').remove(); await deleteLicense(currentLicense.id); currentLicense=null; } const keySpan=document.getElementById('licenseKey'), fill=document.getElementById('timerFill'), remainSpan=document.getElementById('remainingTime'); if(hasActiveLicense()){ const rem=getRemainingTime(currentLicense), total=getTotalMinutes(currentLicense.type), elapsed=total-rem.totalMinutes, percent=Math.max(0,Math.min(100,(elapsed/total)*100)); const names={'012h':'AutoSwap Basic (12ч)','007d':'AutoSwap Plus (7д)','030d':'NevoraSwap Pro (30д)','365d':'Enterprise (1 год)'}; document.querySelector('.license-info h4').textContent=names[currentLicense.type]||'Активная лицензия'; keySpan.textContent=currentLicense.code; fill.style.width=(100-percent)+'%'; remainSpan.textContent=`⏱️ Осталось: ${rem.days} дн. ${rem.hours} ч. ${rem.minutes} мин.`; }else{ document.querySelector('.license-info h4').textContent='Нет активной лицензии'; keySpan.textContent='---- ---- ---- ----'; fill.style.width='0%'; remainSpan.textContent='⏱️ Лицензия не активна'; } updateLauncherButton(); }
   function updateLauncherButton(){ const btn=document.getElementById('launcherMainBtn'), status=document.getElementById('launcherStatus'); const active=hasActiveLicense(); if(btn){ if(active){ btn.style.opacity='1'; btn.style.pointerEvents='auto'; if(status) status.textContent='✅ Доступно для скачивания'; }else{ btn.style.opacity='0.4'; btn.style.pointerEvents='none'; if(status) status.textContent='❌ Требуется активная лицензия'; } } }
