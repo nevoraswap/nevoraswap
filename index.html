@@ -794,16 +794,14 @@
       // Показываем код пользователю
       resultDiv.innerHTML = `
         <div style="background:rgba(34,197,94,0.1); padding:1rem; border-radius:12px; border:1px solid var(--success);">
-          <p style="color:var(--success); font-weight:bold; margin-bottom:0.5rem;">✅ Код активации создан!</p>
+          <p style="color:var(--success); font-weight:bold; margin-bottom:0.5rem;">✅ заходите в игру и следуйте указаниям</p>
           <div class="activation-code-display" style="font-size:2rem;">${siteCode}</div>
           <p style="color:var(--text-muted); font-size:0.75rem; margin-top:0.5rem;">
-            Введите этот код в поле мода и нажмите "Активировать"
           </p>
-          <button class="copy-btn-small" onclick="copySiteCode('${siteCode}')">📋 Копировать</button>
         </div>
       `;
       
-      showToast('Код активации создан!', 'success');
+      showToast('✅', 'success');
       
       // Удаляем код через 5 минут
       setTimeout(async () => {
