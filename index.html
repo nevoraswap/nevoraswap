@@ -97,7 +97,6 @@
     
     #canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.6; }
     
-    /* Хедер - для ПК логотип слева, навигация по центру, кнопка справа */
     header { 
       position: sticky; 
       top: 0; 
@@ -120,7 +119,6 @@
       white-space: nowrap;
     }
     
-    /* Десктопная навигация - по центру */
     .desktop-nav { 
       display: flex; 
       gap: 1.5rem; 
@@ -142,7 +140,6 @@
     .desktop-nav a:hover { color: var(--primary); }
     .desktop-nav a.active { color: var(--primary); }
     
-    /* Анимированная полоска */
     .nav-underline {
       position: absolute;
       bottom: 0;
@@ -153,13 +150,11 @@
       pointer-events: none;
     }
     
-    /* Кнопки входа */
     .auth-container {
       display: flex;
       gap: 0.5rem;
     }
     
-    /* Гамбургер меню - только для мобильных */
     .mobile-menu-btn {
       display: none;
       background: transparent;
@@ -179,7 +174,6 @@
       transition: var(--transition);
     }
     
-    /* Мобильное меню */
     .mobile-nav {
       position: fixed;
       top: 0;
@@ -234,7 +228,6 @@
       display: block;
     }
     
-    /* Адаптивные кнопки */
     .btn { 
       padding: 0.6rem 1.2rem; 
       border-radius: 50px; 
@@ -250,7 +243,6 @@
     .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
     .btn-outline:hover { background: var(--primary); color: white; }
     
-    /* Герой секция */
     .hero { 
       position: relative; 
       z-index: 10; 
@@ -284,7 +276,6 @@
       animation: fadeInUp 0.8s ease 0.2s both;
     }
     
-    /* Анимация для секций */
     .section { 
       position: relative; 
       z-index: 10; 
@@ -307,7 +298,6 @@
       animation: fadeInUp 0.5s ease; 
     }
     
-    /* Особенности */
     .features { 
       display: grid; 
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
@@ -333,7 +323,6 @@
     
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     
-    /* Цены */
     .pricing-grid { 
       display: grid; 
       grid-template-columns: repeat(4, 1fr); 
@@ -382,7 +371,6 @@
     .plan-features li:before { content: "✓"; color: var(--success); font-weight: bold; }
     .payment-note { text-align: center; margin-top: 1.5rem; padding: 0.8rem; background: rgba(99,102,241,0.1); border-radius: 16px; color: var(--text-muted); font-size: 0.85rem; }
     
-    /* Профиль */
     .profile-card { background: var(--card-bg); border-radius: 20px; padding: 1.5rem; margin: 1.5rem auto; max-width: 800px; }
     .profile-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
     .profile-avatar { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); display: flex; align-items: center; justify-content: center; font-size: 2rem; border: 3px solid var(--primary); }
@@ -398,7 +386,6 @@
     .timer-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.3s ease; }
     .activation-input { width: 100%; padding: 0.8rem; background: rgba(10,10,15,0.8); border: 1px solid var(--primary); border-radius: 40px; color: white; text-align: center; font-size: 0.85rem; margin-top: 1rem; }
     
-    /* Модальные окна */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center; z-index: 3000; padding: 1rem; }
     .modal-overlay.active { display: flex; }
     .modal-card { background: var(--card-bg); border: 2px solid var(--primary); border-radius: 24px; padding: 1.5rem; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; animation: modalFadeIn 0.2s ease; }
@@ -414,24 +401,20 @@
     .password-toggle { position: absolute; right: 0.8rem; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--primary); cursor: pointer; font-size: 1rem; }
     .error-text { color: var(--error); font-size: 0.8rem; margin-top: 0.3rem; text-align: center; }
     
-    /* Тосты */
     .toast { position: fixed; bottom: 1rem; right: 1rem; background: var(--card-bg); border-left: 4px solid var(--primary); padding: 0.8rem 1.2rem; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); z-index: 4000; animation: slideIn 0.3s ease; max-width: calc(100vw - 2rem); font-size: 0.85rem; }
     .toast.success { border-left-color: var(--success); }
     .toast.error { border-left-color: var(--error); }
     @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
     
-    /* Футер */
     footer { position: relative; z-index: 10; margin-top: 4rem; padding: 2rem 1rem; border-top: 1px solid rgba(99,102,241,0.2); text-align: center; color: var(--text-muted); }
     .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
     .footer-links a { color: var(--text-muted); text-decoration: none; transition: var(--transition); cursor: pointer; font-size: 0.85rem; }
     .footer-links a:hover { color: var(--primary); }
     
-    /* Капча */
     .captcha-container { background: rgba(10,10,15,0.8); border-radius: 16px; padding: 0.8rem; text-align: center; margin: 0.8rem 0; }
     .captcha-code { font-family: monospace; font-size: 1.5rem; letter-spacing: 6px; background: var(--card-bg); padding: 0.5rem; border-radius: 12px; display: inline-block; margin: 0.3rem 0; font-weight: bold; color: var(--accent); }
     .captcha-refresh { margin-top: 0.3rem; padding: 0.3rem 0.8rem; border-radius: 20px; border: 1px solid var(--primary); background: transparent; color: var(--primary); cursor: pointer; font-size: 0.75rem; transition: var(--transition); }
     
-    /* Админ панель */
     .admin-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin-bottom: 1.5rem; }
     .admin-stat-card { background: rgba(10,10,15,0.5); border-radius: 16px; padding: 1rem; text-align: center; border: 1px solid rgba(99,102,241,0.2); }
     .admin-stat-value { font-size: 1.5rem; font-weight: bold; color: var(--accent); }
@@ -446,7 +429,6 @@
     .support-faq-question { font-weight: 600; color: var(--accent); margin-bottom: 0.2rem; font-size: 0.85rem; }
     .support-faq-answer { color: var(--text-muted); font-size: 0.8rem; }
     
-    /* Кнопка активации мода в профиле */
     .mod-activation-btn {
       margin-top: 0.5rem;
       width: 100%;
@@ -474,7 +456,6 @@
       margin-left: 0.5rem;
     }
     
-    /* Мобильные стили */
     @media (max-width: 768px) {
       header { padding: 1rem; }
       .logo { font-size: 1.2rem; }
@@ -520,7 +501,6 @@
   </div>
   <div class="logo">NEVORA SWAP</div>
   
-  <!-- Десктопная навигация -->
   <nav class="desktop-nav" id="desktopNav">
     <a data-section="home" onclick="showSection('home')">Главная</a>
     <a data-section="features" onclick="showSection('features')">Возможности</a>
@@ -538,7 +518,6 @@
   </div>
 </header>
 
-<!-- Мобильная навигация -->
 <div class="mobile-nav" id="mobileNav">
   <a data-section="home" onclick="showSection('home')">Главная</a>
   <a data-section="features" onclick="showSection('features')">Возможности</a>
@@ -551,12 +530,11 @@
 
 <div id="home" class="section active"><section class="hero"><h1>Автоматизация для Minecraft</h1><p>Nevora Swap — профессиональный инструмент для автоматического переключения предметов в инвентаре. Работает поверх Minecraft, не является модом и не запрещён на серверах.</p><div class="hero-buttons" id="heroButtons"></div></section></div>
 
-<div id="features" class="section"><div class="container"><h2 class="section-title">Возможности</h2><div class="features"><div class="feature-card"><div class="feature-icon">⚡</div><h3>AutoSwap</h3><p>Меняет талисман, сферу и другие предметы из инвентаря в пределах ±50 миллисекунд. Мгновенная реакция и плавная работа.</p></div><div class="feature-card"><div class="feature-icon">🖱️</div><h3>Bulova Helper</h3><p>Сложная механика, которая выполняет последовательность действий: опускает камеру вниз → кидает заряд ветра → прыгает → берёт булаву в руки. Вам остаётся только попасть по оппоненту!</p></div><div class="feature-card"><div class="feature-icon">🔒</div><h3>Защита HWID</h3><p>Привязка к устройству и защита от повторного запуска. Ваша лицензия надёжно привязана к вашему ПК.</p></div><div class="feature-card"><div class="feature-icon">📊</div><h3>Статистика</h3><p>Подробная аналитика всех ваших действий в программе: количество свапов, эффективность и многое другое.</p></div></div></div></div>
+<div id="features" class="section"><div class="container"><h2 class="section-title">Возможности</h2><div class="features"><div class="feature-card"><div class="feature-icon">⚡</div><h3>AutoSwap</h3><p>Меняет талисман, сферу и другие предметы из инвентаря в пределах ±50 миллисекунд. Мгновенная реакция и плавная работа.</p></div><div class="feature-card"><div class="feature-icon">🖱️</div><h3>FT Helper</h3><p>Быстрое использование предметов из хотбара: трапка, дезориентация, явная пыль, пласт, снежок. Настройка биндов под себя.</p></div><div class="feature-card"><div class="feature-icon">🔒</div><h3>Защита HWID</h3><p>Привязка к устройству и защита от повторного запуска. Ваша лицензия надёжно привязана к вашему ПК.</p></div><div class="feature-card"><div class="feature-icon">📊</div><h3>Статистика</h3><p>Подробная аналитика всех ваших действий в программе: количество свапов, эффективность и многое другое.</p></div></div></div></div>
 
 <div id="pricing" class="section"><div class="container"><h2 class="section-title">Выберите свой тариф</h2><div class="pricing-grid"><div class="price-card" data-days="12 часов" data-type="012h" data-price="24" data-funpay="https://funpay.com/lots/offer?id=65952691"><div class="plan-name">AutoSwap Basic</div><div class="plan-price">₽24 <span>/12ч</span></div><ul class="plan-features"><li>Время подписки: 12 часов</li><li>Полный функционал</li><li>Поддержка 24/7</li></ul></div><div class="price-card" data-days="7 дней" data-type="007d" data-price="59" data-funpay="https://funpay.com/lots/offer?id=65952858"><div class="plan-name">AutoSwap Plus</div><div class="plan-price">₽59 <span>/7д</span></div><ul class="plan-features"><li>Время подписки: 7 дней</li><li>Полный функционал</li><li>Поддержка 24/7</li></ul></div><div class="price-card featured" data-days="30 дней" data-type="030d" data-price="119" data-funpay="https://funpay.com/lots/offer?id=65952723"><span class="popular-badge">Популярный</span><div class="plan-name">NevoraSwap Pro</div><div class="plan-price">₽119 <span>/30д</span></div><ul class="plan-features"><li>Время подписки: 30 дней</li><li>Полный функционал</li><li>Поддержка 24/7</li><li>Бесплатный сброс HWID</li></ul></div><div class="price-card" data-days="1 год" data-type="365d" data-price="249" data-funpay="https://funpay.com/lots/offer?id=64199862"><div class="plan-name">Enterprise</div><div class="plan-price">₽249 <span>/год</span></div><ul class="plan-features"><li>Время подписки: 1 год</li><li>Полный функционал</li><li>Поддержка 24/7</li><li>Бесплатный сброс HWID</li></ul></div></div><div class="payment-note">✅ После оплаты вы получите: все туториалы по установке, а также индивидуальный ключ, который можно будет активировать в профиле.</div></div></div>
 
 <div id="profile" class="section"><div class="container"><h2 class="section-title">Профиль</h2><div id="profileNotLogged" style="text-align:center; padding:2rem;"><div style="font-size:2.5rem;">🔐</div><h3>Войдите в аккаунт</h3><p style="color:var(--text-muted); margin:0.8rem 0;">Получите доступ ко всем функциям</p><button class="btn btn-primary" onclick="openAuthModal()">Войти</button></div><div id="profileLogged" style="display:none;"><div class="profile-card"><div class="profile-header"><div class="profile-avatar" id="profileAvatar">👤</div><div class="profile-info"><h3 id="profileUsername"></h3><div><span class="profile-badge" id="profileStatus">Активный пользователь</span><span id="adminBadge" class="profile-badge" style="background:var(--warning); display:none;">ADMIN</span></div></div></div><div class="license-info"><h4>Активная лицензия</h4><div class="license-key-container"><span class="license-key license-key-blur" id="licenseKey">---- ---- ---- ----</span><div class="key-actions"><button class="key-btn" id="toggleKeyBtn">👁️ показать</button><button class="key-btn" id="copyKeyBtn">📋 копировать</button></div></div><div class="timer-bar"><div class="timer-fill" id="timerFill" style="width:100%"></div></div><p id="remainingTime" style="text-align:center; color:var(--text-muted); font-size:0.8rem;">⏱️ Осталось: -- дн. -- ч. -- мин.</p></div><div style="margin-top:1rem;"><input type="text" id="activationKeyInput" class="activation-input" placeholder="XXXXXX-XXXXXX-XXXXXX-XXXXXX" style="text-transform:uppercase;"><button class="btn btn-primary" id="activateKeyBtn" style="width:100%; margin-top:0.6rem;">Активировать ключ</button></div>
-  <!-- НОВАЯ КНОПКА АКТИВАЦИИ МОДА -->
   <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid rgba(99,102,241,0.2);">
     <h4 style="color:var(--accent); font-size:0.9rem; margin-bottom:0.5rem;">🔑 Активация мода</h4>
     <p style="color:var(--text-muted); font-size:0.75rem; margin-bottom:0.5rem;">Если мод запросил активацию, введите код из мода и нажмите "Активировать мод"</p>
@@ -578,7 +556,7 @@
 
 <div class="modal-overlay" id="agreementModal"><div class="modal-card"><button class="close-modal" onclick="closeModal('agreementModal')">✖</button><h2 style="text-align:center; font-size:1.2rem;">📜 Пользовательское соглашение</h2><div style="color:var(--text-muted); font-size:0.85rem;"><p><strong>1. Общие положения</strong><br>Используя NEVORA SWAP, вы соглашаетесь с условиями.</p><p><strong>2. Запрещенные действия</strong><br>❌ Запрещена передача лицензии третьим лицам<br>❌ Запрещено взламывать или модифицировать ПО</p><p><strong>3. Ответственность</strong><br>Администрация вправе заблокировать доступ без возврата средств.</p></div><button class="btn btn-primary" onclick="closeModal('agreementModal')" style="width:100%; margin-top:1rem;">Закрыть</button></div></div>
 
-<!-- НОВОЕ МОДАЛЬНОЕ ОКНО АКТИВАЦИИ МОДА -->
+<!-- Модальное окно активации мода -->
 <div class="modal-overlay" id="modActivationModal">
   <div class="modal-card">
     <button class="close-modal" onclick="closeModal('modActivationModal')">✖</button>
@@ -586,7 +564,7 @@
     <div style="color:var(--text-muted); font-size:0.8rem; text-align:center; margin-bottom:1rem;">
       Введите код, который показал мод при первом запуске
     </div>
-    <input type="text" id="modActivationCodeInput" placeholder="XXXX-XXXXXXXX" style="width:100%; padding:0.8rem; background:rgba(10,10,15,0.8); border:1px solid var(--primary); border-radius:40px; color:white; text-align:center; text-transform:uppercase; font-size:1rem;">
+    <input type="text" id="modActivationCodeInput" placeholder="XXXXXXXXXXXX" style="width:100%; padding:0.8rem; background:rgba(10,10,15,0.8); border:1px solid var(--primary); border-radius:40px; color:white; text-align:center; text-transform:uppercase; font-size:1rem;">
     <div id="modActivationError" class="error-text"></div>
     <div id="modActivationResult" style="margin:1rem 0; text-align:center;"></div>
     <button class="btn btn-primary" onclick="activateMod()" style="width:100%;">Активировать</button>
@@ -597,6 +575,21 @@
 </div>
 
 <script>
+  // Firebase config
+  const firebaseConfig = { 
+    apiKey: "AIzaSyCbgkMW0F0Nb8THjhoCapueR0ccGTexoyk", 
+    authDomain: "swap-3f785.firebaseapp.com", 
+    databaseURL: "https://swap-3f785-default-rtdb.firebaseio.com", 
+    projectId: "swap-3f785", 
+    storageBucket: "swap-3f785.appspot.com", 
+    messagingSenderId: "109876543210", 
+    appId: "1:109876543210:web:abc123def456" 
+  };
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+  
+  let currentUser = null, currentLicense = null, isKeyVisible = false, currentCaptcha = '';
+  
   // Мобильное меню
   const mobileBtn = document.getElementById('mobileMenuBtn');
   const mobileNav = document.getElementById('mobileNav');
@@ -618,16 +611,11 @@
   if (mobileBtn) {
     mobileBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      if (mobileNav.classList.contains('open')) {
-        closeMobileMenu();
-      } else {
-        openMobileMenu();
-      }
+      mobileNav.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
     });
     mobileOverlay.addEventListener('click', closeMobileMenu);
   }
   
-  // Функция для обновления позиции подчёркивания
   function updateUnderline(activeLink) {
     const underline = document.getElementById('navUnderline');
     if (!underline || !activeLink) return;
@@ -645,7 +633,6 @@
     }
   }
 
-  // Установка активной вкладки
   function setActiveNavItem(sectionId) {
     const desktopLinks = document.querySelectorAll('#desktopNav a[data-section]');
     let activeDesktopLink = null;
@@ -657,38 +644,23 @@
         link.classList.remove('active');
       }
     });
-    if (activeDesktopLink && window.innerWidth > 768) {
-      updateUnderline(activeDesktopLink);
-    }
+    if (activeDesktopLink && window.innerWidth > 768) updateUnderline(activeDesktopLink);
     
     const mobileLinks = document.querySelectorAll('#mobileNav a[data-section]');
     mobileLinks.forEach(link => {
-      if (link.getAttribute('data-section') === sectionId) {
-        link.classList.add('active');
-      } else {
-        link.classList.remove('active');
-      }
+      link.classList.toggle('active', link.getAttribute('data-section') === sectionId);
     });
     
     closeMobileMenu();
   }
 
-  // Показ секции
   function showSection(id) {
-    const sections = document.querySelectorAll('.section');
-    sections.forEach(s => {
-      if (s.id === id) {
-        s.classList.add('active');
-      } else {
-        s.classList.remove('active');
-      }
-    });
+    document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === id));
     setActiveNavItem(id);
     if (id === 'admin' && currentUser?.is_admin) loadAdminPanel();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Скрытие загрузочного экрана
   window.addEventListener('load', () => {
     setTimeout(() => {
       const loader = document.getElementById('loaderScreen');
@@ -699,45 +671,108 @@
     }, 2000);
   });
 
-  const firebaseConfig = { apiKey: "AIzaSyCbgkMW0F0Nb8THjhoCapueR0ccGTexoyk", authDomain: "swap-3f785.firebaseapp.com", databaseURL: "https://swap-3f785-default-rtdb.firebaseio.com", projectId: "swap-3f785", storageBucket: "swap-3f785.appspot.com", messagingSenderId: "109876543210", appId: "1:109876543210:web:abc123def456" };
-  firebase.initializeApp(firebaseConfig);
-  const database = firebase.database();
-  let currentUser = null, currentLicense = null, isKeyVisible = false, currentCaptcha = '';
-  
-  function showToast(msg, type='info'){ const t=document.createElement('div'); t.className=`toast ${type}`; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+  function showToast(msg, type='info'){ 
+    const t=document.createElement('div'); 
+    t.className=`toast ${type}`; 
+    t.textContent=msg; 
+    document.body.appendChild(t); 
+    setTimeout(()=>t.remove(),3000); 
+  }
   function escapeHtml(t){ const d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
   function hashPassword(pwd){ return CryptoJS.SHA256(pwd).toString(); }
   function saveSession(u){ localStorage.setItem('nevora_session',u); }
   function loadSession(){ return localStorage.getItem('nevora_session'); }
   function clearSession(){ localStorage.removeItem('nevora_session'); currentUser=null; currentLicense=null; updateUI(); }
-  async function generateFingerprint(){ try{ return CryptoJS.SHA512(`cpu_${navigator.hardwareConcurrency}|screen_${screen.width}x${screen.height}|NEVORA_SALT`).toString().substring(0,64); }catch(e){ return CryptoJS.SHA512(Math.random().toString()).toString().substring(0,64); } }
-  function generateCaptcha(){ const c='ABCDEFGHJKLMNPQRSTUVWXYZ0123456789'; let r=''; for(let i=0;i<6;i++) r+=c[Math.floor(Math.random()*c.length)]; currentCaptcha=r; return r; }
-  function renderCaptcha(){ const cont=document.getElementById('captchaContainer'); if(!cont) return; const cap=generateCaptcha(); cont.innerHTML=`<div class="captcha-code">${cap}</div><button class="captcha-refresh" onclick="refreshCaptcha()">🔄 Обновить</button><input type="text" id="captchaInput" placeholder="Введите код" style="margin-top:0.5rem; width:100%; padding:0.6rem; border-radius:40px; background:#1a1a2e; border:1px solid var(--primary); color:white; text-align:center; font-size:0.9rem;">`; }
-  window.refreshCaptcha=function(){ const cont=document.getElementById('captchaContainer'); if(cont){ const newCap=generateCaptcha(); const codeDiv=cont.querySelector('.captcha-code'); if(codeDiv) codeDiv.innerText=newCap; const inp=document.getElementById('captchaInput'); if(inp) inp.value=''; } };
+  async function generateFingerprint(){ 
+    try{ return CryptoJS.SHA512(`cpu_${navigator.hardwareConcurrency}|screen_${screen.width}x${screen.height}|NEVORA_SALT`).toString().substring(0,64); }
+    catch(e){ return CryptoJS.SHA512(Math.random().toString()).toString().substring(0,64); } 
+  }
+  function generateCaptcha(){ 
+    const c='ABCDEFGHJKLMNPQRSTUVWXYZ0123456789'; 
+    let r=''; 
+    for(let i=0;i<6;i++) r+=c[Math.floor(Math.random()*c.length)]; 
+    currentCaptcha=r; 
+    return r; 
+  }
+  function renderCaptcha(){ 
+    const cont=document.getElementById('captchaContainer'); 
+    if(!cont) return; 
+    const cap=generateCaptcha(); 
+    cont.innerHTML=`<div class="captcha-code">${cap}</div><button class="captcha-refresh" onclick="refreshCaptcha()">🔄 Обновить</button><input type="text" id="captchaInput" placeholder="Введите код" style="margin-top:0.5rem; width:100%; padding:0.6rem; border-radius:40px; background:#1a1a2e; border:1px solid var(--primary); color:white; text-align:center; font-size:0.9rem;">`; 
+  }
+  window.refreshCaptcha=function(){ 
+    const cont=document.getElementById('captchaContainer'); 
+    if(cont){ 
+      const newCap=generateCaptcha(); 
+      const codeDiv=cont.querySelector('.captcha-code'); 
+      if(codeDiv) codeDiv.innerText=newCap; 
+      const inp=document.getElementById('captchaInput'); 
+      if(inp) inp.value=''; 
+    } 
+  };
   async function getUser(u){ const snap=await database.ref('users/'+u).once('value'); return snap.val(); }
   async function saveUser(u,d){ await database.ref('users/'+u).set(d); return true; }
   async function updateUser(u,d){ await database.ref('users/'+u).update(d); return true; }
-  async function getLicenseByCode(code){ const snap=await database.ref('licenses').once('value'); const lic=snap.val(); if(!lic) return null; for(const [id,l] of Object.entries(lic)) if(l.code && l.code.toUpperCase()===code.toUpperCase()) return {...l,id}; return null; }
+  async function getLicenseByCode(code){ 
+    const snap=await database.ref('licenses').once('value'); 
+    const lic=snap.val(); 
+    if(!lic) return null; 
+    for(const [id,l] of Object.entries(lic)) 
+      if(l.code && l.code.toUpperCase()===code.toUpperCase()) return {...l,id}; 
+    return null; 
+  }
   async function updateLicense(id,data){ await database.ref('licenses/'+id).update(data); return true; }
   async function deleteLicense(id){ await database.ref('licenses/'+id).remove(); return true; }
   function isExpired(lic){ return lic && lic.expires_at && new Date() > new Date(lic.expires_at); }
-  function getRemainingTime(lic){ if(!lic||!lic.expires_at) return {days:0,hours:0,minutes:0,totalMinutes:0}; const expiry=new Date(lic.expires_at), now=new Date(); if(now>expiry) return {days:0,hours:0,minutes:0,totalMinutes:0}; const diff=expiry-now; return {days:Math.floor(diff/86400000), hours:Math.floor((diff%86400000)/3600000), minutes:Math.floor((diff%3600000)/60000), totalMinutes:Math.floor(diff/60000)}; }
-  function getTotalMinutes(type){ if(type==='012h') return 12*60; if(type==='007d') return 7*24*60; if(type==='030d') return 30*24*60; if(type==='365d') return 365*24*60; return 30*24*60; }
-  function hasActiveLicense(){ return currentLicense && currentLicense.status==='active' && currentLicense.expires_at && !isExpired(currentLicense); }
-  function updateHeroButton(){ const container=document.getElementById('heroButtons'); if(!container) return; if(currentUser){ container.innerHTML='<button class="btn btn-outline" onclick="showSection(\'features\')">Узнать больше</button>'; }else{ container.innerHTML='<button class="btn btn-primary" onclick="openAuthModal()">Зарегистрироваться</button>'; } }
+  function getRemainingTime(lic){ 
+    if(!lic||!lic.expires_at) return {days:0,hours:0,minutes:0,totalMinutes:0}; 
+    const expiry=new Date(lic.expires_at), now=new Date(); 
+    if(now>expiry) return {days:0,hours:0,minutes:0,totalMinutes:0}; 
+    const diff=expiry-now; 
+    return {
+      days:Math.floor(diff/86400000), 
+      hours:Math.floor((diff%86400000)/3600000), 
+      minutes:Math.floor((diff%3600000)/60000), 
+      totalMinutes:Math.floor(diff/60000)
+    }; 
+  }
+  function getTotalMinutes(type){ 
+    if(type==='012h') return 12*60; 
+    if(type==='007d') return 7*24*60; 
+    if(type==='030d') return 30*24*60; 
+    if(type==='365d') return 365*24*60; 
+    return 30*24*60; 
+  }
+  function hasActiveLicense(){ 
+    return currentLicense && currentLicense.status==='active' && currentLicense.expires_at && !isExpired(currentLicense); 
+  }
+  function updateHeroButton(){ 
+    const container=document.getElementById('heroButtons'); 
+    if(!container) return; 
+    container.innerHTML = currentUser 
+      ? '<button class="btn btn-outline" onclick="showSection(\'features\')">Узнать больше</button>' 
+      : '<button class="btn btn-primary" onclick="openAuthModal()">Зарегистрироваться</button>'; 
+  }
   function openAuthModal(){ document.getElementById('authModal').classList.add('active'); renderCaptcha(); }
   function closeModal(id){ document.getElementById(id).classList.remove('active'); }
-  function switchAuthTab(tab){ const loginForm=document.getElementById('loginForm'), regForm=document.getElementById('registerForm'), loginTab=document.getElementById('loginTabBtn'), regTab=document.getElementById('registerTabBtn'); if(tab==='login'){ loginTab.classList.add('active'); regTab.classList.remove('active'); loginForm.style.display='block'; regForm.style.display='none'; }else{ regTab.classList.add('active'); loginTab.classList.remove('active'); regForm.style.display='block'; loginForm.style.display='none'; renderCaptcha(); } }
+  function switchAuthTab(tab){ 
+    const loginForm=document.getElementById('loginForm'), regForm=document.getElementById('registerForm'), 
+          loginTab=document.getElementById('loginTabBtn'), regTab=document.getElementById('registerTabBtn'); 
+    if(tab==='login'){ 
+      loginTab.classList.add('active'); regTab.classList.remove('active'); 
+      loginForm.style.display='block'; regForm.style.display='none'; 
+    } else { 
+      regTab.classList.add('active'); loginTab.classList.remove('active'); 
+      regForm.style.display='block'; loginForm.style.display='none'; 
+      renderCaptcha(); 
+    } 
+  }
   function togglePassword(id){ const inp=document.getElementById(id); if(inp) inp.type=inp.type==='password'?'text':'password'; }
   function contactAdmin(){ window.open('https://t.me/vergyTG','_blank'); }
   function openAgreementModal(){ document.getElementById('agreementModal').classList.add('active'); }
   
-  // Функции для активации мода
   function openModActivationModal() {
-    if (!currentUser) {
-      showToast('Сначала войдите в аккаунт', 'error');
-      return;
-    }
+    if (!currentUser) { showToast('Сначала войдите в аккаунт', 'error'); return; }
     document.getElementById('modActivationModal').classList.add('active');
     document.getElementById('modActivationCodeInput').value = '';
     document.getElementById('modActivationError').textContent = '';
@@ -745,35 +780,23 @@
   }
   
   async function activateMod() {
-    if (!currentUser) {
-      showToast('Сначала войдите в аккаунт', 'error');
-      return;
-    }
+    if (!currentUser) { showToast('Сначала войдите в аккаунт', 'error'); return; }
     
     const modCode = document.getElementById('modActivationCodeInput').value.trim().toUpperCase();
     const errorDiv = document.getElementById('modActivationError');
     const resultDiv = document.getElementById('modActivationResult');
     
-    if (!modCode) {
-      errorDiv.textContent = 'Введите код из мода';
-      return;
-    }
+    if (!modCode) { errorDiv.textContent = 'Введите код из мода'; return; }
     
     errorDiv.textContent = '';
     resultDiv.innerHTML = '<span style="color:var(--primary);">Проверка кода...</span>';
     
     try {
-      // Проверяем существование кода активации в Firebase
       const activationSnap = await database.ref('activations/' + modCode).once('value');
       const activation = activationSnap.val();
       
-      if (!activation) {
-        errorDiv.textContent = 'Код не найден или устарел';
-        resultDiv.innerHTML = '';
-        return;
-      }
+      if (!activation) { errorDiv.textContent = 'Код не найден или устарел'; resultDiv.innerHTML = ''; return; }
       
-      // Проверяем, не истёк ли код (5 минут)
       if (Date.now() - activation.createdAt > 300000) {
         await database.ref('activations/' + modCode).remove();
         errorDiv.textContent = 'Код истёк, перезапустите мод';
@@ -781,32 +804,41 @@
         return;
       }
       
-      // Генерируем ответный код для мода
-      const siteCode = generateSiteCode();
+      const userSnap = await database.ref('users/' + currentUser.username).once('value');
+      const userData = userSnap.val();
       
-      // Обновляем запись в Firebase
+      if (!userData || !userData.license_id) {
+        errorDiv.textContent = 'У вас нет активной лицензии. Купите подписку в разделе "Цены"';
+        resultDiv.innerHTML = '';
+        return;
+      }
+      
+      const licenseId = userData.license_id;
+      const licenseSnap = await database.ref('licenses/' + licenseId).once('value');
+      const license = licenseSnap.val();
+      
+      if (!license || license.status !== 'active') {
+        errorDiv.textContent = 'Ваша лицензия не активна';
+        resultDiv.innerHTML = '';
+        return;
+      }
+      
       await database.ref('activations/' + modCode).update({
-        siteCode: siteCode,
+        licenseId: licenseId,
         username: currentUser.username,
         activatedAt: Date.now()
       });
       
-      // Показываем код пользователю
       resultDiv.innerHTML = `
         <div style="background:rgba(34,197,94,0.1); padding:1rem; border-radius:12px; border:1px solid var(--success);">
-          <p style="color:var(--success); font-weight:bold; margin-bottom:0.5rem;">✅ заходите в игру и следуйте указаниям</p>
-          <div class="activation-code-display" style="font-size:2rem;">${siteCode}</div>
-          <p style="color:var(--text-muted); font-size:0.75rem; margin-top:0.5rem;">
-          </p>
+          <p style="color:var(--success); font-weight:bold; margin-bottom:0.5rem;">✅ Мод активирован!</p>
+          <p style="color:var(--text-muted); font-size:0.8rem;">Теперь нажмите "Проверить активацию" в моде</p>
         </div>
       `;
       
-      showToast('✅', 'success');
+      showToast('Мод успешно активирован!', 'success');
       
-      // Удаляем код через 5 минут
-      setTimeout(async () => {
-        await database.ref('activations/' + modCode).remove();
-      }, 300000);
+      setTimeout(async () => { await database.ref('activations/' + modCode).remove(); }, 300000);
       
     } catch (e) {
       errorDiv.textContent = 'Ошибка: ' + e.message;
@@ -814,37 +846,282 @@
     }
   }
   
-  function generateSiteCode() {
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
-    let code = '';
-    for (let i = 0; i < 8; i++) {
-      code += chars[Math.floor(Math.random() * chars.length)];
-    }
-    return code;
+  async function updateUI(){ 
+    const authDiv=document.getElementById('authButtons'), greetingDiv=document.getElementById('userGreeting'), 
+          greetingText=document.getElementById('greetingText'), profileNot=document.getElementById('profileNotLogged'), 
+          profileLogged=document.getElementById('profileLogged'), adminLink=document.getElementById('adminNavLink'), 
+          adminLinkMobile=document.getElementById('adminNavLinkMobile'), adminBadgeSpan=document.getElementById('adminBadge'); 
+    if(currentUser){ 
+      authDiv.style.display='none'; greetingDiv.style.display='block'; 
+      greetingText.textContent=`👤 ${escapeHtml(currentUser.username)}`; 
+      profileNot.style.display='none'; profileLogged.style.display='block'; 
+      document.getElementById('profileUsername').textContent=escapeHtml(currentUser.username); 
+      if(currentUser.is_admin){ 
+        if(adminLink) adminLink.style.display='inline-block'; 
+        if(adminLinkMobile) adminLinkMobile.style.display='block'; 
+        adminBadgeSpan.style.display='inline-block'; 
+      } else { 
+        if(adminLink) adminLink.style.display='none'; 
+        if(adminLinkMobile) adminLinkMobile.style.display='none'; 
+        adminBadgeSpan.style.display='none'; 
+      } 
+      await updateProfileUI(); 
+    } else { 
+      authDiv.style.display='block'; greetingDiv.style.display='none'; 
+      profileNot.style.display='block'; profileLogged.style.display='none'; 
+      if(adminLink) adminLink.style.display='none'; 
+      if(adminLinkMobile) adminLinkMobile.style.display='none'; 
+    } 
+    updateHeroButton(); updateLauncherButton(); 
   }
   
-  window.copySiteCode = function(code) {
-    navigator.clipboard.writeText(code);
-    showToast('Код скопирован!', 'success');
+  async function updateProfileUI(){ 
+    if(!currentUser) return; 
+    const user=await getUser(currentUser.username); 
+    if(user&&user.license_id){ 
+      const snap=await database.ref('licenses/'+user.license_id).once('value'); 
+      currentLicense=snap.val(); if(currentLicense) currentLicense.id=user.license_id; 
+    } else currentLicense=null; 
+    if(currentLicense&&isExpired(currentLicense)){ 
+      await database.ref('users/'+currentUser.username+'/license_id').remove(); 
+      await deleteLicense(currentLicense.id); 
+      currentLicense=null; 
+    } 
+    const keySpan=document.getElementById('licenseKey'), fill=document.getElementById('timerFill'), 
+          remainSpan=document.getElementById('remainingTime'); 
+    if(hasActiveLicense()){ 
+      const rem=getRemainingTime(currentLicense), total=getTotalMinutes(currentLicense.type), 
+            elapsed=total-rem.totalMinutes, percent=Math.max(0,Math.min(100,(elapsed/total)*100)); 
+      const names={'012h':'AutoSwap Basic (12ч)','007d':'AutoSwap Plus (7д)','030d':'NevoraSwap Pro (30д)','365d':'Enterprise (1 год)'}; 
+      document.querySelector('.license-info h4').textContent=names[currentLicense.type]||'Активная лицензия'; 
+      keySpan.textContent=currentLicense.code; 
+      fill.style.width=(100-percent)+'%'; 
+      remainSpan.textContent=`⏱️ Осталось: ${rem.days} дн. ${rem.hours} ч. ${rem.minutes} мин.`; 
+    } else { 
+      document.querySelector('.license-info h4').textContent='Нет активной лицензии'; 
+      keySpan.textContent='---- ---- ---- ----'; 
+      fill.style.width='0%'; 
+      remainSpan.textContent='⏱️ Лицензия не активна'; 
+    } 
+    updateLauncherButton(); 
+  }
+  
+  function updateLauncherButton(){ 
+    const btn=document.getElementById('launcherMainBtn'), status=document.getElementById('launcherStatus'); 
+    const active=hasActiveLicense(); 
+    if(btn){ 
+      if(active){ 
+        btn.style.opacity='1'; btn.style.pointerEvents='auto'; 
+        if(status) status.textContent='✅ Доступно для скачивания'; 
+      } else { 
+        btn.style.opacity='0.4'; btn.style.pointerEvents='none'; 
+        if(status) status.textContent='❌ Требуется активная лицензия'; 
+      } 
+    } 
+  }
+  
+  document.getElementById('toggleKeyBtn')?.addEventListener('click',()=>{ 
+    const ks=document.getElementById('licenseKey'); 
+    isKeyVisible=!isKeyVisible; 
+    if(isKeyVisible){ ks.classList.remove('license-key-blur'); document.getElementById('toggleKeyBtn').textContent='👁️ скрыть'; } 
+    else { ks.classList.add('license-key-blur'); document.getElementById('toggleKeyBtn').textContent='👁️ показать'; } 
+  });
+  document.getElementById('copyKeyBtn')?.addEventListener('click',()=>{ 
+    if(currentLicense?.code){ navigator.clipboard.writeText(currentLicense.code); showToast('✅ Ключ скопирован','success'); } 
+  });
+  document.getElementById('logoutBtn')?.addEventListener('click',()=>{ 
+    if(confirm('Выйти?')){ clearSession(); showToast('👋 Вы вышли','info'); showSection('home'); } 
+  });
+  document.getElementById('activateKeyBtn')?.addEventListener('click',async()=>{ 
+    if(!currentUser){ showToast('Сначала войдите','error'); return; } 
+    if(hasActiveLicense()){ showToast('У вас уже есть активная лицензия!','error'); return; } 
+    const key=document.getElementById('activationKeyInput').value.trim().toUpperCase(); 
+    if(!key){ showToast('Введите ключ','error'); return; } 
+    const license=await getLicenseByCode(key); 
+    if(!license){ showToast('Ключ не найден','error'); return; } 
+    if(license.status==='active'){ showToast('Ключ уже используется','error'); return; } 
+    const fingerprint=await generateFingerprint(); 
+    const now=new Date(); 
+    let expires=new Date(); 
+    if(license.type==='012h') expires.setHours(now.getHours()+12); 
+    else if(license.type==='007d') expires.setDate(now.getDate()+7); 
+    else if(license.type==='030d') expires.setDate(now.getDate()+30); 
+    else expires.setDate(now.getDate()+365); 
+    await updateLicense(license.id,{status:'active',fingerprint,expires_at:expires.toISOString(),username:currentUser.username}); 
+    await database.ref('users/'+currentUser.username+'/license_id').set(license.id); 
+    showToast('✅ Лицензия активирована!','success'); 
+    await updateProfileUI(); 
+  });
+  
+  async function register(){ 
+    const u=document.getElementById('regUsername').value.trim(), 
+          p=document.getElementById('regPassword').value.trim(), 
+          c=document.getElementById('regPasswordConfirm').value.trim(), 
+          captcha=document.getElementById('captchaInput')?.value.trim(), 
+          err=document.getElementById('registerError'); 
+    if(u.length<3){ err.textContent='❌ Логин минимум 3 символа'; return; } 
+    if(!/^[A-Za-z0-9]+$/.test(u)){ err.textContent='❌ Только латиница и цифры'; return; } 
+    if(p.length<3){ err.textContent='❌ Пароль минимум 3 символа'; return; } 
+    if(p!==c){ err.textContent='❌ Пароли не совпадают'; return; } 
+    if(captcha!==currentCaptcha){ err.textContent='❌ Неверная капча'; refreshCaptcha(); return; } 
+    const existing=await getUser(u); 
+    if(existing){ err.textContent='❌ Логин занят'; return; } 
+    const userData={username:u,password:hashPassword(p),created_at:new Date().toISOString(),is_admin:(u==='Nevora')}; 
+    await saveUser(u,userData); 
+    currentUser=userData; saveSession(u); updateUI(); closeModal('authModal'); 
+    showToast('✅ Регистрация успешна!','success'); 
+  }
+  
+  async function login(){ 
+    const u=document.getElementById('loginUsername').value.trim(), 
+          p=document.getElementById('loginPassword').value.trim(), 
+          err=document.getElementById('loginError'); 
+    if(!u||!p){ err.textContent='❌ Заполните поля'; return; } 
+    const user=await getUser(u); 
+    if(!user){ err.textContent='❌ Пользователь не найден'; return; } 
+    if(user.password!==hashPassword(p)){ err.textContent='❌ Неверный пароль'; return; } 
+    currentUser=user; saveSession(u); updateUI(); closeModal('authModal'); 
+    showToast(`✅ Добро пожаловать, ${escapeHtml(u)}!`,'success'); 
+  }
+  
+  document.querySelectorAll('.price-card').forEach(card=>{ 
+    card.addEventListener('click',()=>{ 
+      const days=card.dataset.days, price=card.dataset.price, link=card.dataset.funpay; 
+      document.getElementById('paymentTitle').innerText=days; 
+      document.getElementById('paymentPrice').innerHTML=`₽${price}`; 
+      document.getElementById('funpayLink').href=link; 
+      document.getElementById('paymentModal').classList.add('active'); 
+    }); 
+  });
+  
+  async function loadAdminPanel(){ 
+    if(!currentUser?.is_admin){ 
+      document.getElementById('adminContent').innerHTML='<p style="color:var(--error); text-align:center;">⛔ Доступ запрещен</p>'; 
+      return; 
+    } 
+    const content=document.getElementById('adminContent'); 
+    content.innerHTML='<p style="text-align:center;">Загрузка...</p>'; 
+    const usersSnap=await database.ref('users').once('value'); 
+    const licSnap=await database.ref('licenses').once('value'); 
+    const users=usersSnap.val()||{}, licenses=licSnap.val()||{}; 
+    let total=0,activeCount=0; 
+    for(const l of Object.values(licenses)){ total++; if(l.status==='active'&&!isExpired(l)) activeCount++; } 
+    let html=`<div class="admin-stats-grid"><div class="admin-stat-card"><div class="admin-stat-value">${Object.keys(users).length}</div><div class="admin-stat-label">Пользователей</div></div><div class="admin-stat-card"><div class="admin-stat-value">${total}</div><div class="admin-stat-label">Всего ключей</div></div><div class="admin-stat-card"><div class="admin-stat-value">${activeCount}</div><div class="admin-stat-label">Активных</div></div></div><div class="admin-panel-card"><h3 style="font-size:1rem;">➕ Создать ключ</h3><select id="adminKeyType" style="width:100%; padding:0.6rem; background:rgba(10,10,15,0.8); border:1px solid var(--primary); border-radius:40px; color:white; margin:0.3rem 0; font-size:0.8rem;"><option value="012h">12 часов</option><option value="007d">7 дней</option><option value="030d">30 дней</option><option value="365d">1 год</option></select><input type="text" id="adminKeyCode" placeholder="Ключ (оставьте пустым)" style="width:100%; padding:0.6rem; background:rgba(10,10,15,0.8); border:1px solid var(--primary); border-radius:40px; color:white; font-size:0.8rem;"><button class="btn btn-primary" id="adminCreateBtn" style="margin-top:0.5rem; width:100%;">Создать ключ</button><div id="adminKeyResult" style="margin-top:0.5rem; text-align:center; font-size:0.8rem;"></div></div><div class="admin-panel-card"><h3 style="font-size:1rem;">🔍 Поиск и фильтры</h3><div class="search-filter"><input type="text" id="adminSearchUsername" placeholder="Поиск по никнейму..."><select id="adminFilterStatus"><option value="all">Все пользователи</option><option value="active">С активной лицензией</option><option value="expired">С истекшей лицензией</option><option value="none">Без лицензии</option><option value="admin">Администраторы</option></select></div><div id="adminUsersList" style="font-size:0.8rem;"></div></div>`; 
+    content.innerHTML=html; 
+    function renderUsersList(filter='all', search=''){ 
+      const usersList=[]; 
+      for(const [username,user] of Object.entries(users)){ 
+        const userLic=user.license_id?licenses[user.license_id]:null; 
+        let status='none'; 
+        if(username==='Nevora') status='owner'; 
+        else if(user.is_admin) status='admin'; 
+        else if(userLic&&userLic.status==='active'&&!isExpired(userLic)) status='active'; 
+        else if(userLic&&isExpired(userLic)) status='expired'; 
+        if(filter!=='all' && filter!==status) continue; 
+        if(search && !username.toLowerCase().includes(search.toLowerCase())) continue; 
+        let badge='', statusText='⚫ Нет'; 
+        if(username==='Nevora'){ badge='<span class="profile-badge" style="background:var(--warning);">👑 OWNER</span>'; statusText='👑 OWNER'; } 
+        else if(user.is_admin){ badge='<span class="profile-badge" style="background:var(--primary);">ADMIN</span>'; statusText='⚙️ ADMIN'; } 
+        else if(userLic&&userLic.status==='active'&&!isExpired(userLic)){ badge='<span class="profile-badge" style="background:var(--success);">✅ Активна</span>'; statusText='🟢 Активна'; } 
+        else if(userLic&&isExpired(userLic)){ badge='<span class="profile-badge" style="background:var(--error);">❌ Истекла</span>'; statusText='🔴 Истекла'; } 
+        usersList.push({username,user,userLic,badge,statusText}); 
+      } 
+      const container=document.getElementById('adminUsersList'); 
+      if(!container) return; 
+      if(usersList.length===0){ container.innerHTML='<p style="text-align:center; color:var(--text-muted);">Пользователи не найдены</p>'; return; } 
+      container.innerHTML=usersList.map(({username,user,userLic,badge,statusText})=>`<div class="admin-user-row"><div><strong>${escapeHtml(username)}</strong> ${badge}<br><small>${user.created_at?new Date(user.created_at).toLocaleDateString():'?'}</small></div><div>${statusText}</div><div><button class="admin-btn" onclick="window.viewUserKey('${username}')">🔍 Ключ</button><button class="admin-btn" onclick="window.extendUser('${username}')">➕ Продлить</button><button class="admin-btn" onclick="window.removeUserLic('${username}')" style="border-color:var(--error);color:var(--error);">🗑️ Удалить</button></div></div>`).join(''); 
+    } 
+    const searchInput=document.getElementById('adminSearchUsername'); 
+    const filterSelect=document.getElementById('adminFilterStatus'); 
+    if(searchInput) searchInput.addEventListener('input',()=>renderUsersList(filterSelect.value,searchInput.value)); 
+    if(filterSelect) filterSelect.addEventListener('change',()=>renderUsersList(filterSelect.value,searchInput?.value||'')); 
+    renderUsersList(); 
+    document.getElementById('adminCreateBtn')?.addEventListener('click',async()=>{ 
+      const type=document.getElementById('adminKeyType').value; 
+      let code=document.getElementById('adminKeyCode').value.trim().toUpperCase(); 
+      if(!code){ const ch='ABCDEFGHJKLMNPQRSTUVWXYZ0123456789'; code=Array(4).fill().map(()=>Array(4).fill().map(()=>ch[Math.floor(Math.random()*ch.length)]).join('')).join('-'); } 
+      await database.ref('licenses').push({code,type,status:'pending',created_at:new Date().toISOString()}); 
+      document.getElementById('adminKeyResult').innerHTML=`<span style="color:var(--success);">✅ Ключ создан: ${code}</span>`; 
+      setTimeout(()=>{ document.getElementById('adminKeyResult').innerHTML=''; loadAdminPanel(); },1500); 
+    }); 
+  }
+  
+  window.viewUserKey=async(username)=>{ 
+    const user=await getUser(username); 
+    if(user?.license_id){ 
+      const snap=await database.ref('licenses/'+user.license_id).once('value'); 
+      const lic=snap.val(); if(lic) alert(`Ключ: ${lic.code}`); else alert('Нет ключа'); 
+    } else alert('Нет ключа'); 
+  };
+  window.extendUser=async(username)=>{ 
+    const days=prompt('На сколько дней продлить? (можно отрицательное)','7'); 
+    if(!days) return; 
+    const user=await getUser(username); 
+    if(user?.license_id){ 
+      const snap=await database.ref('licenses/'+user.license_id).once('value'); 
+      const lic=snap.val(); 
+      if(lic){ 
+        const newExp=new Date(lic.expires_at||new Date()); 
+        newExp.setDate(newExp.getDate()+parseInt(days)); 
+        await updateLicense(user.license_id,{expires_at:newExp.toISOString()}); 
+        alert(`✅ Лицензия изменена на ${days} дней`); 
+        loadAdminPanel(); 
+      } else alert('Нет лицензии'); 
+    } else alert('Нет лицензии'); 
+  };
+  window.removeUserLic=async(username)=>{ 
+    if(!confirm(`Удалить лицензию ${username}?`)) return; 
+    const user=await getUser(username); 
+    if(user?.license_id){ 
+      await deleteLicense(user.license_id); 
+      await database.ref('users/'+username+'/license_id').remove(); 
+      alert('Лицензия удалена'); 
+      loadAdminPanel(); 
+    } else alert('Нет лицензии'); 
   };
   
-  async function updateUI(){ const authDiv=document.getElementById('authButtons'), greetingDiv=document.getElementById('userGreeting'), greetingText=document.getElementById('greetingText'), profileNot=document.getElementById('profileNotLogged'), profileLogged=document.getElementById('profileLogged'), adminLink=document.getElementById('adminNavLink'), adminLinkMobile=document.getElementById('adminNavLinkMobile'), adminBadgeSpan=document.getElementById('adminBadge'); if(currentUser){ authDiv.style.display='none'; greetingDiv.style.display='block'; greetingText.textContent=`👤 ${escapeHtml(currentUser.username)}`; profileNot.style.display='none'; profileLogged.style.display='block'; document.getElementById('profileUsername').textContent=escapeHtml(currentUser.username); if(currentUser.is_admin){ if(adminLink) adminLink.style.display='inline-block'; if(adminLinkMobile) adminLinkMobile.style.display='block'; adminBadgeSpan.style.display='inline-block'; }else{ if(adminLink) adminLink.style.display='none'; if(adminLinkMobile) adminLinkMobile.style.display='none'; adminBadgeSpan.style.display='none'; } await updateProfileUI(); }else{ authDiv.style.display='block'; greetingDiv.style.display='none'; profileNot.style.display='block'; profileLogged.style.display='none'; if(adminLink) adminLink.style.display='none'; if(adminLinkMobile) adminLinkMobile.style.display='none'; } updateHeroButton(); updateLauncherButton(); }
-  async function updateProfileUI(){ if(!currentUser) return; const user=await getUser(currentUser.username); if(user&&user.license_id){ const snap=await database.ref('licenses/'+user.license_id).once('value'); currentLicense=snap.val(); if(currentLicense) currentLicense.id=user.license_id; }else currentLicense=null; if(currentLicense&&isExpired(currentLicense)){ await database.ref('users/'+currentUser.username+'/license_id').remove(); await deleteLicense(currentLicense.id); currentLicense=null; } const keySpan=document.getElementById('licenseKey'), fill=document.getElementById('timerFill'), remainSpan=document.getElementById('remainingTime'); if(hasActiveLicense()){ const rem=getRemainingTime(currentLicense), total=getTotalMinutes(currentLicense.type), elapsed=total-rem.totalMinutes, percent=Math.max(0,Math.min(100,(elapsed/total)*100)); const names={'012h':'AutoSwap Basic (12ч)','007d':'AutoSwap Plus (7д)','030d':'NevoraSwap Pro (30д)','365d':'Enterprise (1 год)'}; document.querySelector('.license-info h4').textContent=names[currentLicense.type]||'Активная лицензия'; keySpan.textContent=currentLicense.code; fill.style.width=(100-percent)+'%'; remainSpan.textContent=`⏱️ Осталось: ${rem.days} дн. ${rem.hours} ч. ${rem.minutes} мин.`; }else{ document.querySelector('.license-info h4').textContent='Нет активной лицензии'; keySpan.textContent='---- ---- ---- ----'; fill.style.width='0%'; remainSpan.textContent='⏱️ Лицензия не активна'; } updateLauncherButton(); }
-  function updateLauncherButton(){ const btn=document.getElementById('launcherMainBtn'), status=document.getElementById('launcherStatus'); const active=hasActiveLicense(); if(btn){ if(active){ btn.style.opacity='1'; btn.style.pointerEvents='auto'; if(status) status.textContent='✅ Доступно для скачивания'; }else{ btn.style.opacity='0.4'; btn.style.pointerEvents='none'; if(status) status.textContent='❌ Требуется активная лицензия'; } } }
-  document.getElementById('toggleKeyBtn')?.addEventListener('click',()=>{ const ks=document.getElementById('licenseKey'); isKeyVisible=!isKeyVisible; if(isKeyVisible){ ks.classList.remove('license-key-blur'); document.getElementById('toggleKeyBtn').textContent='👁️ скрыть'; }else{ ks.classList.add('license-key-blur'); document.getElementById('toggleKeyBtn').textContent='👁️ показать'; } });
-  document.getElementById('copyKeyBtn')?.addEventListener('click',()=>{ if(currentLicense?.code){ navigator.clipboard.writeText(currentLicense.code); showToast('✅ Ключ скопирован','success'); } });
-  document.getElementById('logoutBtn')?.addEventListener('click',()=>{ if(confirm('Выйти?')){ clearSession(); showToast('👋 Вы вышли','info'); showSection('home'); } });
-  document.getElementById('activateKeyBtn')?.addEventListener('click',async()=>{ if(!currentUser){ showToast('Сначала войдите','error'); return; } if(hasActiveLicense()){ showToast('У вас уже есть активная лицензия!','error'); return; } const key=document.getElementById('activationKeyInput').value.trim().toUpperCase(); if(!key){ showToast('Введите ключ','error'); return; } const license=await getLicenseByCode(key); if(!license){ showToast('Ключ не найден','error'); return; } if(license.status==='active'){ showToast('Ключ уже используется','error'); return; } const fingerprint=await generateFingerprint(); const now=new Date(); let expires=new Date(); if(license.type==='012h') expires.setHours(now.getHours()+12); else if(license.type==='007d') expires.setDate(now.getDate()+7); else if(license.type==='030d') expires.setDate(now.getDate()+30); else expires.setDate(now.getDate()+365); await updateLicense(license.id,{status:'active',fingerprint,expires_at:expires.toISOString(),username:currentUser.username}); await database.ref('users/'+currentUser.username+'/license_id').set(license.id); showToast('✅ Лицензия активирована!','success'); await updateProfileUI(); });
-  async function register(){ const u=document.getElementById('regUsername').value.trim(), p=document.getElementById('regPassword').value.trim(), c=document.getElementById('regPasswordConfirm').value.trim(), captcha=document.getElementById('captchaInput')?.value.trim(), err=document.getElementById('registerError'); if(u.length<3){ err.textContent='❌ Логин минимум 3 символа'; return; } if(!/^[A-Za-z0-9]+$/.test(u)){ err.textContent='❌ Только латиница и цифры'; return; } if(p.length<3){ err.textContent='❌ Пароль минимум 3 символа'; return; } if(p!==c){ err.textContent='❌ Пароли не совпадают'; return; } if(captcha!==currentCaptcha){ err.textContent='❌ Неверная капча'; refreshCaptcha(); return; } const existing=await getUser(u); if(existing){ err.textContent='❌ Логин занят'; return; } const userData={username:u,password:hashPassword(p),created_at:new Date().toISOString(),is_admin:(u==='Nevora')}; await saveUser(u,userData); currentUser=userData; saveSession(u); updateUI(); closeModal('authModal'); showToast('✅ Регистрация успешна!','success'); }
-  async function login(){ const u=document.getElementById('loginUsername').value.trim(), p=document.getElementById('loginPassword').value.trim(), err=document.getElementById('loginError'); if(!u||!p){ err.textContent='❌ Заполните поля'; return; } const user=await getUser(u); if(!user){ err.textContent='❌ Пользователь не найден'; return; } if(user.password!==hashPassword(p)){ err.textContent='❌ Неверный пароль'; return; } currentUser=user; saveSession(u); updateUI(); closeModal('authModal'); showToast(`✅ Добро пожаловать, ${escapeHtml(u)}!`,'success'); }
-  document.querySelectorAll('.price-card').forEach(card=>{ card.addEventListener('click',()=>{ const days=card.dataset.days, price=card.dataset.price, link=card.dataset.funpay; document.getElementById('paymentTitle').innerText=days; document.getElementById('paymentPrice').innerHTML=`₽${price}`; document.getElementById('funpayLink').href=link; document.getElementById('paymentModal').classList.add('active'); }); });
-  async function loadAdminPanel(){ if(!currentUser?.is_admin){ document.getElementById('adminContent').innerHTML='<p style="color:var(--error); text-align:center;">⛔ Доступ запрещен</p>'; return; } const content=document.getElementById('adminContent'); content.innerHTML='<p style="text-align:center;">Загрузка...</p>'; const usersSnap=await database.ref('users').once('value'); const licSnap=await database.ref('licenses').once('value'); const users=usersSnap.val()||{}, licenses=licSnap.val()||{}; let total=0,activeCount=0; for(const l of Object.values(licenses)){ total++; if(l.status==='active'&&!isExpired(l)) activeCount++; } let html=`<div class="admin-stats-grid"><div class="admin-stat-card"><div class="admin-stat-value">${Object.keys(users).length}</div><div class="admin-stat-label">Пользователей</div></div><div class="admin-stat-card"><div class="admin-stat-value">${total}</div><div class="admin-stat-label">Всего ключей</div></div><div class="admin-stat-card"><div class="admin-stat-value">${activeCount}</div><div class="admin-stat-label">Активных</div></div></div><div class="admin-panel-card"><h3 style="font-size:1rem;">➕ Создать ключ</h3><select id="adminKeyType" style="width:100%; padding:0.6rem; background:rgba(10,10,15,0.8); border:1px solid var(--primary); border-radius:40px; color:white; margin:0.3rem 0; font-size:0.8rem;"><option value="012h">12 часов</option><option value="007d">7 дней</option><option value="030d">30 дней</option><option value="365d">1 год</option></select><input type="text" id="adminKeyCode" placeholder="Ключ (оставьте пустым)" style="width:100%; padding:0.6rem; background:rgba(10,10,15,0.8); border:1px solid var(--primary); border-radius:40px; color:white; font-size:0.8rem;"><button class="btn btn-primary" id="adminCreateBtn" style="margin-top:0.5rem; width:100%;">Создать ключ</button><div id="adminKeyResult" style="margin-top:0.5rem; text-align:center; font-size:0.8rem;"></div></div><div class="admin-panel-card"><h3 style="font-size:1rem;">🔍 Поиск и фильтры</h3><div class="search-filter"><input type="text" id="adminSearchUsername" placeholder="Поиск по никнейму..."><select id="adminFilterStatus"><option value="all">Все пользователи</option><option value="active">С активной лицензией</option><option value="expired">С истекшей лицензией</option><option value="none">Без лицензии</option><option value="admin">Администраторы</option></select></div><div id="adminUsersList" style="font-size:0.8rem;"></div></div>`; content.innerHTML=html; function renderUsersList(filter='all', search=''){ const usersList=[]; for(const [username,user] of Object.entries(users)){ const userLic=user.license_id?licenses[user.license_id]:null; let status='none'; if(username==='Nevora') status='owner'; else if(user.is_admin) status='admin'; else if(userLic&&userLic.status==='active'&&!isExpired(userLic)) status='active'; else if(userLic&&isExpired(userLic)) status='expired'; if(filter!=='all' && filter!==status) continue; if(search && !username.toLowerCase().includes(search.toLowerCase())) continue; let badge='', statusText='⚫ Нет'; if(username==='Nevora'){ badge='<span class="profile-badge" style="background:var(--warning);">👑 OWNER</span>'; statusText='👑 OWNER'; }else if(user.is_admin){ badge='<span class="profile-badge" style="background:var(--primary);">ADMIN</span>'; statusText='⚙️ ADMIN'; }else if(userLic&&userLic.status==='active'&&!isExpired(userLic)){ badge='<span class="profile-badge" style="background:var(--success);">✅ Активна</span>'; statusText='🟢 Активна'; }else if(userLic&&isExpired(userLic)){ badge='<span class="profile-badge" style="background:var(--error);">❌ Истекла</span>'; statusText='🔴 Истекла'; } usersList.push({username,user,userLic,badge,statusText}); } const container=document.getElementById('adminUsersList'); if(!container) return; if(usersList.length===0){ container.innerHTML='<p style="text-align:center; color:var(--text-muted);">Пользователи не найдены</p>'; return; } container.innerHTML=usersList.map(({username,user,userLic,badge,statusText})=>`<div class="admin-user-row"><div><strong>${escapeHtml(username)}</strong> ${badge}<br><small>${user.created_at?new Date(user.created_at).toLocaleDateString():'?'}</small></div><div>${statusText}</div><div><button class="admin-btn" onclick="window.viewUserKey('${username}')">🔍 Ключ</button><button class="admin-btn" onclick="window.extendUser('${username}')">➕ Продлить</button><button class="admin-btn" onclick="window.removeUserLic('${username}')" style="border-color:var(--error);color:var(--error);">🗑️ Удалить</button></div></div>`).join(''); } const searchInput=document.getElementById('adminSearchUsername'); const filterSelect=document.getElementById('adminFilterStatus'); if(searchInput) searchInput.addEventListener('input',()=>renderUsersList(filterSelect.value,searchInput.value)); if(filterSelect) filterSelect.addEventListener('change',()=>renderUsersList(filterSelect.value,searchInput?.value||'')); renderUsersList(); document.getElementById('adminCreateBtn')?.addEventListener('click',async()=>{ const type=document.getElementById('adminKeyType').value; let code=document.getElementById('adminKeyCode').value.trim().toUpperCase(); if(!code){ const ch='ABCDEFGHJKLMNPQRSTUVWXYZ0123456789'; code=Array(4).fill().map(()=>Array(4).fill().map(()=>ch[Math.floor(Math.random()*ch.length)]).join('')).join('-'); } await database.ref('licenses').push({code,type,status:'pending',created_at:new Date().toISOString()}); document.getElementById('adminKeyResult').innerHTML=`<span style="color:var(--success);">✅ Ключ создан: ${code}</span>`; setTimeout(()=>{ document.getElementById('adminKeyResult').innerHTML=''; loadAdminPanel(); },1500); }); }
-  window.viewUserKey=async(username)=>{ const user=await getUser(username); if(user?.license_id){ const snap=await database.ref('licenses/'+user.license_id).once('value'); const lic=snap.val(); if(lic) alert(`Ключ: ${lic.code}`); else alert('Нет ключа'); }else alert('Нет ключа'); };
-  window.extendUser=async(username)=>{ const days=prompt('На сколько дней продлить? (можно отрицательное)','7'); if(!days) return; const user=await getUser(username); if(user?.license_id){ const snap=await database.ref('licenses/'+user.license_id).once('value'); const lic=snap.val(); if(lic){ const newExp=new Date(lic.expires_at||new Date()); newExp.setDate(newExp.getDate()+parseInt(days)); await updateLicense(user.license_id,{expires_at:newExp.toISOString()}); alert(`✅ Лицензия изменена на ${days} дней`); loadAdminPanel(); }else alert('Нет лицензии'); }else alert('Нет лицензии'); };
-  window.removeUserLic=async(username)=>{ if(!confirm(`Удалить лицензию ${username}?`)) return; const user=await getUser(username); if(user?.license_id){ await deleteLicense(user.license_id); await database.ref('users/'+username+'/license_id').remove(); alert('Лицензия удалена'); loadAdminPanel(); }else alert('Нет лицензии'); };
-  (async()=>{ const saved=loadSession(); if(saved){ const u=await getUser(saved); if(u) currentUser=u; } updateUI(); setActiveNavItem('home'); window.addEventListener('resize', () => { const activeLink = document.querySelector('#desktopNav a.active'); if (activeLink && window.innerWidth > 768) updateUnderline(activeLink); }); setInterval(()=>{ if(currentUser) updateProfileUI(); },60000); })();
-  document.querySelectorAll('.modal-overlay').forEach(m=>{ m.addEventListener('click',(e)=>{ if(e.target===m) m.classList.remove('active'); }); });
-  const canvas=document.getElementById('canvas-bg'), ctx=canvas.getContext('2d'); let particles=[], mx=0,my=0; function resizeCanvas(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; particles=[]; const count=Math.min(150, Math.floor(window.innerWidth * window.innerHeight / 15000)); for(let i=0;i<count;i++) particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,baseX:Math.random()*canvas.width,baseY:Math.random()*canvas.height,size:Math.random()*2.5+1,speed:0.01+Math.random()*0.02,vx:(Math.random()-0.5)*0.5,vy:(Math.random()-0.5)*0.5}); } function animate(){ ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{ let dxBase=p.baseX-p.x, dyBase=p.baseY-p.y; p.x+=dxBase*p.speed+p.vx; p.y+=dyBase*p.speed+p.vy; let dx=p.x-mx, dy=p.y-my, dist=Math.hypot(dx,dy); if(dist<100){ let force=(100-dist)/100*2, ang=Math.atan2(dy,dx); p.x+=Math.cos(ang)*force; p.y+=Math.sin(ang)*force; } ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2); ctx.fillStyle='#6366f1'; ctx.fill(); }); requestAnimationFrame(animate); } window.addEventListener('resize',resizeCanvas); document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; }); resizeCanvas(); animate();
+  (async()=>{ 
+    const saved=loadSession(); 
+    if(saved){ const u=await getUser(saved); if(u) currentUser=u; } 
+    updateUI(); setActiveNavItem('home'); 
+    window.addEventListener('resize', () => { 
+      const activeLink = document.querySelector('#desktopNav a.active'); 
+      if (activeLink && window.innerWidth > 768) updateUnderline(activeLink); 
+    }); 
+    setInterval(()=>{ if(currentUser) updateProfileUI(); },60000); 
+  })();
+  
+  document.querySelectorAll('.modal-overlay').forEach(m=>{ 
+    m.addEventListener('click',(e)=>{ if(e.target===m) m.classList.remove('active'); }); 
+  });
+  
+  const canvas=document.getElementById('canvas-bg'), ctx=canvas.getContext('2d'); 
+  let particles=[], mx=0,my=0; 
+  function resizeCanvas(){ 
+    canvas.width=window.innerWidth; canvas.height=window.innerHeight; 
+    particles=[]; 
+    const count=Math.min(150, Math.floor(window.innerWidth * window.innerHeight / 15000)); 
+    for(let i=0;i<count;i++) particles.push({
+      x:Math.random()*canvas.width,y:Math.random()*canvas.height,
+      baseX:Math.random()*canvas.width,baseY:Math.random()*canvas.height,
+      size:Math.random()*2.5+1,speed:0.01+Math.random()*0.02,
+      vx:(Math.random()-0.5)*0.5,vy:(Math.random()-0.5)*0.5
+    }); 
+  } 
+  function animate(){ 
+    ctx.clearRect(0,0,canvas.width,canvas.height); 
+    particles.forEach(p=>{ 
+      let dxBase=p.baseX-p.x, dyBase=p.baseY-p.y; 
+      p.x+=dxBase*p.speed+p.vx; p.y+=dyBase*p.speed+p.vy; 
+      let dx=p.x-mx, dy=p.y-my, dist=Math.hypot(dx,dy); 
+      if(dist<100){ let force=(100-dist)/100*2, ang=Math.atan2(dy,dx); p.x+=Math.cos(ang)*force; p.y+=Math.sin(ang)*force; } 
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2); ctx.fillStyle='#6366f1'; ctx.fill(); 
+    }); 
+    requestAnimationFrame(animate); 
+  } 
+  window.addEventListener('resize',resizeCanvas); 
+  document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; }); 
+  resizeCanvas(); animate();
 </script>
 </body>
 </html>
