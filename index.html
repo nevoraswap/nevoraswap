@@ -666,10 +666,13 @@ async function transferTicket(){
   
   if(!confirm(`Передать тикет администратору ${targetAdmin}?`)) return;
   
-  // Отправляем системное сообщение
+  // Назначаем тикет на нового админа
+  await database.ref('tickets/'+currentTicketId+'/assigned_to').set(targetAdmin);
+  
+  // Отправляем системное сообщение в чат
   await database.ref('tickets/'+currentTicketId+'/messages').push({
     sender:'system',
-    text:`🔄 Администратор ${currentUser.username} передаёт тикет администратору ${targetAdmin}. Ожидайте его прихода.`,
+    text:`🔄 Администратор ${currentUser.username} передал тикет администратору ${targetAdmin}.`,
     timestamp:Date.now()
   });
   
@@ -677,18 +680,12 @@ async function transferTicket(){
   document.getElementById('chatInputArea').style.display='none';
   document.getElementById('adminTicketControls').style.display='none';
   
-  // Создаём запрос на передачу
-  await database.ref('ticket_transfers').push({
-    from:currentUser.username,
-    to:targetAdmin,
-    ticket_id:currentTicketId,
-    ticket_subject:ticket.subject||'Без темы',
-    ticket_username:ticket.username,
-    status:'pending',
-    created_at:Date.now()
-  });
+  // Показываем сообщение в чате
+  const msgs=document.getElementById('chatMessages');
+  msgs.innerHTML+=`<div class="chat-message system"><div>🔄 Вы передали тикет администратору ${targetAdmin}. Чат заблокирован.</div></div>`;
+  msgs.scrollTop=msgs.scrollHeight;
   
-  showToast(`Тикет передан администратору ${targetAdmin}`,'info');
+  showToast(`Тикет передан администратору ${targetAdmin}`,'success');
 }
 
 // ============ ШАБЛОННЫЕ ОТВЕТЫ ============
