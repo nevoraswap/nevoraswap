@@ -16,7 +16,6 @@
     :root { --primary: #6366f1; --primary-dark: #4f46e5; --bg: #0f0f23; --card-bg: #1a1a2e; --text: #e2e8f0; --text-muted: #94a3b8; --accent: #818cf8; --success: #22c55e; --error: #ef4444; --warning: #eab308; --transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
 
     svg.icon { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: middle; }
-    svg.icon-fill { fill: currentColor; stroke: none; }
     .btn svg.icon, .key-btn svg.icon, .admin-btn svg.icon { width: 16px; height: 16px; }
     .support-chat-btn svg.icon { width: 28px; height: 28px; stroke: white; }
     .close-modal svg.icon { width: 18px; height: 18px; }
@@ -60,53 +59,32 @@
     .btn-outline:hover { background: var(--primary); color: white; }
     .btn-outline:hover svg.icon { stroke: white; }
     
-    .hero { position: relative; z-index: 10; text-align: center; padding: clamp(2rem, 10vw, 6rem) 1rem clamp(2rem, 8vw, 4rem); max-width: 900px; margin: 0 auto; animation: fadeInUp 0.6s ease; }
-    .hero h1 { font-size: clamp(1.8rem, 8vw, 3.5rem); font-weight: 800; margin-bottom: 1rem; background: linear-gradient(135deg, white, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.2; }
-    .hero p { font-size: clamp(1rem, 4vw, 1.3rem); color: var(--text-muted); margin-bottom: 1.5rem; }
-    .hero-buttons { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
-    
     .section { position: relative; z-index: 10; display: none; }
     .section.active { display: block; animation: sectionFadeIn 0.4s ease forwards; }
-    @keyframes sectionFadeIn { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 1; transform: translateY(0); } }
+    @keyframes sectionFadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
-    .section-title { font-size: clamp(1.5rem, 6vw, 2.5rem); font-weight: 700; margin-bottom: 1.5rem; text-align: center; }
     
     .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem auto; }
-    .feature-card { background: var(--card-bg); padding: 1.5rem; border-radius: 20px; border: 1px solid rgba(99,102,241,0.2); transition: var(--transition); animation: fadeInUp 0.5s ease backwards; }
-    .feature-card:nth-child(1) { animation-delay: 0.1s; } .feature-card:nth-child(2) { animation-delay: 0.2s; } .feature-card:nth-child(3) { animation-delay: 0.3s; } .feature-card:nth-child(4) { animation-delay: 0.4s; } .feature-card:nth-child(5) { animation-delay: 0.5s; } .feature-card:nth-child(6) { animation-delay: 0.6s; } .feature-card:nth-child(7) { animation-delay: 0.7s; } .feature-card:nth-child(8) { animation-delay: 0.8s; }
+    .feature-card { background: var(--card-bg); padding: 1.5rem; border-radius: 20px; border: 1px solid rgba(99,102,241,0.2); transition: var(--transition); }
     .feature-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(99,102,241,0.2); }
-    .feature-icon { font-size: 2rem; margin-bottom: 0.8rem; }
-    .feature-card h3 { font-size: clamp(1.2rem, 5vw, 1.5rem); margin-bottom: 0.5rem; color: var(--accent); }
-    .feature-card p { color: var(--text-muted); line-height: 1.6; font-size: clamp(0.85rem, 4vw, 0.95rem); }
-    .feature-card .tag { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.7rem; margin-top: 0.5rem; background: rgba(99,102,241,0.2); color: var(--accent); }
-    
-    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     
     .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 2rem 0; }
     @media (max-width: 900px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 500px) { .pricing-grid { grid-template-columns: 1fr; } }
     .price-card { background: var(--card-bg); border-radius: 20px; padding: 1.2rem; border: 2px solid transparent; transition: var(--transition); cursor: pointer; text-align: center; position: relative; }
-    .price-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 25px rgba(99,102,241,0.2); }
+    .price-card:hover { transform: translateY(-5px); border-color: var(--primary); }
     .price-card.featured { border-color: var(--primary); background: linear-gradient(135deg, var(--card-bg), rgba(99,102,241,0.1)); }
     .popular-badge { position: absolute; top: -10px; right: 10px; background: var(--success); color: white; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem; font-weight: 600; }
-    .plan-name { font-size: clamp(1.1rem, 5vw, 1.3rem); font-weight: 700; margin-bottom: 0.5rem; color: var(--accent); }
-    .plan-price { font-size: clamp(1.5rem, 6vw, 2rem); font-weight: 800; margin-bottom: 0.3rem; }
-    .plan-price span { font-size: 0.8rem; color: var(--text-muted); font-weight: 400; }
-    .payment-note { text-align: center; margin-top: 1.5rem; padding: 0.8rem; background: rgba(99,102,241,0.1); border-radius: 16px; color: var(--text-muted); font-size: 0.85rem; }
     
     .profile-card { background: var(--card-bg); border-radius: 20px; padding: 1.5rem; margin: 1.5rem auto; max-width: 800px; }
     .profile-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
     .profile-avatar { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); display: flex; align-items: center; justify-content: center; font-size: 2rem; border: 3px solid var(--primary); }
-    .profile-info h3 { font-size: clamp(1.1rem, 5vw, 1.3rem); margin-bottom: 0.3rem; }
     .profile-badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 20px; background: rgba(99,102,241,0.2); border: 1px solid var(--primary); font-size: 0.7rem; margin-right: 0.5rem; }
     .license-info { background: rgba(10,10,15,0.5); border-radius: 16px; padding: 1rem; margin-top: 1rem; }
     .license-key-container { background: var(--bg); border-radius: 12px; padding: 0.8rem; margin: 0.8rem 0; font-family: 'Courier New', monospace; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
     .license-key { font-size: clamp(0.7rem, 4vw, 0.9rem); color: var(--accent); word-break: break-all; }
     .license-key-blur { filter: blur(4px); }
-    .key-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-    .key-btn { padding: 0.3rem 0.8rem; border-radius: 20px; border: 1px solid var(--primary); background: transparent; color: var(--primary); cursor: pointer; font-size: 0.7rem; transition: var(--transition); display: inline-flex; align-items: center; gap: 0.3rem; }
-    .key-btn:hover { background: var(--primary); color: white; }
-    .key-btn:hover svg.icon { stroke: white; }
+    .key-btn { padding: 0.3rem 0.8rem; border-radius: 20px; border: 1px solid var(--primary); background: transparent; color: var(--primary); cursor: pointer; font-size: 0.7rem; display: inline-flex; align-items: center; gap: 0.3rem; }
     .timer-bar { width: 100%; height: 6px; background: rgba(99,102,241,0.2); border-radius: 3px; overflow: hidden; margin: 0.8rem 0; }
     .timer-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.3s ease; }
     .activation-input { width: 100%; padding: 0.8rem; background: rgba(10,10,15,0.8); border: 1px solid var(--primary); border-radius: 40px; color: white; text-align: center; font-size: 0.85rem; margin-top: 1rem; }
@@ -121,10 +99,9 @@
     .modal-tab { background: transparent; border: 2px solid var(--primary); color: var(--text-muted); font-size: 0.9rem; font-weight: 600; padding: 0.5rem 1.2rem; cursor: pointer; border-radius: 30px; transition: var(--transition); }
     .modal-tab.active { background: var(--primary); color: white; }
     .modal-card input, .modal-card textarea { width: 100%; padding: 0.8rem; margin: 0.6rem 0; background: rgba(10,10,15,0.8); border: 1px solid rgba(99,102,241,0.3); border-radius: 16px; color: var(--text); font-size: 0.9rem; }
-    .modal-card textarea { resize: vertical; min-height: 80px; }
     .password-field { position: relative; width: 100%; }
-    .password-field input { padding-right: 2.5rem !important; margin: 0.6rem 0 !important; }
-    .password-toggle { position: absolute; right: 0.8rem; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--primary); cursor: pointer; font-size: 1rem; display: flex; align-items: center; }
+    .password-field input { padding-right: 2.5rem !important; }
+    .password-toggle { position: absolute; right: 0.8rem; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--primary); cursor: pointer; }
     .error-text { color: var(--error); font-size: 0.8rem; margin-top: 0.3rem; text-align: center; }
     
     .toast { position: fixed; bottom: 1rem; right: 1rem; background: var(--card-bg); border-left: 4px solid var(--primary); padding: 0.8rem 1.2rem; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); z-index: 4000; animation: slideIn 0.3s ease; max-width: calc(100vw - 2rem); font-size: 0.85rem; }
@@ -132,9 +109,6 @@
     @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
     
     footer { position: relative; z-index: 10; margin-top: 4rem; padding: 2rem 1rem; border-top: 1px solid rgba(99,102,241,0.2); text-align: center; color: var(--text-muted); }
-    .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
-    .footer-links a { color: var(--text-muted); text-decoration: none; transition: var(--transition); cursor: pointer; font-size: 0.85rem; }
-    .footer-links a:hover { color: var(--primary); }
     
     .captcha-container { background: rgba(10,10,15,0.8); border-radius: 16px; padding: 0.8rem; text-align: center; margin: 0.8rem 0; }
     .captcha-code { font-family: monospace; font-size: 1.5rem; letter-spacing: 6px; background: var(--card-bg); padding: 0.5rem; border-radius: 12px; display: inline-block; margin: 0.3rem 0; font-weight: bold; color: var(--accent); }
@@ -146,42 +120,35 @@
     .admin-stat-label { font-size: 0.7rem; color: var(--text-muted); }
     .admin-panel-card { background: var(--card-bg); border-radius: 20px; padding: 1rem; margin-bottom: 1rem; border: 1px solid rgba(99,102,241,0.2); }
     .admin-user-row { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem; border-bottom: 1px solid rgba(99,102,241,0.1); flex-wrap: wrap; gap: 0.5rem; font-size: 0.8rem; }
-    .admin-btn { padding: 0.3rem 0.7rem; border-radius: 20px; border: 1px solid var(--primary); background: transparent; color: var(--primary); cursor: pointer; font-size: 0.7rem; margin: 0.1rem; transition: var(--transition); display: inline-flex; align-items: center; gap: 0.2rem; }
-    .admin-btn:hover { background: var(--primary); color: white; }
-    .search-filter { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1rem; align-items: center; }
-    .search-filter input, .search-filter select { padding: 0.6rem 1rem; background: rgba(10,10,15,0.8); border: 1px solid var(--primary); border-radius: 40px; color: white; flex: 1; min-width: 120px; outline: none; font-size: 0.8rem; }
-    .support-faq { margin-top: 1rem; padding: 1rem; background: rgba(99,102,241,0.05); border-radius: 16px; }
-    .support-faq-item { margin-bottom: 0.8rem; padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .support-faq-question { font-weight: 600; color: var(--accent); margin-bottom: 0.2rem; font-size: 0.85rem; }
-    .support-faq-answer { color: var(--text-muted); font-size: 0.8rem; }
-    
-    .install-steps { display: flex; flex-direction: column; gap: 1rem; margin: 1.5rem 0; }
-    .install-step { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem; background: rgba(99,102,241,0.05); border-radius: 16px; border-left: 3px solid var(--primary); }
-    .step-number { width: 30px; height: 30px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; flex-shrink: 0; }
+    .admin-btn { padding: 0.3rem 0.7rem; border-radius: 20px; border: 1px solid var(--primary); background: transparent; color: var(--primary); cursor: pointer; font-size: 0.7rem; margin: 0.1rem; display: inline-flex; align-items: center; gap: 0.2rem; }
     
     .support-chat-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 2000; width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); border: none; color: white; cursor: pointer; box-shadow: 0 8px 25px rgba(99,102,241,0.5); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; }
     .support-chat-btn:hover { transform: scale(1.1); }
     
     .chat-window { position: fixed; width: 380px; max-width: calc(100vw - 2rem); height: 520px; max-height: 75vh; background: var(--card-bg); border: 2px solid var(--primary); border-radius: 20px; z-index: 2001; display: none; flex-direction: column; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.7); }
-    .chat-window.open { display: flex; }
+    .chat-window.open { display: flex; animation: chatOpenIn 0.3s ease forwards; }
+    .chat-window.closing { animation: chatCloseOut 0.5s ease forwards; pointer-events: none; }
+    @keyframes chatOpenIn { from { opacity: 0; transform: scale(0.9) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    @keyframes chatCloseOut { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(0.85); filter: blur(4px); } 100% { opacity: 0; transform: scale(0.7) translateY(30px); filter: blur(8px); } }
+    
     .chat-header { padding: 0.8rem 1rem; background: rgba(99,102,241,0.2); border-bottom: 1px solid var(--primary); display: flex; justify-content: space-between; align-items: center; cursor: grab; user-select: none; }
     .chat-header:active { cursor: grabbing; }
-    .chat-header span { pointer-events: none; }
     .chat-header .close-chat-btn { pointer-events: auto; cursor: pointer; background: transparent; border: none; color: var(--text-muted); width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: var(--transition); }
     .chat-header .close-chat-btn:hover { color: var(--error); background: rgba(239,68,68,0.1); }
     .chat-messages { flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.6rem; }
     .chat-message { padding: 0.7rem; border-radius: 14px; max-width: 85%; word-break: break-word; animation: msgPop 0.2s ease; font-size: 0.85rem; }
     .chat-message.user { align-self: flex-end; background: var(--primary); color: white; }
     .chat-message.support { align-self: flex-start; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); }
-    .chat-message.system { align-self: center; background: rgba(234,179,8,0.15); color: var(--warning); font-size: 0.75rem; padding: 0.4rem 0.8rem; border-radius: 20px; max-width: 90%; text-align: center; }
-    .chat-message .msg-meta { font-size: 0.6rem; opacity: 0.7; margin-top: 0.3rem; }
+    .chat-message.system { align-self: center; background: rgba(234,179,8,0.15); color: var(--warning); font-size: 0.75rem; padding: 0.5rem 1rem; border-radius: 20px; max-width: 90%; text-align: center; }
+    .chat-message.closed { align-self: center; background: rgba(239,68,68,0.2); color: var(--error); font-size: 0.8rem; padding: 0.6rem 1rem; border-radius: 16px; text-align: center; animation: closedPulse 0.6s ease; }
+    @keyframes closedPulse { 0% { transform: scale(0.8); opacity: 0; } 50% { transform: scale(1.05); } 100% { transform: scale(1); opacity: 1; } }
     @keyframes msgPop { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+    .chat-message .msg-meta { font-size: 0.6rem; opacity: 0.7; margin-top: 0.3rem; }
     .chat-input-area { padding: 0.7rem; border-top: 1px solid rgba(99,102,241,0.2); display: flex; gap: 0.5rem; }
     .chat-input-area input { flex: 1; padding: 0.6rem 0.8rem; background: rgba(10,10,15,0.8); border: 1px solid var(--primary); border-radius: 30px; color: white; outline: none; font-size: 0.85rem; }
     
     .ticket-create-form { padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
     .ticket-create-form input, .ticket-create-form textarea { width: 100%; padding: 0.6rem 0.8rem; background: rgba(10,10,15,0.8); border: 1px solid var(--primary); border-radius: 14px; color: white; outline: none; font-size: 0.85rem; }
-    .ticket-create-form textarea { resize: vertical; min-height: 60px; }
     
     .tickets-list-panel { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 420px; max-width: 90vw; max-height: 80vh; background: var(--card-bg); border: 2px solid var(--primary); border-radius: 20px; z-index: 2500; display: none; flex-direction: column; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
     .tickets-list-panel.open { display: flex; }
@@ -191,10 +158,11 @@
     .ticket-item:hover { background: rgba(99,102,241,0.1); }
     .ticket-item .ticket-subject { font-weight: 600; color: var(--accent); }
     .ticket-item .ticket-user { font-size: 0.75rem; color: var(--text-muted); }
-    .ticket-item .ticket-time { font-size: 0.65rem; color: var(--text-muted); }
     
-    @media (max-width: 768px) { header { padding: 1rem; } .logo { font-size: 1.2rem; } .desktop-nav { display: none; } .mobile-menu-btn { display: block; } .hero { padding: 3rem 1rem 2rem; } .container { padding: 0 0.8rem; } .profile-header { flex-direction: column; text-align: center; } .chat-window { width: calc(100vw - 1rem); left: 0.5rem !important; } }
-    @media (min-width: 769px) { .mobile-menu-btn { display: none; } .mobile-nav { display: none; } .desktop-nav { display: flex; } .nav-underline { display: block; } }
+    .muted-badge { display: inline-block; padding: 0.15rem 0.4rem; border-radius: 10px; background: rgba(239,68,68,0.2); color: var(--error); font-size: 0.6rem; margin-left: 0.3rem; }
+    
+    @media (max-width: 768px) { header { padding: 1rem; } .logo { font-size: 1.2rem; } .desktop-nav { display: none; } .mobile-menu-btn { display: block; } .chat-window { width: calc(100vw - 1rem); left: 0.5rem !important; } }
+    @media (min-width: 769px) { .mobile-menu-btn { display: none; } .mobile-nav { display: none; } .desktop-nav { display: flex; } }
     body.menu-open { overflow: hidden; }
   </style>
 </head>
@@ -215,7 +183,6 @@
     <a data-section="support" onclick="showSection('support')">Поддержка</a>
     <a data-section="launcher" onclick="showSection('launcher')">Скачать</a>
     <a id="adminNavLink" data-section="admin" onclick="showSection('admin')" style="display:none;">Админ</a>
-    <div class="nav-underline" id="navUnderline"></div>
   </nav>
   <div class="auth-container">
     <div id="authButtons"><button class="btn btn-primary" onclick="openAuthModal()">Вход / Регистрация</button></div>
@@ -233,70 +200,24 @@
   <a id="adminNavLinkMobile" data-section="admin" onclick="showSection('admin')" style="display:none;">Админ</a>
 </div>
 
-<div id="home" class="section active"><section class="hero"><h1>Nevora Swap — твой боевой мод</h1><p>Fabric мод для Minecraft 1.21.4 с автосвапом, быстрым использованием предметов и системой друзей.</p><div class="hero-buttons" id="heroButtons"></div></section></div>
-<div id="features" class="section"><div class="container"><h2 class="section-title">Возможности мода</h2><div class="features">
-  <div class="feature-card"><div class="feature-icon">⚡</div><h3>AutoSwap</h3><p>Автоматическая замена предметов в левой руке.</p></div>
-  <div class="feature-card"><div class="feature-icon">💨</div><h3>FT Helper</h3><p>Быстрое использование предметов из хотбара.</p></div>
-  <div class="feature-card"><div class="feature-icon">🌪️</div><h3>Wind Helper</h3><p>Комбо-связка для булавы.</p></div>
-  <div class="feature-card"><div class="feature-icon">🍑</div><h3>Chorus Helper</h3><p>Умное поедание хоруса.</p></div>
-  <div class="feature-card"><div class="feature-icon">👥</div><h3>Friends System</h3><p>Система групп через облако.</p></div>
-  <div class="feature-card"><div class="feature-icon">🔒</div><h3>Защита HWID</h3><p>Лицензия привязывается к вашему ПК.</p></div>
+<div id="home" class="section active"><section class="hero" style="text-align:center;padding:4rem 1rem;"><h1>Nevora Swap — твой боевой мод</h1><p>Fabric мод для Minecraft 1.21.4 с автосвапом и системой друзей.</p></section></div>
+<div id="features" class="section"><div class="container"><h2>Возможности</h2><div class="features"><div class="feature-card"><h3>AutoSwap</h3><p>Автоматическая замена предметов.</p></div><div class="feature-card"><h3>Friends System</h3><p>Система групп через облако.</p></div></div></div></div>
+<div id="pricing" class="section"><div class="container"><h2>Цены</h2><div class="pricing-grid">
+  <div class="price-card" data-days="12 часов" data-price="24" data-funpay="https://funpay.com/lots/offer?id=65952691"><div class="plan-name">Basic</div><div class="plan-price">₽24</div></div>
+  <div class="price-card featured" data-days="30 дней" data-price="119" data-funpay="https://funpay.com/lots/offer?id=65952723"><span class="popular-badge">Популярный</span><div class="plan-name">Pro</div><div class="plan-price">₽119</div></div>
 </div></div></div>
+<div id="profile" class="section"><div class="container"><div id="profileNotLogged"><button class="btn btn-primary" onclick="openAuthModal()">Войти</button></div><div id="profileLogged" style="display:none;"><div class="profile-card"><div class="profile-header"><div class="profile-avatar">👤</div><div><h3 id="profileUsername"></h3><span id="adminBadge" class="profile-badge" style="background:var(--warning);display:none;">ADMIN</span></div></div><div class="license-info"><div class="license-key-container"><span class="license-key license-key-blur" id="licenseKey">----</span><button class="key-btn" id="toggleKeyBtn">👁</button><button class="key-btn" id="copyKeyBtn">📋</button></div><div class="timer-bar"><div class="timer-fill" id="timerFill"></div></div><p id="remainingTime"></p></div><input type="text" id="activationKeyInput" class="activation-input" placeholder="Ключ"><button class="btn btn-primary" id="activateKeyBtn">Активировать</button><button class="btn btn-outline" id="logoutBtn" style="border-color:var(--error);color:var(--error);margin-top:0.5rem;">Выйти</button></div></div></div></div>
+<div id="support" class="section"><div class="container"><h2>Поддержка</h2><div class="profile-card"><p>Используйте кнопку чата справа снизу.</p></div></div></div>
+<div id="launcher" class="section"><div class="container"><h2>Скачать</h2><div class="profile-card"><a href="#" id="launcherMainBtn" class="btn btn-primary">Скачать</a><p id="launcherStatus"></p></div></div></div>
+<div id="admin" class="section"><div class="container"><h2>Админ</h2><div id="adminContent"></div></div></div>
 
-<div id="pricing" class="section"><div class="container"><h2 class="section-title">Выберите тариф</h2><div class="pricing-grid">
-  <div class="price-card" data-days="12 часов" data-type="012h" data-price="24" data-funpay="https://funpay.com/lots/offer?id=65952691"><div class="plan-name">Basic</div><div class="plan-price">₽24 <span>/12ч</span></div></div>
-  <div class="price-card" data-days="7 дней" data-type="007d" data-price="59" data-funpay="https://funpay.com/lots/offer?id=65952858"><div class="plan-name">Plus</div><div class="plan-price">₽59 <span>/7д</span></div></div>
-  <div class="price-card featured" data-days="30 дней" data-type="030d" data-price="119" data-funpay="https://funpay.com/lots/offer?id=65952723"><span class="popular-badge">Популярный</span><div class="plan-name">Pro</div><div class="plan-price">₽119 <span>/30д</span></div></div>
-  <div class="price-card" data-days="1 год" data-type="365d" data-price="249" data-funpay="https://funpay.com/lots/offer?id=64199862"><div class="plan-name">Enterprise</div><div class="plan-price">₽249 <span>/год</span></div></div>
-</div><div class="payment-note">✅ После оплаты вы получите ключ. Активируйте его в профиле.</div></div></div>
+<footer><p>© 2026 NEVORA SWAP</p></footer>
 
-<div id="profile" class="section"><div class="container"><h2 class="section-title">Профиль</h2>
-  <div id="profileNotLogged" style="text-align:center; padding:2rem;"><h3>Войдите в аккаунт</h3><button class="btn btn-primary" onclick="openAuthModal()">Войти</button></div>
-  <div id="profileLogged" style="display:none;"><div class="profile-card">
-    <div class="profile-header"><div class="profile-avatar" id="profileAvatar">👤</div><div class="profile-info"><h3 id="profileUsername"></h3><span class="profile-badge" id="profileStatus">Активный</span><span id="adminBadge" class="profile-badge" style="background:var(--warning); display:none;">ADMIN</span></div></div>
-    <div class="license-info"><h4>Лицензия</h4><div class="license-key-container"><span class="license-key license-key-blur" id="licenseKey">---- ---- ---- ----</span><div class="key-actions"><button class="key-btn" id="toggleKeyBtn"><svg class="icon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button><button class="key-btn" id="copyKeyBtn"><svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></div><div class="timer-bar"><div class="timer-fill" id="timerFill"></div></div><p id="remainingTime"></p></div>
-    <input type="text" id="activationKeyInput" class="activation-input" placeholder="XXXXXX-XXXXXX-XXXXXX-XXXXXX" style="text-transform:uppercase;">
-    <button class="btn btn-primary" id="activateKeyBtn" style="width:100%; margin-top:0.6rem;">Активировать ключ</button>
-    <div style="margin-top:1rem;"><button class="btn btn-outline" onclick="openModActivationModal()" style="width:100%;"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Активировать мод</button></div>
-    <div style="margin-top:1.5rem; text-align:center;"><button class="btn btn-outline" onclick="showSection('pricing')">➕ Продлить</button><button class="btn btn-outline" id="logoutBtn" style="border-color:var(--error); color:var(--error); margin-left:0.5rem;">🚪 Выйти</button></div>
-  </div></div>
-</div></div>
+<div class="modal-overlay" id="authModal"><div class="modal-card"><button class="close-modal" onclick="closeModal('authModal')">✖</button><div class="modal-tabs"><button class="modal-tab active" onclick="switchAuthTab('login')">Вход</button><button class="modal-tab" onclick="switchAuthTab('register')">Регистрация</button></div><div id="loginForm"><input type="text" id="loginUsername" placeholder="Логин"><div class="password-field"><input type="password" id="loginPassword" placeholder="Пароль"><button class="password-toggle" onclick="togglePassword('loginPassword')">👁</button></div><button class="btn btn-primary" onclick="login()">Войти</button></div><div id="registerForm" style="display:none;"><input type="text" id="regUsername" placeholder="Логин"><div class="password-field"><input type="password" id="regPassword" placeholder="Пароль"><button class="password-toggle" onclick="togglePassword('regPassword')">👁</button></div><input type="password" id="regPasswordConfirm" placeholder="Повторите пароль"><div id="captchaContainer"></div><button class="btn btn-primary" onclick="register()">Зарегистрироваться</button></div></div></div>
 
-<div id="support" class="section"><div class="container"><h2 class="section-title">Поддержка</h2><div class="profile-card">
-  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:0.8rem; margin-bottom:1.5rem;">
-    <a href="https://t.me/vergyTG" target="_blank" class="btn btn-primary" style="text-decoration:none; text-align:center;">📩 Админ @vergyTG</a>
-    <a href="https://t.me/nevoraswap" target="_blank" class="btn btn-outline" style="text-decoration:none; text-align:center;">📢 Канал @nevoraswap</a>
-  </div>
-  <div class="support-faq"><h4>❓ FAQ</h4>
-    <div class="support-faq-item"><div class="support-faq-question">🔹 Как установить мод?</div><div class="support-faq-answer">Fabric Loader + Fabric API + Nevora Swap в папку mods.</div></div>
-    <div class="support-faq-item"><div class="support-faq-question">🔹 Как активировать мод?</div><div class="support-faq-answer">При первом запуске мод покажет код. Введите его в Профиль → Активация мода.</div></div>
-  </div>
-</div></div></div>
+<div class="modal-overlay" id="paymentModal"><div class="modal-card"><button class="close-modal" onclick="closeModal('paymentModal')">✖</button><h2 id="paymentTitle">Тариф</h2><p id="paymentPrice">₽0</p><a href="#" id="funpayLink" target="_blank" class="btn btn-primary">Оплатить</a></div></div>
 
-<div id="launcher" class="section"><div class="container"><h2 class="section-title">Скачать мод</h2><div class="profile-card">
-  <div style="text-align:center;"><h3>Nevora Swap v1.0.0</h3></div>
-  <div class="install-steps">
-    <div class="install-step"><div class="step-number">1</div><div class="step-content"><h4>Fabric Loader</h4><p>Установите для 1.21.4</p></div></div>
-    <div class="install-step"><div class="step-number">2</div><div class="step-content"><h4>Fabric API</h4><p>Поместите в папку mods</p></div></div>
-    <div class="install-step"><div class="step-number">3</div><div class="step-content"><h4>Nevora Swap</h4><p>Скачайте и поместите в mods</p></div></div>
-  </div>
-  <div style="text-align:center; margin-top:1.5rem;">
-    <a href="https://drive.google.com/file/d/1bEC1cm71_LAq8bC3l1sRoQx8z6dysqeH/view?usp=sharing" id="launcherMainBtn" class="btn btn-primary" style="display:inline-block; text-decoration:none;" target="_blank">⬇️ СКАЧАТЬ МОД</a>
-    <p id="launcherStatus" style="margin-top:0.8rem; color:var(--text-muted);">Доступно после входа и активации лицензии</p>
-  </div>
-</div></div></div>
-
-<div id="admin" class="section"><div class="container"><h2 class="section-title">⚙️ Админ панель</h2><div id="adminContent" class="profile-card"><p style="text-align:center;">Загрузка...</p></div></div></div>
-
-<footer><div class="footer-links"><a href="https://t.me/nevoraswap" target="_blank">Telegram</a><a href="#" onclick="openAgreementModal()">Политика</a></div><p>© 2026 NEVORA SWAP</p></footer>
-
-<div class="modal-overlay" id="authModal"><div class="modal-card"><button class="close-modal" onclick="closeModal('authModal')"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="modal-tabs"><button class="modal-tab active" id="loginTabBtn" onclick="switchAuthTab('login')">Вход</button><button class="modal-tab" id="registerTabBtn" onclick="switchAuthTab('register')">Регистрация</button></div><div id="loginForm"><input type="text" id="loginUsername" placeholder="Логин"><div class="password-field"><input type="password" id="loginPassword" placeholder="Пароль"><button class="password-toggle" onclick="togglePassword('loginPassword')"><svg class="icon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div><div id="loginError" class="error-text"></div><button class="btn btn-primary" onclick="login()" style="width:100%;">Войти</button></div><div id="registerForm" style="display:none;"><input type="text" id="regUsername" placeholder="Логин"><div class="password-field"><input type="password" id="regPassword" placeholder="Пароль"><button class="password-toggle" onclick="togglePassword('regPassword')"><svg class="icon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div><div class="password-field"><input type="password" id="regPasswordConfirm" placeholder="Повторите пароль"><button class="password-toggle" onclick="togglePassword('regPasswordConfirm')"><svg class="icon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div><div id="captchaContainer" class="captcha-container"></div><div id="registerError" class="error-text"></div><button class="btn btn-primary" onclick="register()" style="width:100%;">Зарегистрироваться</button></div></div></div>
-
-<div class="modal-overlay" id="paymentModal"><div class="modal-card"><button class="close-modal" onclick="closeModal('paymentModal')"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><h2 id="paymentTitle" style="text-align:center;">Тариф</h2><p id="paymentPrice" style="font-size:2rem; text-align:center; font-weight:bold; color:var(--primary);">₽0</p><div style="display:grid; gap:0.8rem; margin-top:1.5rem;"><a href="#" id="funpayLink" target="_blank" class="btn btn-primary" style="text-decoration:none; text-align:center;">Оплатить через FunPay</a></div></div></div>
-
-<div class="modal-overlay" id="agreementModal"><div class="modal-card"><button class="close-modal" onclick="closeModal('agreementModal')"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><h2 style="text-align:center;">📜 Соглашение</h2><div style="color:var(--text-muted); font-size:0.85rem;"><p>Используя NEVORA SWAP, вы соглашаетесь с условиями.</p></div><button class="btn btn-primary" onclick="closeModal('agreementModal')" style="width:100%; margin-top:1rem;">Закрыть</button></div></div>
-
-<div class="modal-overlay" id="modActivationModal"><div class="modal-card"><button class="close-modal" onclick="closeModal('modActivationModal')"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><h2 style="text-align:center;">🔑 Активация мода</h2><input type="text" id="modActivationCodeInput" placeholder="XXXXXXXXXXXX" style="width:100%; padding:0.8rem; background:rgba(10,10,15,0.8); border:1px solid var(--primary); border-radius:40px; color:white; text-align:center; text-transform:uppercase;"><div id="modActivationError" class="error-text"></div><div id="modActivationResult" style="margin:1rem 0; text-align:center;"></div><button class="btn btn-primary" onclick="activateMod()" style="width:100%;">Активировать</button></div></div>
+<div class="modal-overlay" id="muteModal"><div class="modal-card"><button class="close-modal" onclick="closeModal('muteModal')">✖</button><h2>🔇 Замутить пользователя</h2><input type="text" id="muteUsernameInput" placeholder="Ник" readonly><select id="muteDuration"><option value="30">30 минут</option><option value="60">1 час</option><option value="360">6 часов</option><option value="1440">24 часа</option><option value="10080">7 дней</option></select><button class="btn btn-primary" onclick="applyMute()" style="width:100%;">Применить</button></div></div>
 
 <button class="support-chat-btn" id="supportChatBtn" title="Поддержка">
   <svg class="icon" viewBox="0 0 24 24" style="width:28px;height:28px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -304,30 +225,28 @@
 
 <div class="chat-window" id="chatWindow">
   <div class="chat-header" id="chatHeader">
-    <span style="font-weight:600; color:var(--accent);" id="chatHeaderTitle">💬 Поддержка</span>
-    <button class="close-chat-btn" id="closeChatBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <span id="chatHeaderTitle">💬 Поддержка</span>
+    <button class="close-chat-btn" id="closeChatBtn">✖</button>
   </div>
   <div class="chat-messages" id="chatMessages"></div>
   <div id="ticketCreateForm" class="ticket-create-form" style="display:none;">
     <input type="text" id="ticketSubject" placeholder="Тема тикета">
     <textarea id="ticketMessage" placeholder="Опишите вашу проблему..."></textarea>
-    <button class="btn btn-primary" onclick="createTicket()" style="width:100%;">📩 Отправить тикет</button>
+    <button class="btn btn-primary" onclick="createTicket()">📩 Отправить тикет</button>
   </div>
-  <div class="admin-ticket-controls" id="adminTicketControls" style="display:none; padding:0.5rem; background:rgba(239,68,68,0.1); border-top:1px solid var(--error); justify-content:flex-end;">
-    <button class="admin-btn" onclick="closeTicket()" style="border-color:var(--error); color:var(--error);">🔒 Закрыть тикет</button>
+  <div class="admin-ticket-controls" id="adminTicketControls" style="display:none;padding:0.5rem;gap:0.5rem;justify-content:flex-end;">
+    <button class="admin-btn" onclick="openMuteModal()" style="border-color:var(--warning);color:var(--warning);">🔇 Мут</button>
+    <button class="admin-btn" onclick="closeTicket()" style="border-color:var(--error);color:var(--error);">🔒 Закрыть</button>
   </div>
   <div class="chat-input-area" id="chatInputArea" style="display:none;">
     <input type="text" id="chatMessageInput" placeholder="Введите сообщение..." onkeypress="if(event.key==='Enter')sendChatMessage()">
-    <button class="btn btn-primary" style="padding:0.4rem 0.8rem;" onclick="sendChatMessage()"><svg class="icon" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+    <button class="btn btn-primary" onclick="sendChatMessage()">➤</button>
   </div>
 </div>
 
 <div class="tickets-list-panel" id="ticketsListPanel">
-  <div class="tickets-list-header">
-    <span style="font-weight:600; color:var(--accent);">📋 Открытые тикеты</span>
-    <button class="close-modal" style="position:static;" onclick="closeTicketsList()"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  </div>
-  <div class="tickets-list-body" id="ticketsListBody"><p style="color:var(--text-muted); text-align:center;">Загрузка...</p></div>
+  <div class="tickets-list-header"><span>📋 Открытые тикеты</span><button class="close-modal" style="position:static;" onclick="closeTicketsList()">✖</button></div>
+  <div class="tickets-list-body" id="ticketsListBody"></div>
 </div>
 
 <script>
@@ -335,18 +254,7 @@ const firebaseConfig={apiKey:"AIzaSyCbgkMW0F0Nb8THjhoCapueR0ccGTexoyk",authDomai
 firebase.initializeApp(firebaseConfig);
 const database=firebase.database();
 let currentUser=null,currentLicense=null,isKeyVisible=false,currentCaptcha='';
-let chatListener=null, currentTicketId=null, lastMessageTime=0;
-
-const mobileBtn=document.getElementById('mobileMenuBtn'),mobileNav=document.getElementById('mobileNav'),mobileOverlay=document.getElementById('mobileOverlay');
-function openMobileMenu(){mobileNav.classList.add('open');mobileOverlay.classList.add('show');document.body.classList.add('menu-open');}
-function closeMobileMenu(){mobileNav.classList.remove('open');mobileOverlay.classList.remove('show');document.body.classList.remove('menu-open');}
-mobileBtn?.addEventListener('click',(e)=>{e.stopPropagation();mobileNav.classList.contains('open')?closeMobileMenu():openMobileMenu();});
-mobileOverlay?.addEventListener('click',closeMobileMenu);
-
-function setActiveNavItem(id){document.querySelectorAll('#desktopNav a[data-section]').forEach(l=>l.classList.toggle('active',l.getAttribute('data-section')===id));document.querySelectorAll('#mobileNav a[data-section]').forEach(l=>l.classList.toggle('active',l.getAttribute('data-section')===id));closeMobileMenu();}
-function showSection(id){document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id===id));setActiveNavItem(id);if(id==='admin'&&currentUser?.is_admin)loadAdminPanel();window.scrollTo({top:0,behavior:'smooth'});}
-
-window.addEventListener('load',()=>{setTimeout(()=>{const l=document.getElementById('loaderScreen');if(l){l.classList.add('fade-out');setTimeout(()=>{if(l)l.style.display='none';},800);}},2000);initChatDrag();});
+let chatListener=null, currentTicketId=null, lastMessageTime=0, ticketClosureListener=null;
 
 function showToast(m,t='info'){const e=document.createElement('div');e.className=`toast ${t}`;e.textContent=m;document.body.appendChild(e);setTimeout(()=>e.remove(),3000);}
 function escapeHtml(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML;}
@@ -356,34 +264,43 @@ function loadSession(){return localStorage.getItem('nevora_session');}
 function clearSession(){localStorage.removeItem('nevora_session');currentUser=null;currentLicense=null;updateUI();}
 function isAdmin(){return currentUser&&(currentUser.is_admin||currentUser.admin_level>=1);}
 function hasActiveLicense(){return currentLicense&&currentLicense.status==='active'&&currentLicense.expires_at&&new Date()<new Date(currentLicense.expires_at);}
+function isMuted(){return currentUser&&currentUser.muted_until&&Date.now()<currentUser.muted_until;}
 
 async function getUser(u){const s=await database.ref('users/'+u).once('value');return s.val();}
 async function saveUser(u,d){await database.ref('users/'+u).set(d);}
 async function updateUser(u,d){await database.ref('users/'+u).update(d);}
 async function getLicenseByCode(code){const s=await database.ref('licenses').once('value');const l=s.val();if(!l)return null;for(const[id,lic] of Object.entries(l))if(lic.code&&lic.code.toUpperCase()===code.toUpperCase())return{...lic,id};return null;}
 async function updateLicense(id,d){await database.ref('licenses/'+id).update(d);}
-async function deleteLicense(id){await database.ref('licenses/'+id).remove();}
 function isExpired(lic){return lic&&lic.expires_at&&new Date()>new Date(lic.expires_at);}
 
 function generateCaptcha(){const c='ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';let r='';for(let i=0;i<6;i++)r+=c[Math.floor(Math.random()*c.length)];currentCaptcha=r;return r;}
-function renderCaptcha(){const c=document.getElementById('captchaContainer');if(!c)return;const cap=generateCaptcha();c.innerHTML=`<div class="captcha-code">${cap}</div><button class="captcha-refresh" onclick="refreshCaptcha()"><svg class="icon" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Обновить</button><input type="text" id="captchaInput" placeholder="Введите код" style="margin-top:0.5rem;width:100%;padding:0.6rem;border-radius:40px;background:#1a1a2e;border:1px solid var(--primary);color:white;text-align:center;">`;}
-window.refreshCaptcha=function(){const c=document.getElementById('captchaContainer');if(c){renderCaptcha();}};
+function renderCaptcha(){const c=document.getElementById('captchaContainer');if(!c)return;c.innerHTML=`<div class="captcha-code">${generateCaptcha()}</div><button class="captcha-refresh" onclick="renderCaptcha()">🔄</button><input type="text" id="captchaInput" placeholder="Код">`;}
+
+function setActiveNavItem(id){document.querySelectorAll('#desktopNav a[data-section],#mobileNav a[data-section]').forEach(l=>l.classList.toggle('active',l.getAttribute('data-section')===id));closeMobileMenu();}
+function showSection(id){document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id===id));setActiveNavItem(id);if(id==='admin'&&isAdmin())loadAdminPanel();}
+
+const mobileBtn=document.getElementById('mobileMenuBtn'),mobileNav=document.getElementById('mobileNav'),mobileOverlay=document.getElementById('mobileOverlay');
+function openMobileMenu(){mobileNav.classList.add('open');mobileOverlay.classList.add('show');}
+function closeMobileMenu(){mobileNav.classList.remove('open');mobileOverlay.classList.remove('show');}
+mobileBtn?.addEventListener('click',()=>mobileNav.classList.contains('open')?closeMobileMenu():openMobileMenu());
+mobileOverlay?.addEventListener('click',closeMobileMenu);
+
+function openAuthModal(){document.getElementById('authModal').classList.add('active');renderCaptcha();}
+function closeModal(id){document.getElementById(id).classList.remove('active');}
+function switchAuthTab(t){document.getElementById('loginForm').style.display=t==='login'?'block':'none';document.getElementById('registerForm').style.display=t==='register'?'block':'none';}
+function togglePassword(id){const i=document.getElementById(id);if(i)i.type=i.type==='password'?'text':'password';}
 
 async function updateUI(){
-  const ad=document.getElementById('authButtons'),gd=document.getElementById('userGreeting'),gt=document.getElementById('greetingText');
-  const pn=document.getElementById('profileNotLogged'),pl=document.getElementById('profileLogged');
-  const al=document.getElementById('adminNavLink'),am=document.getElementById('adminNavLinkMobile'),ab=document.getElementById('adminBadge');
-  if(currentUser){
-    ad.style.display='none';gd.style.display='block';gt.textContent=`👤 ${escapeHtml(currentUser.username)}`;
-    pn.style.display='none';pl.style.display='block';
-    document.getElementById('profileUsername').textContent=escapeHtml(currentUser.username);
-    if(isAdmin()){al.style.display='inline-block';am.style.display='block';ab.style.display='inline-block';}
-    else{al.style.display='none';am.style.display='none';ab.style.display='none';}
-    await updateProfileUI();
-  }else{
-    ad.style.display='block';gd.style.display='none';pn.style.display='block';pl.style.display='none';
-    al.style.display='none';am.style.display='none';
-  }
+  document.getElementById('authButtons').style.display=currentUser?'none':'block';
+  document.getElementById('userGreeting').style.display=currentUser?'block':'none';
+  if(currentUser)document.getElementById('greetingText').textContent=`👤 ${escapeHtml(currentUser.username)}`;
+  document.getElementById('profileNotLogged').style.display=currentUser?'none':'block';
+  document.getElementById('profileLogged').style.display=currentUser?'block':'none';
+  if(currentUser)document.getElementById('profileUsername').textContent=escapeHtml(currentUser.username);
+  const ab=document.getElementById('adminBadge');if(ab)ab.style.display=isAdmin()?'inline-block':'none';
+  document.getElementById('adminNavLink').style.display=isAdmin()?'inline-block':'none';
+  document.getElementById('adminNavLinkMobile').style.display=isAdmin()?'block':'none';
+  if(currentUser)await updateProfileUI();
   updateChatButton();
 }
 
@@ -392,76 +309,48 @@ async function updateProfileUI(){
   const u=await getUser(currentUser.username);
   if(u&&u.license_id){const s=await database.ref('licenses/'+u.license_id).once('value');currentLicense=s.val();if(currentLicense)currentLicense.id=u.license_id;}
   else currentLicense=null;
-  if(currentLicense&&isExpired(currentLicense)){await database.ref('users/'+currentUser.username+'/license_id').remove();await deleteLicense(currentLicense.id);currentLicense=null;}
+  if(currentLicense&&isExpired(currentLicense)){await database.ref('users/'+currentUser.username+'/license_id').remove();currentLicense=null;}
   const ks=document.getElementById('licenseKey'),tf=document.getElementById('timerFill'),rt=document.getElementById('remainingTime');
   if(hasActiveLicense()){
-    const now=new Date(),exp=new Date(currentLicense.expires_at);
+    const exp=new Date(currentLicense.expires_at),now=new Date();
     const total=exp.getTime()-new Date(currentLicense.activated_at||currentLicense.created_at).getTime();
-    const remaining=exp.getTime()-now.getTime();
-    const pc=Math.max(0,Math.min(100,(remaining/total)*100));
-    const d=Math.floor(remaining/86400000),h=Math.floor((remaining%86400000)/3600000),m=Math.floor((remaining%3600000)/60000);
-    ks.textContent=currentLicense.code;tf.style.width=pc+'%';rt.textContent=`⏱️ Осталось: ${d} дн. ${h} ч. ${m} мин.`;
-  }else{ks.textContent='---- ---- ---- ----';tf.style.width='0%';rt.textContent='⏱️ Лицензия не активна';}
-  updateLauncherButton();
+    const rem=exp.getTime()-now.getTime();
+    const pc=Math.max(0,Math.min(100,(rem/total)*100));
+    const d=Math.floor(rem/86400000),h=Math.floor((rem%86400000)/3600000);
+    ks.textContent=currentLicense.code;tf.style.width=pc+'%';rt.textContent=`Осталось: ${d} дн. ${h} ч.`;
+  }else{ks.textContent='----';tf.style.width='0%';rt.textContent='Нет лицензии';}
 }
-function updateLauncherButton(){const b=document.getElementById('launcherMainBtn'),s=document.getElementById('launcherStatus');const a=hasActiveLicense();if(b){b.style.opacity=a?'1':'0.4';b.style.pointerEvents=a?'auto':'none';if(s)s.textContent=a?'✅ Доступно':'❌ Требуется лицензия';}}
-function updateChatButton(){const btn=document.getElementById('supportChatBtn');if(!currentUser){btn.style.display='none';return;}btn.style.display='flex';if(isAdmin()){btn.title='Тикеты';btn.innerHTML='<svg class="icon" viewBox="0 0 24 24" style="width:28px;height:28px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>';}else{btn.title='Поддержка';btn.innerHTML='<svg class="icon" viewBox="0 0 24 24" style="width:28px;height:28px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';}}
 
-function openAuthModal(){document.getElementById('authModal').classList.add('active');renderCaptcha();}
-function closeModal(id){document.getElementById(id).classList.remove('active');}
-function switchAuthTab(tab){const lf=document.getElementById('loginForm'),rf=document.getElementById('registerForm'),lt=document.getElementById('loginTabBtn'),rt=document.getElementById('registerTabBtn');if(tab==='login'){lt.classList.add('active');rt.classList.remove('active');lf.style.display='block';rf.style.display='none';}else{rt.classList.add('active');lt.classList.remove('active');rf.style.display='block';lf.style.display='none';renderCaptcha();}}
-function togglePassword(id){const i=document.getElementById(id);if(i)i.type=i.type==='password'?'text':'password';}
-function openAgreementModal(){document.getElementById('agreementModal').classList.add('active');}
-function openModActivationModal(){if(!currentUser){showToast('Сначала войдите','error');return;}document.getElementById('modActivationModal').classList.add('active');}
-
-async function activateMod(){
-  if(!currentUser)return;
-  const code=document.getElementById('modActivationCodeInput').value.trim().toUpperCase();
-  if(!code){document.getElementById('modActivationError').textContent='Введите код';return;}
-  try{
-    const snap=await database.ref('activations/'+code).once('value');
-    if(!snap.val()){document.getElementById('modActivationError').textContent='Код не найден';return;}
-    if(Date.now()-snap.val().createdAt>300000){await database.ref('activations/'+code).remove();document.getElementById('modActivationError').textContent='Код истёк';return;}
-    const us=await database.ref('users/'+currentUser.username).once('value');
-    if(!us.val()?.license_id){document.getElementById('modActivationError').textContent='Нет лицензии';return;}
-    const ls=await database.ref('licenses/'+us.val().license_id).once('value');
-    if(!ls.val()||ls.val().status!=='active'){document.getElementById('modActivationError').textContent='Лицензия не активна';return;}
-    await database.ref('activations/'+code).update({licenseId:us.val().license_id,username:currentUser.username,activatedAt:Date.now()});
-    document.getElementById('modActivationResult').innerHTML='<p style="color:var(--success);">✅ Мод активирован!</p>';
-    showToast('Успешно!','success');
-  }catch(e){document.getElementById('modActivationError').textContent='Ошибка: '+e.message;}
+function updateChatButton(){
+  const btn=document.getElementById('supportChatBtn');
+  if(!currentUser){btn.style.display='none';return;}
+  btn.style.display='flex';
+  btn.innerHTML=isAdmin()?'<svg class="icon" viewBox="0 0 24 24" style="width:28px;height:28px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>':'<svg class="icon" viewBox="0 0 24 24" style="width:28px;height:28px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';
 }
 
 async function register(){
   const u=document.getElementById('regUsername').value.trim(),p=document.getElementById('regPassword').value.trim();
   const c=document.getElementById('regPasswordConfirm').value.trim(),cap=document.getElementById('captchaInput')?.value.trim();
-  const err=document.getElementById('registerError');
-  if(u.length<3){err.textContent='Логин минимум 3 символа';return;}
-  if(!/^[A-Za-z0-9]+$/.test(u)){err.textContent='Только латиница и цифры';return;}
-  if(p.length<3){err.textContent='Пароль минимум 3 символа';return;}
-  if(p!==c){err.textContent='Пароли не совпадают';return;}
-  if(cap!==currentCaptcha){err.textContent='Неверная капча';renderCaptcha();return;}
-  if(await getUser(u)){err.textContent='Логин занят';return;}
+  if(u.length<3||p.length<3||p!==c||cap!==currentCaptcha)return;
+  if(await getUser(u)){showToast('Логин занят','error');return;}
   const ud={username:u,password:hashPassword(p),created_at:new Date().toISOString(),is_admin:(u==='Nevora'),admin_level:(u==='Nevora'?10:0)};
   await saveUser(u,ud);currentUser=ud;saveSession(u);updateUI();closeModal('authModal');showToast('Регистрация успешна!','success');
 }
 
 async function login(){
   const u=document.getElementById('loginUsername').value.trim(),p=document.getElementById('loginPassword').value.trim();
-  if(!u||!p){document.getElementById('loginError').textContent='Заполните поля';return;}
+  if(!u||!p)return;
   const user=await getUser(u);
-  if(!user){document.getElementById('loginError').textContent='Пользователь не найден';return;}
-  if(user.password!==hashPassword(p)){document.getElementById('loginError').textContent='Неверный пароль';return;}
+  if(!user||user.password!==hashPassword(p)){showToast('Неверные данные','error');return;}
   currentUser=user;saveSession(u);updateUI();closeModal('authModal');showToast(`Добро пожаловать, ${escapeHtml(u)}!`,'success');
 }
 
 document.getElementById('activateKeyBtn')?.addEventListener('click',async()=>{
   if(!currentUser||hasActiveLicense())return;
   const key=document.getElementById('activationKeyInput').value.trim().toUpperCase();
-  if(!key){showToast('Введите ключ','error');return;}
+  if(!key)return;
   const lic=await getLicenseByCode(key);
-  if(!lic){showToast('Ключ не найден','error');return;}
-  if(lic.status==='active'){showToast('Ключ уже используется','error');return;}
+  if(!lic||lic.status==='active'){showToast('Ключ недействителен','error');return;}
   const now=new Date();let exp=new Date();
   if(lic.type==='012h')exp.setHours(now.getHours()+12);else if(lic.type==='007d')exp.setDate(now.getDate()+7);
   else if(lic.type==='030d')exp.setDate(now.getDate()+30);else exp.setDate(now.getDate()+365);
@@ -471,90 +360,53 @@ document.getElementById('activateKeyBtn')?.addEventListener('click',async()=>{
 });
 
 document.getElementById('toggleKeyBtn')?.addEventListener('click',()=>{isKeyVisible=!isKeyVisible;document.getElementById('licenseKey').classList.toggle('license-key-blur',!isKeyVisible);});
-document.getElementById('copyKeyBtn')?.addEventListener('click',()=>{if(currentLicense?.code){navigator.clipboard.writeText(currentLicense.code);showToast('Ключ скопирован','success');}});
 document.getElementById('logoutBtn')?.addEventListener('click',()=>{if(confirm('Выйти?')){clearSession();showToast('Вы вышли','info');showSection('home');}});
+document.getElementById('copyKeyBtn')?.addEventListener('click',()=>{if(currentLicense?.code)navigator.clipboard.writeText(currentLicense.code);});
 
 document.querySelectorAll('.price-card').forEach(card=>{card.addEventListener('click',()=>{document.getElementById('paymentTitle').innerText=card.dataset.days;document.getElementById('paymentPrice').innerHTML=`₽${card.dataset.price}`;document.getElementById('funpayLink').href=card.dataset.funpay;document.getElementById('paymentModal').classList.add('active');});});
-
-async function loadAdminPanel(){
-  if(!isAdmin()){document.getElementById('adminContent').innerHTML='<p style="color:var(--error);text-align:center;">Доступ запрещен</p>';return;}
-  const content=document.getElementById('adminContent');content.innerHTML='<p style="text-align:center;">Загрузка...</p>';
-  const us=await database.ref('users').once('value');const ls=await database.ref('licenses').once('value');
-  const users=us.val()||{},licenses=ls.val()||{};
-  let total=0,active=0;for(const l of Object.values(licenses)){total++;if(l.status==='active'&&!isExpired(l))active++;}
-  content.innerHTML=`<div class="admin-stats-grid"><div class="admin-stat-card"><div class="admin-stat-value">${Object.keys(users).length}</div><div class="admin-stat-label">Пользователей</div></div><div class="admin-stat-card"><div class="admin-stat-value">${total}</div><div class="admin-stat-label">Ключей</div></div><div class="admin-stat-card"><div class="admin-stat-value">${active}</div><div class="admin-stat-label">Активных</div></div></div>
-  <div class="admin-panel-card"><h3>👑 Управление администраторами</h3><div id="adminManageList"></div><div style="margin-top:1rem;"><input type="text" id="newAdminUsername" placeholder="Ник нового админа" style="width:100%;padding:0.6rem;background:rgba(10,10,15,0.8);border:1px solid var(--primary);border-radius:40px;color:white;"><select id="newAdminLevel" style="width:100%;padding:0.6rem;background:rgba(10,10,15,0.8);border:1px solid var(--primary);border-radius:40px;color:white;margin:0.3rem 0;"><option value="1">Уровень 1 (чат)</option><option value="2">Уровень 2 (чат + пользователи)</option><option value="3">Уровень 3 (полный доступ)</option></select><button class="btn btn-primary" id="addAdminBtn" style="width:100%;">Добавить администратора</button></div></div>
-  <div class="admin-panel-card"><h3>➕ Создать ключ</h3><select id="adminKeyType" style="width:100%;padding:0.6rem;background:rgba(10,10,15,0.8);border:1px solid var(--primary);border-radius:40px;color:white;margin:0.3rem 0;"><option value="012h">12 часов</option><option value="007d">7 дней</option><option value="030d">30 дней</option><option value="365d">1 год</option></select><input type="text" id="adminKeyCode" placeholder="Ключ (пусто = авто)" style="width:100%;padding:0.6rem;background:rgba(10,10,15,0.8);border:1px solid var(--primary);border-radius:40px;color:white;"><button class="btn btn-primary" id="adminCreateBtn" style="margin-top:0.5rem;width:100%;">Создать</button><div id="adminKeyResult" style="margin-top:0.5rem;text-align:center;"></div></div>
-  <div class="admin-panel-card"><h3>🔍 Пользователи</h3><div class="search-filter"><input type="text" id="adminSearchUsername" placeholder="Ник..."><select id="adminFilterStatus"><option value="all">Все</option><option value="active">Активные</option><option value="expired">Истекшие</option><option value="none">Без лицензии</option></select></div><div id="adminUsersList"></div></div>`;
-  function renderAdminList(){const list=document.getElementById('adminManageList');if(!list)return;const admins=Object.entries(users).filter(([,u])=>u.is_admin||u.admin_level>0);list.innerHTML=admins.map(([name,u])=>`<div class="admin-user-row"><div><strong>${escapeHtml(name)}</strong> (Ур. ${u.admin_level||1})</div><div>${name!=='Nevora'?`<button class="admin-btn" onclick="window.removeAdmin('${name}')" style="border-color:var(--error);color:var(--error);">🗑️</button>`:''}</div></div>`).join('')||'<p>Нет администраторов</p>';}
-  renderAdminList();
-  document.getElementById('addAdminBtn')?.addEventListener('click',async()=>{const name=document.getElementById('newAdminUsername').value.trim();const level=parseInt(document.getElementById('newAdminLevel').value);if(!name||name===currentUser.username)return;const target=await getUser(name);if(!target)return;await updateUser(name,{admin_level:level,is_admin:true});showToast(`${name} теперь админ`,'success');loadAdminPanel();});
-  document.getElementById('adminCreateBtn')?.addEventListener('click',async()=>{const type=document.getElementById('adminKeyType').value;let code=document.getElementById('adminKeyCode').value.trim().toUpperCase();if(!code){const ch='ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';code=Array(4).fill().map(()=>Array(4).fill().map(()=>ch[Math.floor(Math.random()*ch.length)]).join('')).join('-');}await database.ref('licenses').push({code,type,status:'pending',created_at:new Date().toISOString()});document.getElementById('adminKeyResult').innerHTML=`<span style="color:var(--success);">✅ ${code}</span>`;setTimeout(()=>loadAdminPanel(),1500);});
-}
-window.removeAdmin=async(name)=>{if(!confirm(`Удалить админа ${name}?`))return;await updateUser(name,{admin_level:0,is_admin:false});showToast('Админ удален','info');loadAdminPanel();};
-
-// ==== ЧАТ И ТИКЕТЫ ====
 
 function resetChatPosition(){
   const w=document.getElementById('chatWindow');
   if(!w)return;
-  const ww=w.offsetWidth||380;
-  const wh=w.offsetHeight||520;
-  w.style.left=Math.max(0,window.innerWidth-ww-20)+'px';
-  w.style.top=Math.max(0,window.innerHeight-wh-100)+'px';
-  w.style.right='auto';w.style.bottom='auto';
+  w.style.left=Math.max(0,window.innerWidth-(w.offsetWidth||380)-20)+'px';
+  w.style.top=Math.max(0,window.innerHeight-(w.offsetHeight||520)-100)+'px';
 }
 
 function initChatDrag(){
-  const chatWindow=document.getElementById('chatWindow');
-  const header=document.getElementById('chatHeader');
+  const chatWindow=document.getElementById('chatWindow'),header=document.getElementById('chatHeader');
   if(!chatWindow||!header)return;
-  window.resetChatPosition=resetChatPosition;
-  resetChatPosition();
+  window.resetChatPosition=resetChatPosition;resetChatPosition();
   window.addEventListener('resize',()=>{if(!chatWindow.classList.contains('open'))resetChatPosition();});
-  
   let isDragging=false,startX,startY,startLeft,startTop;
-  header.addEventListener('mousedown',(e)=>{
-    if(e.target.closest('#closeChatBtn'))return;
-    isDragging=true;startX=e.clientX;startY=e.clientY;
-    const r=chatWindow.getBoundingClientRect();startLeft=r.left;startTop=r.top;
-    chatWindow.style.transition='none';document.body.style.userSelect='none';
-  });
-  header.addEventListener('touchstart',(e)=>{
-    if(e.target.closest('#closeChatBtn'))return;
-    isDragging=true;const t=e.touches[0];startX=t.clientX;startY=t.clientY;
-    const r=chatWindow.getBoundingClientRect();startLeft=r.left;startTop=r.top;
-    chatWindow.style.transition='none';
-  },{passive:false});
-  document.addEventListener('mousemove',(e)=>{
-    if(!isDragging)return;
-    let nl=startLeft+e.clientX-startX;let nt=startTop+e.clientY-startY;
-    nl=Math.max(0,Math.min(nl,window.innerWidth-chatWindow.offsetWidth));
-    nt=Math.max(0,Math.min(nt,window.innerHeight-chatWindow.offsetHeight));
-    chatWindow.style.left=nl+'px';chatWindow.style.top=nt+'px';
-  });
-  document.addEventListener('touchmove',(e)=>{
-    if(!isDragging)return;
-    const t=e.touches[0];
-    let nl=startLeft+t.clientX-startX;let nt=startTop+t.clientY-startY;
-    nl=Math.max(0,Math.min(nl,window.innerWidth-chatWindow.offsetWidth));
-    nt=Math.max(0,Math.min(nt,window.innerHeight-chatWindow.offsetHeight));
-    chatWindow.style.left=nl+'px';chatWindow.style.top=nt+'px';
-  },{passive:false});
-  document.addEventListener('mouseup',()=>{if(isDragging){isDragging=false;chatWindow.style.transition='';document.body.style.userSelect='';}});
+  header.addEventListener('mousedown',(e)=>{if(e.target.closest('#closeChatBtn'))return;isDragging=true;startX=e.clientX;startY=e.clientY;const r=chatWindow.getBoundingClientRect();startLeft=r.left;startTop=r.top;chatWindow.style.transition='none';});
+  header.addEventListener('touchstart',(e)=>{if(e.target.closest('#closeChatBtn'))return;isDragging=true;const t=e.touches[0];startX=t.clientX;startY=t.clientY;const r=chatWindow.getBoundingClientRect();startLeft=r.left;startTop=r.top;chatWindow.style.transition='none';},{passive:false});
+  document.addEventListener('mousemove',(e)=>{if(!isDragging)return;let nl=startLeft+e.clientX-startX,nt=startTop+e.clientY-startY;nl=Math.max(0,Math.min(nl,window.innerWidth-chatWindow.offsetWidth));nt=Math.max(0,Math.min(nt,window.innerHeight-chatWindow.offsetHeight));chatWindow.style.left=nl+'px';chatWindow.style.top=nt+'px';});
+  document.addEventListener('touchmove',(e)=>{if(!isDragging)return;const t=e.touches[0];let nl=startLeft+t.clientX-startX,nt=startTop+t.clientY-startY;nl=Math.max(0,Math.min(nl,window.innerWidth-chatWindow.offsetWidth));nt=Math.max(0,Math.min(nt,window.innerHeight-chatWindow.offsetHeight));chatWindow.style.left=nl+'px';chatWindow.style.top=nt+'px';},{passive:false});
+  document.addEventListener('mouseup',()=>{if(isDragging){isDragging=false;chatWindow.style.transition='';}});
   document.addEventListener('touchend',()=>{if(isDragging){isDragging=false;chatWindow.style.transition='';}});
+}
+
+function animateAndCloseChat(callback){
+  const w=document.getElementById('chatWindow');
+  w.classList.add('closing');
+  if(chatListener&&currentTicketId){database.ref('tickets/'+currentTicketId+'/messages').off('value',chatListener);chatListener=null;}
+  if(ticketClosureListener&&currentTicketId){database.ref('tickets/'+currentTicketId+'/closure').off('value',ticketClosureListener);ticketClosureListener=null;}
+  setTimeout(()=>{
+    w.classList.remove('open','closing');
+    document.getElementById('adminTicketControls').style.display='none';
+    document.getElementById('chatInputArea').style.display='none';
+    document.getElementById('ticketCreateForm').style.display='none';
+    document.getElementById('chatMessages').innerHTML='';
+    currentTicketId=null;
+    resetChatPosition();
+    if(callback)callback();
+  },500);
 }
 
 function closeChatWindow(){
   const w=document.getElementById('chatWindow');
-  w.classList.remove('open');
-  if(chatListener&&currentTicketId){database.ref('tickets/'+currentTicketId+'/messages').off('value',chatListener);chatListener=null;}
-  document.getElementById('adminTicketControls').style.display='none';
-  document.getElementById('chatInputArea').style.display='none';
-  document.getElementById('ticketCreateForm').style.display='none';
-  document.getElementById('chatMessages').innerHTML='';
-  currentTicketId=null;
-  resetChatPosition();
+  if(!w.classList.contains('open'))return;
+  animateAndCloseChat();
 }
 document.getElementById('closeChatBtn').addEventListener('click',closeChatWindow);
 
@@ -562,23 +414,19 @@ function toggleChat(){
   const w=document.getElementById('chatWindow');
   if(w.classList.contains('open')){closeChatWindow();return;}
   if(!currentUser){showToast('Войдите для чата','error');return;}
-  resetChatPosition();
-  w.classList.add('open');
-  if(isAdmin()){openTicketsList();}
-  else{initUserChat();}
+  if(!isAdmin()&&isMuted()){const d=new Date(currentUser.muted_until);showToast(`Вы замучены до ${d.toLocaleString()}`,'error');return;}
+  resetChatPosition();w.classList.remove('closing');w.classList.add('open');
+  if(isAdmin()){openTicketsList();}else{initUserChat();}
 }
 document.getElementById('supportChatBtn').addEventListener('click',toggleChat);
 
-// Админ: список тикетов
 async function openTicketsList(){
-  const panel=document.getElementById('ticketsListPanel');
-  panel.classList.add('open');
-  const body=document.getElementById('ticketsListBody');
-  body.innerHTML='<p style="color:var(--text-muted);text-align:center;">Загрузка...</p>';
+  const panel=document.getElementById('ticketsListPanel');panel.classList.add('open');
+  const body=document.getElementById('ticketsListBody');body.innerHTML='<p>Загрузка...</p>';
   const snap=await database.ref('tickets').orderByChild('status').equalTo('open').once('value');
   const tickets=snap.val();
-  if(!tickets){body.innerHTML='<p style="color:var(--text-muted);text-align:center;">Нет открытых тикетов</p>';return;}
-  body.innerHTML=Object.entries(tickets).map(([id,t])=>`<div class="ticket-item" onclick="openTicketAsAdmin('${id}')"><div><div class="ticket-subject">${escapeHtml(t.subject||'Без темы')}</div><div class="ticket-user">${escapeHtml(t.username)}</div><div class="ticket-time">${new Date(t.created_at).toLocaleString()}</div></div><span style="color:var(--accent);">→</span></div>`).join('');
+  if(!tickets){body.innerHTML='<p>Нет открытых тикетов</p>';return;}
+  body.innerHTML=Object.entries(tickets).map(([id,t])=>`<div class="ticket-item" onclick="openTicketAsAdmin('${id}')"><div class="ticket-subject">${escapeHtml(t.subject||'Без темы')}${t.username?` <span class="ticket-user">(${escapeHtml(t.username)})</span>`:''}</div></div>`).join('');
 }
 function closeTicketsList(){document.getElementById('ticketsListPanel').classList.remove('open');}
 
@@ -589,76 +437,93 @@ async function openTicketAsAdmin(ticketId){
   if(!ticket)return;
   currentTicketId=ticketId;
   const w=document.getElementById('chatWindow');
-  if(!w.classList.contains('open')){w.classList.add('open');resetChatPosition();}
+  if(!w.classList.contains('open')){w.classList.remove('closing');w.classList.add('open');resetChatPosition();}
   document.getElementById('chatHeaderTitle').textContent=`Тикет: ${ticket.subject||'Без темы'}`;
   document.getElementById('ticketCreateForm').style.display='none';
   document.getElementById('chatInputArea').style.display='flex';
   document.getElementById('adminTicketControls').style.display='flex';
-  const msgs=document.getElementById('chatMessages');
-  msgs.innerHTML='';
+  
+  // Сохраняем username тикета для мута
+  document.getElementById('adminTicketControls').dataset.ticketUsername=ticket.username;
+  
+  const msgs=document.getElementById('chatMessages');msgs.innerHTML='';
   if(ticket.subject||ticket.initial_message){
     msgs.innerHTML+=`<div class="chat-message system"><div>📌 Тема: ${escapeHtml(ticket.subject||'Не указана')}<br>📝 Обращение: ${escapeHtml(ticket.initial_message||'Нет')}</div><div class="msg-meta">${ticket.username} • ${new Date(ticket.created_at).toLocaleString()}</div></div>`;
   }
-  if(chatListener) database.ref('tickets/'+currentTicketId+'/messages').off('value',chatListener);
+  if(chatListener)database.ref('tickets/'+currentTicketId+'/messages').off('value',chatListener);
   chatListener=database.ref('tickets/'+currentTicketId+'/messages').on('value',snap=>{
     const data=snap.val();
-    // Удаляем только старые сообщения, системное оставляем
-    msgs.querySelectorAll('.chat-message:not(.system)').forEach(el=>el.remove());
-    if(data){
-      Object.values(data).sort((a,b)=>a.timestamp-b.timestamp).forEach(m=>{
-        const div=document.createElement('div');
-        div.className=`chat-message ${m.sender==='user'?'user':'support'}`;
-        div.innerHTML=`<div>${escapeHtml(m.text)}</div><div class="msg-meta">${m.sender==='user'?ticket.username:'Вы'} • ${new Date(m.timestamp).toLocaleTimeString()}</div>`;
-        msgs.appendChild(div);
-      });
-    }
+    msgs.querySelectorAll('.chat-message:not(.system):not(.closed)').forEach(el=>el.remove());
+    if(data)Object.values(data).sort((a,b)=>a.timestamp-b.timestamp).forEach(m=>{
+      const div=document.createElement('div');
+      div.className=`chat-message ${m.sender==='user'?'user':'support'}`;
+      div.innerHTML=`<div>${escapeHtml(m.text)}</div><div class="msg-meta">${m.sender==='user'?ticket.username:'Вы'} • ${new Date(m.timestamp).toLocaleTimeString()}</div>`;
+      msgs.appendChild(div);
+    });
     msgs.scrollTop=msgs.scrollHeight;
   });
 }
 
-// Юзер: форма создания или загрузка существующего тикета
+function openMuteModal(){
+  const username=document.getElementById('adminTicketControls').dataset.ticketUsername;
+  if(!username)return;
+  document.getElementById('muteUsernameInput').value=username;
+  document.getElementById('muteModal').classList.add('active');
+}
+
+async function applyMute(){
+  const username=document.getElementById('muteUsernameInput').value;
+  const minutes=parseInt(document.getElementById('muteDuration').value);
+  const until=Date.now()+minutes*60000;
+  await updateUser(username,{muted_until:until});
+  showToast(`${username} замучен на ${minutes} мин.`,'success');
+  closeModal('muteModal');
+}
+
 async function initUserChat(){
   if(!currentUser||isAdmin())return;
   document.getElementById('adminTicketControls').style.display='none';
-  
-  // Проверяем существующий открытый тикет
   const snap=await database.ref('tickets').orderByChild('username').equalTo(currentUser.username).once('value');
   let existingTicket=null;
   snap.forEach(child=>{if(child.val().status==='open')existingTicket={id:child.key,...child.val()};});
   
   if(existingTicket){
-    // Открываем существующий тикет
     currentTicketId=existingTicket.id;
     document.getElementById('chatHeaderTitle').textContent='💬 Поддержка';
     document.getElementById('ticketCreateForm').style.display='none';
     document.getElementById('chatInputArea').style.display='flex';
-    const msgs=document.getElementById('chatMessages');
-    msgs.innerHTML='';
+    const msgs=document.getElementById('chatMessages');msgs.innerHTML='';
     if(existingTicket.subject||existingTicket.initial_message){
-      msgs.innerHTML+=`<div class="chat-message system"><div>📌 Тема: ${escapeHtml(existingTicket.subject||'Не указана')}<br>📝 Ваше обращение: ${escapeHtml(existingTicket.initial_message||'Нет')}</div><div class="msg-meta">Вы • ${new Date(existingTicket.created_at).toLocaleString()}</div></div>`;
+      msgs.innerHTML+=`<div class="chat-message system"><div>📌 Тема: ${escapeHtml(existingTicket.subject||'Не указана')}<br>📝 Ваше обращение: ${escapeHtml(existingTicket.initial_message||'Нет')}</div></div>`;
     }
-    if(chatListener) database.ref('tickets/'+currentTicketId+'/messages').off('value',chatListener);
+    if(chatListener)database.ref('tickets/'+currentTicketId+'/messages').off('value',chatListener);
+    if(ticketClosureListener)database.ref('tickets/'+currentTicketId+'/closure').off('value',ticketClosureListener);
     chatListener=database.ref('tickets/'+currentTicketId+'/messages').on('value',snap=>{
       const data=snap.val();
-      msgs.querySelectorAll('.chat-message:not(.system)').forEach(el=>el.remove());
-      if(data){
-        Object.values(data).sort((a,b)=>a.timestamp-b.timestamp).forEach(m=>{
-          const div=document.createElement('div');
-          div.className=`chat-message ${m.sender==='user'?'user':'support'}`;
-          div.innerHTML=`<div>${escapeHtml(m.text)}</div><div class="msg-meta">${m.sender==='user'?'Вы':'Администратор'} • ${new Date(m.timestamp).toLocaleTimeString()}</div>`;
-          msgs.appendChild(div);
-        });
-      }
+      msgs.querySelectorAll('.chat-message:not(.system):not(.closed)').forEach(el=>el.remove());
+      if(data)Object.values(data).sort((a,b)=>a.timestamp-b.timestamp).forEach(m=>{
+        const div=document.createElement('div');
+        div.className=`chat-message ${m.sender==='user'?'user':'support'}`;
+        div.innerHTML=`<div>${escapeHtml(m.text)}</div><div class="msg-meta">${m.sender==='user'?'Вы':'Администратор'}</div>`;
+        msgs.appendChild(div);
+      });
       msgs.scrollTop=msgs.scrollHeight;
     });
+    // Слушаем закрытие тикета
+    ticketClosureListener=database.ref('tickets/'+currentTicketId+'/closure').on('value',snap=>{
+      if(snap.val()){
+        const msg=snap.val().message||'Тикет был закрыт администратором.';
+        msgs.innerHTML+=`<div class="chat-message closed"><div>🔒 ${escapeHtml(msg)}</div></div>`;
+        document.getElementById('chatInputArea').style.display='none';
+        msgs.scrollTop=msgs.scrollHeight;
+        setTimeout(()=>animateAndCloseChat(),2000);
+      }
+    });
   }else{
-    // Показываем форму создания
     document.getElementById('chatHeaderTitle').textContent='📝 Новый тикет';
     document.getElementById('chatMessages').innerHTML='<div class="chat-message system"><div>Создайте тикет, чтобы связаться с поддержкой.</div></div>';
     document.getElementById('ticketCreateForm').style.display='flex';
     document.getElementById('chatInputArea').style.display='none';
-    document.getElementById('ticketSubject').value='';
-    document.getElementById('ticketMessage').value='';
   }
 }
 
@@ -666,33 +531,34 @@ async function createTicket(){
   if(!currentUser||isAdmin())return;
   const subject=document.getElementById('ticketSubject').value.trim();
   const message=document.getElementById('ticketMessage').value.trim();
-  if(!subject){showToast('Укажите тему','error');return;}
-  if(!message){showToast('Опишите проблему','error');return;}
-  
+  if(!subject||!message){showToast('Заполните все поля','error');return;}
   const ref=database.ref('tickets').push();
-  const ticket={username:currentUser.username,status:'open',created_at:new Date().toISOString(),subject:subject,initial_message:message};
-  await ref.set(ticket);
+  await ref.set({username:currentUser.username,status:'open',created_at:new Date().toISOString(),subject,initial_message:message});
   currentTicketId=ref.key;
-  
   document.getElementById('ticketCreateForm').style.display='none';
   document.getElementById('chatInputArea').style.display='flex';
   document.getElementById('chatHeaderTitle').textContent='💬 Поддержка';
   const msgs=document.getElementById('chatMessages');
-  msgs.innerHTML=`<div class="chat-message system"><div>📌 Тема: ${escapeHtml(subject)}<br>📝 Ваше обращение: ${escapeHtml(message)}</div><div class="msg-meta">Вы • ${new Date().toLocaleString()}</div></div>`;
-  
-  if(chatListener) database.ref('tickets/'+currentTicketId+'/messages').off('value',chatListener);
+  msgs.innerHTML=`<div class="chat-message system"><div>📌 Тема: ${escapeHtml(subject)}<br>📝 Ваше обращение: ${escapeHtml(message)}</div></div>`;
+  if(chatListener)database.ref('tickets/'+currentTicketId+'/messages').off('value',chatListener);
   chatListener=database.ref('tickets/'+currentTicketId+'/messages').on('value',snap=>{
     const data=snap.val();
-    msgs.querySelectorAll('.chat-message:not(.system)').forEach(el=>el.remove());
-    if(data){
-      Object.values(data).sort((a,b)=>a.timestamp-b.timestamp).forEach(m=>{
-        const div=document.createElement('div');
-        div.className=`chat-message ${m.sender==='user'?'user':'support'}`;
-        div.innerHTML=`<div>${escapeHtml(m.text)}</div><div class="msg-meta">${m.sender==='user'?'Вы':'Администратор'} • ${new Date(m.timestamp).toLocaleTimeString()}</div>`;
-        msgs.appendChild(div);
-      });
-    }
+    msgs.querySelectorAll('.chat-message:not(.system):not(.closed)').forEach(el=>el.remove());
+    if(data)Object.values(data).sort((a,b)=>a.timestamp-b.timestamp).forEach(m=>{
+      const div=document.createElement('div');
+      div.className=`chat-message ${m.sender==='user'?'user':'support'}`;
+      div.innerHTML=`<div>${escapeHtml(m.text)}</div><div class="msg-meta">${m.sender==='user'?'Вы':'Администратор'}</div>`;
+      msgs.appendChild(div);
+    });
     msgs.scrollTop=msgs.scrollHeight;
+  });
+  ticketClosureListener=database.ref('tickets/'+currentTicketId+'/closure').on('value',snap=>{
+    if(snap.val()){
+      msgs.innerHTML+=`<div class="chat-message closed"><div>🔒 ${escapeHtml(snap.val().message||'Тикет был закрыт администратором.')}</div></div>`;
+      document.getElementById('chatInputArea').style.display='none';
+      msgs.scrollTop=msgs.scrollHeight;
+      setTimeout(()=>animateAndCloseChat(),2000);
+    }
   });
   showToast('Тикет создан','success');
 }
@@ -703,7 +569,7 @@ function sendChatMessage(){
   if(!text||!currentTicketId)return;
   const now=Date.now();
   if(!isAdmin()&&now-lastMessageTime<30000){showToast('Сообщения раз в 30 секунд','error');return;}
-  database.ref('tickets/'+currentTicketId+'/messages').push({sender:isAdmin()?'support':'user',text:text,timestamp:now});
+  database.ref('tickets/'+currentTicketId+'/messages').push({sender:isAdmin()?'support':'user',text,timestamp:now});
   input.value='';
   if(!isAdmin())lastMessageTime=now;
 }
@@ -711,21 +577,63 @@ function sendChatMessage(){
 async function closeTicket(){
   if(!isAdmin()||!currentTicketId)return;
   if(!confirm('Закрыть тикет?'))return;
-  await database.ref('tickets/'+currentTicketId).update({status:'closed'});
-  if(chatListener){database.ref('tickets/'+currentTicketId+'/messages').off('value',chatListener);chatListener=null;}
-  // Удаляем тикет и его сообщения из базы
-  await database.ref('tickets/'+currentTicketId).remove();
-  document.getElementById('chatMessages').innerHTML='<div class="chat-message system"><div>Тикет закрыт и удалён.</div></div>';
+  
+  // Отправляем уведомление о закрытии
+  await database.ref('tickets/'+currentTicketId+'/closure').set({
+    closed_at:Date.now(),
+    message:'Ваш тикет был закрыт администратором. Если проблема не решена, создайте новый тикет.'
+  });
+  
+  // Ждём немного чтобы пользователь получил уведомление
+  setTimeout(async()=>{
+    await database.ref('tickets/'+currentTicketId).remove();
+  },3000);
+  
+  // Анимируем закрытие у админа
+  const msgs=document.getElementById('chatMessages');
+  msgs.innerHTML+=`<div class="chat-message closed"><div>🔒 Тикет закрыт. Удаление через 3 секунды...</div></div>`;
+  msgs.scrollTop=msgs.scrollHeight;
   document.getElementById('adminTicketControls').style.display='none';
-  currentTicketId=null;
-  showToast('Тикет закрыт и удалён','info');
+  document.getElementById('chatInputArea').style.display='none';
+  if(chatListener){database.ref('tickets/'+currentTicketId+'/messages').off('value',chatListener);chatListener=null;}
+  
+  setTimeout(()=>{
+    animateAndCloseChat();
+    currentTicketId=null;
+  },3000);
+  
+  showToast('Тикет закрыт','info');
 }
 
+async function loadAdminPanel(){
+  if(!isAdmin())return;
+  const content=document.getElementById('adminContent');
+  const us=await database.ref('users').once('value');const ls=await database.ref('licenses').once('value');
+  const users=us.val()||{},licenses=ls.val()||{};
+  content.innerHTML=`<div class="admin-panel-card"><h3>👑 Администраторы</h3><div id="adminManageList"></div><input type="text" id="newAdminUsername" placeholder="Ник"><select id="newAdminLevel"><option value="1">Ур.1</option><option value="2">Ур.2</option><option value="3">Ур.3</option></select><button class="btn btn-primary" id="addAdminBtn">Добавить</button></div>
+  <div class="admin-panel-card"><h3>🔇 Замученные</h3><div id="mutedList"></div></div>`;
+  document.getElementById('addAdminBtn')?.addEventListener('click',async()=>{
+    const name=document.getElementById('newAdminUsername').value.trim();
+    const level=parseInt(document.getElementById('newAdminLevel').value);
+    if(!name||!await getUser(name))return;
+    await updateUser(name,{admin_level:level,is_admin:true});
+    showToast(`${name} теперь админ`,'success');loadAdminPanel();
+  });
+  const aml=document.getElementById('adminManageList');
+  aml.innerHTML=Object.entries(users).filter(([,u])=>u.is_admin||u.admin_level>0).map(([n,u])=>`<div class="admin-user-row"><span>${escapeHtml(n)} (Ур.${u.admin_level||1})</span>${n!=='Nevora'?`<button class="admin-btn" onclick="window.removeAdmin('${n}')">Удалить</button>`:''}</div>`).join('');
+  const ml=document.getElementById('mutedList');
+  const muted=Object.entries(users).filter(([,u])=>u.muted_until&&Date.now()<u.muted_until);
+  ml.innerHTML=muted.length?muted.map(([n,u])=>`<div class="admin-user-row"><span>${escapeHtml(n)} — до ${new Date(u.muted_until).toLocaleString()}</span><button class="admin-btn" onclick="window.unmuteUser('${n}')">Размутить</button></div>`).join(''):'<p>Нет замученных</p>';
+}
+window.removeAdmin=async(n)=>{await updateUser(n,{admin_level:0,is_admin:false});showToast('Админ удалён');loadAdminPanel();};
+window.unmuteUser=async(n)=>{await updateUser(n,{muted_until:null});showToast(`${n} размучен`,'success');loadAdminPanel();};
+
+window.addEventListener('load',()=>{setTimeout(()=>{const l=document.getElementById('loaderScreen');if(l){l.classList.add('fade-out');setTimeout(()=>l.style.display='none',800);}},2000);initChatDrag();});
 (async()=>{const s=loadSession();if(s){const u=await getUser(s);if(u)currentUser=u;}updateUI();setActiveNavItem('home');setInterval(()=>{if(currentUser)updateProfileUI();},60000);})();
 document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('click',(e)=>{if(e.target===m)m.classList.remove('active');});});
 
 const canvas=document.getElementById('canvas-bg'),ctx=canvas.getContext('2d');let particles=[],mx=0,my=0;
-function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;particles=[];for(let i=0;i<Math.min(150,Math.floor(window.innerWidth*window.innerHeight/15000));i++)particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,baseX:Math.random()*canvas.width,baseY:Math.random()*canvas.height,size:Math.random()*2.5+1,speed:0.01+Math.random()*0.02,vx:(Math.random()-0.5)*0.5,vy:(Math.random()-0.5)*0.5});}
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;particles=[];for(let i=0;i<Math.min(100,Math.floor(window.innerWidth*window.innerHeight/15000));i++)particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,baseX:Math.random()*canvas.width,baseY:Math.random()*canvas.height,size:Math.random()*2+1,speed:0.01+Math.random()*0.02,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3});}
 function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{let dx=p.baseX-p.x,dy=p.baseY-p.y;p.x+=dx*p.speed+p.vx;p.y+=dy*p.speed+p.vy;let dxx=p.x-mx,dyy=p.y-my,dist=Math.hypot(dxx,dyy);if(dist<100){let force=(100-dist)/100*2,ang=Math.atan2(dyy,dxx);p.x+=Math.cos(ang)*force;p.y+=Math.sin(ang)*force;}ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fillStyle='#6366f1';ctx.fill();});requestAnimationFrame(animate);}
 window.addEventListener('resize',resizeCanvas);document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});resizeCanvas();animate();
 </script>
