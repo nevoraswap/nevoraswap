@@ -367,6 +367,26 @@ let activeClosureTimeout=null;
 let unreadTicketsListener=null;
 let globalSoundListener=null;
 let globalSoundListener2=null;
+let ticketTransferListener=null;
+
+// ============ ШАБЛОННЫЕ ОТВЕТЫ ============
+const templateResponses=[
+  {title:"Как установить мод?",text:"1. Установите Fabric Loader для 1.21.4\n2. Скачайте Fabric API и поместите в папку mods\n3. Скачайте Nevora Swap и поместите в папку mods\n4. Запустите игру с профилем Fabric"},
+  {title:"Как активировать мод?",text:"При первом запуске мод покажет код. Введите его в Профиль → Активация мода. После активации мод готов к использованию."},
+  {title:"Что делает Nevora Swap?",text:"Nevora Swap — это Fabric мод для Minecraft 1.21.4 с автосвапом, быстрым использованием предметов (FT Helper), системой друзей, HUD и защитой HWID."},
+  {title:"Почему выбрать нас?",text:"✅ Уникальные функции (Wind Helper, Chorus Helper)\n✅ Система друзей с тегами через стены\n✅ Защита HWID — одна лицензия = один ПК\n✅ Доступные цены от 24₽\n✅ Поддержка 24/7"},
+  {title:"Мод не работает",text:"Проверьте:\n1. Установлен ли Fabric Loader для 1.21.4\n2. Установлен ли Fabric API\n3. Отключите VPN и программы обхода блокировок\n4. Проверьте папку mods — в ней должен быть NevoraSwap.jar"},
+  {title:"Как продлить лицензию?",text:"Перейдите в раздел Цены, выберите подходящий тариф и оплатите через FunPay. После оплаты введите ключ в Профиле."},
+  {title:"Сколько стоит мод?",text:"Basic: 24₽ (12ч)\nPlus: 59₽ (7д)\nPro: 119₽ (30д) — популярный\nEnterprise: 249₽ (1 год)"},
+  {title:"Как работает Friends System?",text:"Используйте команды:\n/ninvite Ник — пригласить\n/naccept Ник — принять\n/nteam — состав группы\nЗелёные теги видны через стены с указанием дистанции."},
+  {title:"Можно ли передать лицензию?",text:"Нет. Лицензия привязывается к вашему ПК через HWID. Передача запрещена."},
+  {title:"Как сбросить HWID?",text:"Сброс HWID доступен на тарифах Pro и Enterprise. Обратитесь к администратору."},
+  {title:"Есть ли тестовый период?",text:"Нет, но вы можете приобрести тариф Basic на 12 часов всего за 24₽."},
+  {title:"Какие сервера поддерживаются?",text:"Мод работает на любых серверах Minecraft 1.21.4 с Fabric."},
+  {title:"Как обновить мод?",text:"Скачайте новую версию из раздела Скачать и замените старый файл в папке mods."},
+  {title:"Что делать если ключ не работает?",text:"Проверьте правильность ввода (заглавные буквы). Если проблема сохраняется — создайте тикет."},
+  {title:"Как удалить мод?",text:"Удалите файл NevoraSwap.jar из папки .minecraft/mods."}
+];
 
 // ============ ЗВУК УВЕДОМЛЕНИЯ ============
 function playNotificationSound(){
@@ -390,7 +410,6 @@ function initGlobalSoundListener(){
   if(!currentUser) return;
   
   if(!isAdmin()){
-    // Пользователь: звук при изменении ЕГО тикета
     globalSoundListener=database.ref('tickets').orderByChild('username').equalTo(currentUser.username).on('child_changed',snap=>{
       const ticket=snap.val();
       const chatOpen=document.getElementById('chatWindow').classList.contains('open');
@@ -399,7 +418,6 @@ function initGlobalSoundListener(){
       }
     });
   }else{
-    // Админ: звук при изменении любого тикета
     globalSoundListener=database.ref('tickets').on('child_changed',snap=>{
       const ticket=snap.val();
       if(ticket && ticket.status==='open'){
@@ -410,7 +428,6 @@ function initGlobalSoundListener(){
         }
       }
     });
-    // Админ: звук при создании нового тикета
     globalSoundListener2=database.ref('tickets').on('child_added',snap=>{
       const ticket=snap.val();
       if(ticket && ticket.status==='open'){
@@ -460,6 +477,7 @@ function initUnreadTicketsWatcher(){
     if(tickets){
       for(const[id,ticket] of Object.entries(tickets)){
         if(ticket.status!=='open') continue;
+        if(ticket.assigned_to && ticket.assigned_to!==currentUser.username) continue;
         
         const msgsSnap=await database.ref('tickets/'+id+'/messages').once('value');
         const msgs=msgsSnap.val();
@@ -469,58 +487,42 @@ function initUnreadTicketsWatcher(){
         }else{
           const sorted=Object.values(msgs).sort((a,b)=>b.timestamp-a.timestamp);
           const lastMsg=sorted[0];
-          
           const lastViewedKey=`ticket_viewed_${id}`;
           const lastViewed=parseInt(localStorage.getItem(lastViewedKey)||'0');
-          
           if(lastMsg && lastMsg.sender==='user' && lastMsg.timestamp>lastViewed){
             unreadCount++;
           }
         }
       }
     }
-    
     updateUnreadBadge(unreadCount);
   });
 }
 
 function markTicketAsViewed(ticketId){
   if(!ticketId) return;
-  const key=`ticket_viewed_${ticketId}`;
-  localStorage.setItem(key,Date.now().toString());
-  if(unreadTicketsListener){
-    database.ref('tickets').once('value').then(snap=>{});
-  }
+  localStorage.setItem(`ticket_viewed_${ticketId}`,Date.now().toString());
 }
 
 function updateUnreadBadge(count){
   const btn=document.getElementById('supportChatBtn');
   if(!btn) return;
-  
-  const oldBadge=document.getElementById('unreadBadge');
-  if(oldBadge) oldBadge.remove();
-  
-  const oldLabel=document.getElementById('unreadLabel');
-  if(oldLabel) oldLabel.remove();
+  const oldBadge=document.getElementById('unreadBadge');if(oldBadge) oldBadge.remove();
+  const oldLabel=document.getElementById('unreadLabel');if(oldLabel) oldLabel.remove();
   
   if(count>0 && isAdmin()){
     const badge=document.createElement('span');
     badge.id='unreadBadge';
     badge.style.cssText='position:absolute;top:-8px;right:-8px;background:var(--error);color:white;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:bold;z-index:2001;box-shadow:0 2px 8px rgba(239,68,68,0.5);';
     badge.textContent=count>99?'99+':count;
-    btn.style.position='relative';
-    btn.appendChild(badge);
+    btn.style.position='relative';btn.appendChild(badge);
     
     const label=document.createElement('div');
     label.id='unreadLabel';
-    label.style.cssText='position:fixed;bottom:85px;right:20px;background:var(--card-bg);border:1px solid var(--error);color:var(--error);padding:0.5rem 1rem;border-radius:20px;font-size:0.8rem;font-weight:600;z-index:2001;animation:fadeInUp 0.3s ease;box-shadow:0 5px 20px rgba(239,68,68,0.3);';
+    label.style.cssText='position:fixed;bottom:85px;right:20px;background:var(--card-bg);border:1px solid var(--error);color:var(--error);padding:0.5rem 1rem;border-radius:20px;font-size:0.8rem;font-weight:600;z-index:2001;box-shadow:0 5px 20px rgba(239,68,68,0.3);';
     label.innerHTML=`🔴 Есть непрочитанные тикеты (${count})`;
     document.body.appendChild(label);
-    
-    setTimeout(()=>{
-      if(label.parentNode) label.style.opacity='0';
-      setTimeout(()=>{if(label.parentNode) label.remove();},300);
-    },5000);
+    setTimeout(()=>{if(label.parentNode) label.remove();},5000);
   }
 }
 
@@ -554,12 +556,14 @@ async function updateUI(){
     }else{al.style.display='none';am.style.display='none';gl.style.display='none';gm.style.display='none';ab.style.display='none';}
     await updateProfileUI();
     initGlobalSoundListener();
+    initTransferListener();
   }else{
     ad.style.display='block';gd.style.display='none';pn.style.display='block';pl.style.display='none';
     al.style.display='none';am.style.display='none';gl.style.display='none';gm.style.display='none';
     if(unreadTicketsListener){database.ref('tickets').off('value',unreadTicketsListener);unreadTicketsListener=null;}
     if(globalSoundListener){database.ref('tickets').off('child_changed',globalSoundListener);globalSoundListener=null;}
     if(globalSoundListener2){database.ref('tickets').off('child_added',globalSoundListener2);globalSoundListener2=null;}
+    if(ticketTransferListener){database.ref('ticket_transfers').off('value',ticketTransferListener);ticketTransferListener=null;}
   }
   updateHeroButton();updateLauncherButton();updateChatButton();
 }
@@ -590,6 +594,141 @@ async function updateProfileUI(){
 
 function updateLauncherButton(){const b=document.getElementById('launcherMainBtn'),s=document.getElementById('launcherStatus');const a=hasActiveLicense();if(b){b.style.opacity=a?'1':'0.4';b.style.pointerEvents=a?'auto':'none';if(s)s.textContent=a?'✅ Доступно':'❌ Требуется лицензия';}}
 function updateChatButton(){const btn=document.getElementById('supportChatBtn');if(!currentUser){btn.style.display='none';return;}btn.style.display='flex';btn.style.position='relative';if(isAdmin()){btn.title='Тикеты';btn.innerHTML='<svg class="icon" viewBox="0 0 24 24" style="width:28px;height:28px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>';}else{btn.title='Поддержка';btn.innerHTML='<svg class="icon" viewBox="0 0 24 24" style="width:28px;height:28px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';}}
+
+// ============ ПЕРЕДАЧА ТИКЕТОВ ============
+function initTransferListener(){
+  if(ticketTransferListener) database.ref('ticket_transfers').off('value',ticketTransferListener);
+  if(!isAdmin()||!currentUser) return;
+  
+  ticketTransferListener=database.ref('ticket_transfers').on('child_added',async(snap)=>{
+    const transfer=snap.val();
+    if(!transfer || transfer.status!=='pending') return;
+    if(transfer.to!==currentUser.username) return;
+    
+    // Показываем модалку с подтверждением
+    const accept=confirm(`📨 Администратор ${transfer.from} хочет передать вам тикет:\n"${transfer.ticket_subject||'Без темы'}"\nот пользователя ${transfer.ticket_username}\n\nПринять тикет?`);
+    
+    if(accept){
+      // Принимаем тикет
+      await database.ref('tickets/'+transfer.ticket_id+'/assigned_to').set(currentUser.username);
+      await database.ref('ticket_transfers/'+snap.key).update({status:'accepted',accepted_at:Date.now()});
+      
+      // Отправляем системное сообщение в чат
+      await database.ref('tickets/'+transfer.ticket_id+'/messages').push({
+        sender:'system',
+        text:`🔄 Администратор ${currentUser.username} принял тикет.`,
+        timestamp:Date.now()
+      });
+      
+      showToast('Тикет принят','success');
+      
+      // Если чат открыт — обновляем
+      if(currentTicketId===transfer.ticket_id && document.getElementById('chatWindow').classList.contains('open')){
+        document.getElementById('adminTicketControls').style.display='flex';
+        document.getElementById('chatInputArea').style.display='flex';
+      }
+    }else{
+      // Отклоняем
+      await database.ref('ticket_transfers/'+snap.key).update({status:'declined',declined_at:Date.now()});
+      showToast('Тикет отклонён','info');
+    }
+    
+    // Удаляем старые трансферы через 30 секунд
+    setTimeout(async()=>{await database.ref('ticket_transfers/'+snap.key).remove();},30000);
+  });
+}
+
+async function transferTicket(){
+  if(!isAdmin()||!currentTicketId) return;
+  
+  const ticketSnap=await database.ref('tickets/'+currentTicketId).once('value');
+  const ticket=ticketSnap.val();
+  if(!ticket||ticket.status!=='open'){showToast('Тикет недоступен','error');return;}
+  
+  // Получаем список админов
+  const usersSnap=await database.ref('users').once('value');
+  const users=usersSnap.val();
+  const admins=Object.entries(users).filter(([,u])=>u.is_admin||u.admin_level>0).filter(([name])=>name!==currentUser.username);
+  
+  if(admins.length===0){showToast('Нет других администраторов','error');return;}
+  
+  // Создаём список для выбора
+  let list='Выберите администратора:\n\n';
+  admins.forEach(([name,u],i)=>{list+=`${i+1}. ${name} (Ур. ${u.admin_level||1})\n`;});
+  
+  const choice=prompt(list,'1');
+  if(!choice) return;
+  
+  const index=parseInt(choice)-1;
+  if(isNaN(index)||index<0||index>=admins.length){showToast('Неверный выбор','error');return;}
+  
+  const targetAdmin=admins[index][0];
+  
+  if(!confirm(`Передать тикет администратору ${targetAdmin}?`)) return;
+  
+  // Отправляем системное сообщение
+  await database.ref('tickets/'+currentTicketId+'/messages').push({
+    sender:'system',
+    text:`🔄 Администратор ${currentUser.username} передаёт тикет администратору ${targetAdmin}. Ожидайте его прихода.`,
+    timestamp:Date.now()
+  });
+  
+  // Блокируем чат для текущего админа
+  document.getElementById('chatInputArea').style.display='none';
+  document.getElementById('adminTicketControls').style.display='none';
+  
+  // Создаём запрос на передачу
+  await database.ref('ticket_transfers').push({
+    from:currentUser.username,
+    to:targetAdmin,
+    ticket_id:currentTicketId,
+    ticket_subject:ticket.subject||'Без темы',
+    ticket_username:ticket.username,
+    status:'pending',
+    created_at:Date.now()
+  });
+  
+  showToast(`Тикет передан администратору ${targetAdmin}`,'info');
+}
+
+// ============ ШАБЛОННЫЕ ОТВЕТЫ ============
+function openTemplatesPanel(){
+  const panel=document.getElementById('templatesPanel');
+  if(!panel){
+    // Создаём панель если её нет
+    const div=document.createElement('div');
+    div.id='templatesPanel';
+    div.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:420px;max-width:90vw;max-height:80vh;background:var(--card-bg);border:2px solid var(--primary);border-radius:20px;z-index:2500;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,0.8);';
+    div.innerHTML=`
+      <div style="padding:1rem;background:rgba(99,102,241,0.2);border-bottom:1px solid var(--primary);display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:600;color:var(--accent);">📋 Шаблонные ответы</span>
+        <button onclick="document.getElementById('templatesPanel').remove()" style="background:transparent;border:none;color:var(--text-muted);cursor:pointer;font-size:1.2rem;">✖</button>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:0.5rem;" id="templatesList"></div>
+    `;
+    document.body.appendChild(div);
+    
+    const list=document.getElementById('templatesList');
+    templateResponses.forEach((t,i)=>{
+      const item=document.createElement('div');
+      item.style.cssText='padding:0.8rem;margin:0.3rem 0;background:rgba(255,255,255,0.03);border-radius:12px;cursor:pointer;transition:var(--transition);border-left:3px solid var(--primary);';
+      item.innerHTML=`<div style="font-weight:600;color:var(--accent);margin-bottom:0.3rem;">${t.title}</div><div style="color:var(--text-muted);font-size:0.8rem;white-space:pre-line;">${t.text}</div>`;
+      item.addEventListener('click',()=>{
+        if(currentTicketId){
+          database.ref('tickets/'+currentTicketId+'/messages').push({sender:'support',text:t.text,timestamp:Date.now()});
+          database.ref('tickets/'+currentTicketId+'/last_message_time').set(Date.now());
+          document.getElementById('templatesPanel').remove();
+          showToast('Ответ отправлен','success');
+        }else{
+          showToast('Сначала откройте тикет','error');
+        }
+      });
+      list.appendChild(item);
+    });
+  }else{
+    panel.remove();
+  }
+}
 
 // ============ МОДАЛКИ ============
 function openAuthModal(){document.getElementById('authModal').classList.add('active');renderCaptcha();}
@@ -688,7 +827,6 @@ async function loadAdminPanel(){
   }
   
   html+=`<div class="admin-panel-card"><h3>🔍 Пользователи</h3><div class="search-filter"><input type="text" id="adminSearchUsername" placeholder="Ник..."><select id="adminFilterStatus"><option value="all">Все</option><option value="active">Активные</option><option value="expired">Истекшие</option><option value="none">Без лицензии</option></select></div><div id="adminUsersList"></div></div>`;
-  
   html+=`<div class="admin-panel-card"><h3>🔇 Замученные пользователи</h3><div id="mutedList"></div></div>`;
   
   content.innerHTML=html;
@@ -767,7 +905,7 @@ window.editLic=async(u)=>{
   const s=await database.ref('licenses/'+user.license_id).once('value');
   const l=s.val();
   if(!l){alert('Лицензия не найдена');return;}
-  const action=prompt(`Лицензия: ${l.code}\nТип: ${l.type}\nИстекает: ${l.expires_at?new Date(l.expires_at).toLocaleString():'нет'}\n\nВыберите действие:\n- Введите число дней (продлить/укоротить)\n- Напишите "deactivate" для деактивации`);
+  const action=prompt(`Лицензия: ${l.code}\nТип: ${l.type}\nИстекает: ${l.expires_at?new Date(l.expires_at).toLocaleString():'нет'}\n\nВведите число дней или "deactivate"`);
   if(!action)return;
   if(action.toLowerCase()==='deactivate'){
     if(!confirm('Деактивировать лицензию?'))return;
@@ -780,7 +918,7 @@ window.editLic=async(u)=>{
     const exp=new Date(l.expires_at||new Date());
     exp.setDate(exp.getDate()+days);
     await updateLicense(user.license_id,{expires_at:exp.toISOString()});
-    alert(`✅ Лицензия изменена на ${days} дней. Истекает: ${exp.toLocaleString()}`);
+    alert(`✅ Изменено на ${days} дней. Истекает: ${exp.toLocaleString()}`);
   }
   loadAdminPanel();
 };
@@ -793,33 +931,20 @@ function loadGuide(){
   document.getElementById('guideContent').innerHTML=`
     <h3 style="color:var(--accent);margin-bottom:1rem;">📋 Руководство по мутам</h3>
     <table class="guide-table">
-      <tr><th>Нарушение</th><th>Длительность</th><th>Пояснение</th></tr>
-      <tr><td>Спам/флуд в тикетах</td><td>30 минут</td><td>Повторяющиеся бессмысленные сообщения</td></tr>
-      <tr><td>Оскорбления/токсичность</td><td>1 час</td><td>Неуважительное общение</td></tr>
-      <tr><td>Создание ложных тикетов</td><td>6 часов</td><td>Тикеты не по теме, введение в заблуждение</td></tr>
-      <tr><td>Повторное нарушение после мута</td><td>24 часа</td><td>Рецидив после первого мута</td></tr>
-      <tr><td>Попытка взлома/мошенничество</td><td>7 дней</td><td>Серьёзное нарушение</td></tr>
-      <tr><td>Многократные нарушения</td><td>30 дней</td><td>Систематические нарушения</td></tr>
+      <tr><th>Нарушение</th><th>Длительность</th></tr>
+      <tr><td>Спам/флуд</td><td>30 минут</td></tr>
+      <tr><td>Оскорбления</td><td>1 час</td></tr>
+      <tr><td>Ложные тикеты</td><td>6 часов</td></tr>
+      <tr><td>Повторное нарушение</td><td>24 часа</td></tr>
+      <tr><td>Мошенничество</td><td>7 дней</td></tr>
     </table>
-    
-    <h3 style="color:var(--accent);margin:1.5rem 0 0.5rem;">🔑 Руководство по лицензиям</h3>
-    <table class="guide-table">
-      <tr><th>Действие</th><th>Как выполнить</th><th>Кто может</th></tr>
-      <tr><td>Просмотр ключа</td><td>Кнопка 🔍 в списке пользователей</td><td>Уровень 3+</td></tr>
-      <tr><td>Продлить лицензию</td><td>Кнопка ➕ → ввести кол-во дней (например 7)</td><td>Уровень 3+</td></tr>
-      <tr><td>Укоротить лицензию</td><td>Кнопка ➕ → ввести отрицательное число (например -3)</td><td>Уровень 3+</td></tr>
-      <tr><td>Деактивировать лицензию</td><td>Кнопка ➕ → написать "deactivate"</td><td>Уровень 3+</td></tr>
-      <tr><td>Удалить лицензию</td><td>Кнопка 🗑️ в списке пользователей</td><td>Уровень 3+</td></tr>
-      <tr><td>Создать новый ключ</td><td>Форма "Создать ключ" в админ-панели</td><td>Уровень 3+</td></tr>
-    </table>
-    
-    <h3 style="color:var(--accent);margin:1.5rem 0 0.5rem;">👥 Уровни администраторов</h3>
+    <h3 style="color:var(--accent);margin:1.5rem 0 0.5rem;">👥 Уровни админов</h3>
     <table class="guide-table">
       <tr><th>Уровень</th><th>Права</th></tr>
-      <tr><td>Уровень 1</td><td>Доступ к чату поддержки, просмотр и ответы на тикеты, мут пользователей</td></tr>
-      <tr><td>Уровень 2</td><td>Всё из уровня 1 + просмотр списка пользователей</td></tr>
-      <tr><td>Уровень 3</td><td>Всё из уровня 2 + управление лицензиями (создание, продление, удаление)</td></tr>
-      <tr><td>Owner (Nevora)</td><td>Абсолютный доступ: управление админами, все лицензии, все настройки</td></tr>
+      <tr><td>1</td><td>Чат, мут</td></tr>
+      <tr><td>2</td><td>+ Просмотр пользователей</td></tr>
+      <tr><td>3</td><td>+ Лицензии</td></tr>
+      <tr><td>Owner</td><td>Всё</td></tr>
     </table>
   `;
 }
@@ -887,11 +1012,8 @@ function toggleChat(){
   const w=document.getElementById('chatWindow');
   if(w.classList.contains('open')){closeChatWindow();return;}
   if(!currentUser){showToast('Войдите для чата','error');return;}
-  if(!isAdmin()&&isMuted()){const d=new Date(currentUser.muted_until);showToast(`🔇 Вы замучены до ${d.toLocaleString()}`,'error');return;}
-  
-  const label=document.getElementById('unreadLabel');
-  if(label) label.remove();
-  
+  if(!isAdmin()&&isMuted()){showToast(`🔇 Вы замучены`,'error');return;}
+  const label=document.getElementById('unreadLabel');if(label) label.remove();
   resetChatPosition();w.classList.remove('closing');w.classList.add('open');
   if(isAdmin()){openTicketsList();}else{initUserChat();}
 }
@@ -903,12 +1025,12 @@ async function openTicketsList(){
   const snap=await database.ref('tickets').orderByChild('status').equalTo('open').once('value');
   const tickets=snap.val();
   if(!tickets){body.innerHTML='<p style="color:var(--text-muted);text-align:center;">Нет открытых тикетов</p>';return;}
-  body.innerHTML=Object.entries(tickets).sort((a,b)=>new Date(b[1].created_at)-new Date(a[1].created_at)).map(([id,t])=>{
-    const lastViewedKey=`ticket_viewed_${id}`;
-    const lastViewed=parseInt(localStorage.getItem(lastViewedKey)||'0');
+  body.innerHTML=Object.entries(tickets).filter(([,t])=>!t.assigned_to||t.assigned_to===currentUser.username).sort((a,b)=>new Date(b[1].created_at)-new Date(a[1].created_at)).map(([id,t])=>{
+    const lastViewed=parseInt(localStorage.getItem(`ticket_viewed_${id}`)||'0');
     const isUnread=t.last_message_time?t.last_message_time>lastViewed:true;
-    const unreadDot=isUnread?'<span style="display:inline-block;width:8px;height:8px;background:var(--error);border-radius:50%;margin-right:0.5rem;"></span>':'';
-    return `<div class="ticket-item" onclick="openTicketAsAdmin('${id}')"><div>${unreadDot}<span class="ticket-subject">${escapeHtml(t.subject||'Без темы')}</span><div class="ticket-user">${escapeHtml(t.username)} • ${new Date(t.created_at).toLocaleString()}</div></div><span style="color:var(--accent);">→</span></div>`;
+    const dot=isUnread?'<span style="display:inline-block;width:8px;height:8px;background:var(--error);border-radius:50%;margin-right:0.5rem;"></span>':'';
+    const assigned=t.assigned_to?` (👤 ${t.assigned_to})`:'';
+    return `<div class="ticket-item" onclick="openTicketAsAdmin('${id}')"><div>${dot}<span class="ticket-subject">${escapeHtml(t.subject||'Без темы')}${assigned}</span><div class="ticket-user">${escapeHtml(t.username)} • ${new Date(t.created_at).toLocaleString()}</div></div></div>`;
   }).join('');
 }
 function closeTicketsList(){document.getElementById('ticketsListPanel').classList.remove('open');}
@@ -917,10 +1039,17 @@ async function openTicketAsAdmin(ticketId){
   closeTicketsList();
   const snap=await database.ref('tickets/'+ticketId).once('value');
   const ticket=snap.val();
-  if(!ticket||ticket.status!=='open'){showToast('Тикет уже закрыт','error');openTicketsList();return;}
+  if(!ticket||ticket.status!=='open'){showToast('Тикет закрыт','error');return;}
+  if(ticket.assigned_to&&ticket.assigned_to!==currentUser.username){
+    showToast(`Тикет назначен на ${ticket.assigned_to}`,'error');return;
+  }
+  
+  // Назначаем тикет на текущего админа
+  if(!ticket.assigned_to){
+    await database.ref('tickets/'+ticketId+'/assigned_to').set(currentUser.username);
+  }
   
   markTicketAsViewed(ticketId);
-  
   currentTicketId=ticketId;
   const w=document.getElementById('chatWindow');
   if(!w.classList.contains('open')){w.classList.remove('closing');w.classList.add('open');resetChatPosition();}
@@ -929,6 +1058,13 @@ async function openTicketAsAdmin(ticketId){
   document.getElementById('chatInputArea').style.display='flex';
   document.getElementById('adminTicketControls').style.display='flex';
   document.getElementById('adminTicketControls').dataset.ticketUsername=ticket.username;
+  document.getElementById('adminTicketControls').innerHTML=`
+    <button class="admin-btn" onclick="openTemplatesPanel()" style="border-color:var(--accent);color:var(--accent);">📋 Шаблоны</button>
+    <button class="admin-btn" onclick="openMuteModal()" style="border-color:var(--warning);color:var(--warning);">🔇 Мут</button>
+    <button class="admin-btn" onclick="transferTicket()" style="border-color:var(--accent);color:var(--accent);">🔄 Передать</button>
+    <button class="admin-btn" onclick="closeTicket()" style="border-color:var(--error);color:var(--error);">🔒 Закрыть</button>
+  `;
+  
   const msgs=document.getElementById('chatMessages');msgs.innerHTML='';
   if(ticket.subject||ticket.initial_message){
     msgs.innerHTML+=`<div class="chat-message system"><div>📌 Тема: ${escapeHtml(ticket.subject||'Не указана')}<br>📝 Обращение: ${escapeHtml(ticket.initial_message||'Нет')}</div><div class="msg-meta">${ticket.username} • ${new Date(ticket.created_at).toLocaleString()}</div></div>`;
@@ -938,23 +1074,130 @@ async function openTicketAsAdmin(ticketId){
     const data=snap.val();
     msgs.querySelectorAll('.chat-message:not(.system):not(.closed)').forEach(el=>el.remove());
     if(data){
-      let hasNew=false;
       Object.values(data).sort((a,b)=>a.timestamp-b.timestamp).forEach(m=>{
         const div=document.createElement('div');
-        div.className=`chat-message ${m.sender==='user'?'user':'support'}`;
-        div.innerHTML=`<div>${escapeHtml(m.text)}</div><div class="msg-meta">${m.sender==='user'?ticket.username:'Вы'} • ${new Date(m.timestamp).toLocaleTimeString()}</div>`;
+        if(m.sender==='system'){
+          div.className='chat-message system';
+          div.innerHTML=`<div>${escapeHtml(m.text)}</div><div class="msg-meta">Система • ${new Date(m.timestamp).toLocaleTimeString()}</div>`;
+        }else{
+          div.className=`chat-message ${m.sender==='user'?'user':'support'}`;
+          div.innerHTML=`<div>${escapeHtml(m.text)}</div><div class="msg-meta">${m.sender==='user'?ticket.username:'Администратор'} • ${new Date(m.timestamp).toLocaleTimeString()}</div>`;
+        }
         msgs.appendChild(div);
-        if(m.sender==='user')hasNew=true;
       });
-      const lastMsg=Object.values(data).sort((a,b)=>b.timestamp-a.timestamp)[0];
-      if(lastMsg) database.ref('tickets/'+currentTicketId+'/last_message_time').set(lastMsg.timestamp);
-      if(hasNew)playNotificationSound();
     }
     msgs.scrollTop=msgs.scrollHeight;
   });
+}
+
+async function closeTicket(){
+  if(!isAdmin()||!currentTicketId)return;
+  if(!confirm('Закрыть тикет?'))return;
+  await database.ref('tickets/'+currentTicketId).remove();
+  const msgs=document.getElementById('chatMessages');
+  msgs.innerHTML+=`<div class="chat-message closed"><div>🔒 Тикет закрыт и удалён. Окно закроется через 10 секунд...</div></div>`;
+  msgs.scrollTop=msgs.scrollHeight;
+  document.getElementById('adminTicketControls').style.display='none';
+  document.getElementById('chatInputArea').style.display='none';
+  cleanupChatListeners();
+  setTimeout(()=>{
+    if(document.getElementById('chatWindow').classList.contains('open')) animateAndCloseChat();
+    currentTicketId=null;
+  },10000);
+  showToast('Тикет закрыт и удалён','info');
+}
+
+async function initUserChat(){
+  if(!currentUser||isAdmin())return;
+  const fresh=await getUser(currentUser.username);
+  if(fresh){currentUser=fresh;}
+  if(isMuted()){showToast('🔇 Вы замучены','error');closeChatWindow();return;}
   
-  const badge=document.getElementById('unreadBadge');
-  if(badge) badge.remove();
+  document.getElementById('adminTicketControls').style.display='none';
+  const snap=await database.ref('tickets').orderByChild('username').equalTo(currentUser.username).once('value');
+  let existingTicket=null;
+  snap.forEach(child=>{if(child.val().status==='open')existingTicket={id:child.key,...child.val()};});
+  
+  if(existingTicket){
+    currentTicketId=existingTicket.id;
+    document.getElementById('chatHeaderTitle').textContent='💬 Поддержка';
+    document.getElementById('ticketCreateForm').style.display='none';
+    document.getElementById('chatInputArea').style.display='flex';
+    const msgs=document.getElementById('chatMessages');msgs.innerHTML='';
+    if(existingTicket.subject||existingTicket.initial_message){
+      msgs.innerHTML+=`<div class="chat-message system"><div>📌 Тема: ${escapeHtml(existingTicket.subject||'Не указана')}<br>📝 Ваше обращение: ${escapeHtml(existingTicket.initial_message||'Нет')}</div><div class="msg-meta">Вы</div></div>`;
+    }
+    cleanupChatListeners();
+    chatListener=database.ref('tickets/'+currentTicketId+'/messages').on('value',snap=>{
+      const data=snap.val();
+      msgs.querySelectorAll('.chat-message:not(.system):not(.closed)').forEach(el=>el.remove());
+      if(data){
+        Object.values(data).sort((a,b)=>a.timestamp-b.timestamp).forEach(m=>{
+          const div=document.createElement('div');
+          if(m.sender==='system'){
+            div.className='chat-message system';
+            div.innerHTML=`<div>${escapeHtml(m.text)}</div><div class="msg-meta">Система</div>`;
+          }else{
+            div.className=`chat-message ${m.sender==='user'?'user':'support'}`;
+            div.innerHTML=`<div>${escapeHtml(m.text)}</div><div class="msg-meta">${m.sender==='user'?'Вы':'Администратор'}</div>`;
+          }
+          msgs.appendChild(div);
+        });
+      }
+      msgs.scrollTop=msgs.scrollHeight;
+    });
+  }else{
+    document.getElementById('chatHeaderTitle').textContent='📝 Новый тикет';
+    document.getElementById('chatMessages').innerHTML='<div class="chat-message system"><div>Создайте тикет.</div></div>';
+    document.getElementById('ticketCreateForm').style.display='flex';
+    document.getElementById('chatInputArea').style.display='none';
+    currentTicketId=null;
+  }
+}
+
+async function createTicket(){
+  if(!currentUser||isAdmin())return;
+  if(isMuted()){showToast('🔇 Вы замучены','error');return;}
+  const subject=document.getElementById('ticketSubject').value.trim();
+  const message=document.getElementById('ticketMessage').value.trim();
+  if(!subject||!message){showToast('Заполните поля','error');return;}
+  const ref=database.ref('tickets').push();
+  await ref.set({username:currentUser.username,status:'open',created_at:new Date().toISOString(),subject,initial_message:message,last_message_time:Date.now()});
+  currentTicketId=ref.key;
+  document.getElementById('ticketCreateForm').style.display='none';
+  document.getElementById('chatInputArea').style.display='flex';
+  document.getElementById('chatHeaderTitle').textContent='💬 Поддержка';
+  const msgs=document.getElementById('chatMessages');
+  msgs.innerHTML=`<div class="chat-message system"><div>📌 ${escapeHtml(subject)}<br>📝 ${escapeHtml(message)}</div></div>`;
+  cleanupChatListeners();
+  chatListener=database.ref('tickets/'+currentTicketId+'/messages').on('value',snap=>{
+    const data=snap.val();
+    msgs.querySelectorAll('.chat-message:not(.system):not(.closed)').forEach(el=>el.remove());
+    if(data) Object.values(data).sort((a,b)=>a.timestamp-b.timestamp).forEach(m=>{
+      const div=document.createElement('div');
+      if(m.sender==='system'){div.className='chat-message system';div.innerHTML=`<div>${escapeHtml(m.text)}</div>`;}
+      else{div.className=`chat-message ${m.sender==='user'?'user':'support'}`;div.innerHTML=`<div>${escapeHtml(m.text)}</div><div class="msg-meta">${m.sender==='user'?'Вы':'Администратор'}</div>`;}
+      msgs.appendChild(div);
+    });
+    msgs.scrollTop=msgs.scrollHeight;
+  });
+  showToast('Тикет создан','success');
+}
+
+function sendChatMessage(){
+  if(!currentTicketId)return;
+  database.ref('tickets/'+currentTicketId).once('value').then(snap=>{
+    const ticket=snap.val();
+    if(!ticket||ticket.status!=='open'){showToast('Тикет закрыт','error');return;}
+    if(isAdmin()&&ticket.assigned_to&&ticket.assigned_to!==currentUser.username){showToast('Тикет не ваш','error');return;}
+    const input=document.getElementById('chatMessageInput');
+    const text=input.value.trim();
+    if(!text)return;
+    if(!isAdmin()){const now=Date.now();if(now-lastMessageTime<30000){showToast('Раз в 30 секунд','error');return;}lastMessageTime=now;}
+    database.ref('tickets/'+currentTicketId+'/messages').push({sender:isAdmin()?'support':'user',text,timestamp:Date.now()});
+    database.ref('tickets/'+currentTicketId+'/last_message_time').set(Date.now());
+    input.value='';
+  });
 }
 
 function openMuteModal(){
@@ -967,204 +1210,10 @@ function openMuteModal(){
 async function applyMute(){
   const username=document.getElementById('muteUsernameInput').value;
   const minutes=parseInt(document.getElementById('muteDuration').value);
-  const until=Date.now()+minutes*60000;
-  await updateUser(username,{muted_until:until});
-  await database.ref('mutes').push({username,muted_by:currentUser.username,duration_minutes:minutes,created_at:Date.now(),expires_at:until});
+  await updateUser(username,{muted_until:Date.now()+minutes*60000});
+  await database.ref('mutes').push({username,muted_by:currentUser.username,duration_minutes:minutes,created_at:Date.now()});
   showToast(`${username} замучен на ${minutes} мин.`,'success');
   closeModal('muteModal');
-}
-
-async function initUserChat(){
-  if(!currentUser||isAdmin())return;
-  const fresh=await getUser(currentUser.username);
-  if(fresh){currentUser=fresh;}
-  if(isMuted()){showToast('🔇 Вы замучены','error');closeChatWindow();return;}
-  
-  document.getElementById('adminTicketControls').style.display='none';
-  
-  const snap=await database.ref('tickets').orderByChild('username').equalTo(currentUser.username).once('value');
-  let existingTicket=null;
-  snap.forEach(child=>{if(child.val().status==='open')existingTicket={id:child.key,...child.val()};});
-  
-  if(existingTicket){
-    currentTicketId=existingTicket.id;
-    document.getElementById('chatHeaderTitle').textContent='💬 Поддержка';
-    document.getElementById('ticketCreateForm').style.display='none';
-    document.getElementById('chatInputArea').style.display='flex';
-    const msgs=document.getElementById('chatMessages');msgs.innerHTML='';
-    if(existingTicket.subject||existingTicket.initial_message){
-      msgs.innerHTML+=`<div class="chat-message system"><div>📌 Тема: ${escapeHtml(existingTicket.subject||'Не указана')}<br>📝 Ваше обращение: ${escapeHtml(existingTicket.initial_message||'Нет')}</div><div class="msg-meta">Вы • ${new Date(existingTicket.created_at).toLocaleString()}</div></div>`;
-    }
-    cleanupChatListeners();
-    chatListener=database.ref('tickets/'+currentTicketId+'/messages').on('value',snap=>{
-      const data=snap.val();
-      msgs.querySelectorAll('.chat-message:not(.system):not(.closed)').forEach(el=>el.remove());
-      if(data){
-        let hasNew=false;
-        Object.values(data).sort((a,b)=>a.timestamp-b.timestamp).forEach(m=>{
-          const div=document.createElement('div');
-          div.className=`chat-message ${m.sender==='user'?'user':'support'}`;
-          div.innerHTML=`<div>${escapeHtml(m.text)}</div><div class="msg-meta">${m.sender==='user'?'Вы':'Администратор'} • ${new Date(m.timestamp).toLocaleTimeString()}</div>`;
-          msgs.appendChild(div);
-          if(m.sender==='support')hasNew=true;
-        });
-        if(hasNew)playNotificationSound();
-      }
-      msgs.scrollTop=msgs.scrollHeight;
-    });
-    ticketClosureListener=database.ref('tickets/'+currentTicketId+'/closure').on('value',snap=>{
-      if(snap.val()){
-        const msg=snap.val().message||'Тикет был закрыт администратором.';
-        msgs.innerHTML+=`<div class="chat-message closed"><div>🔒 ${escapeHtml(msg)}</div></div>`;
-        document.getElementById('chatInputArea').style.display='none';
-        msgs.scrollTop=msgs.scrollHeight;
-        if(activeClosureTimeout)clearTimeout(activeClosureTimeout);
-        activeClosureTimeout=setTimeout(()=>{
-          animateAndCloseChat();
-          activeClosureTimeout=null;
-        },30000);
-      }
-    });
-    database.ref('tickets/'+currentTicketId).on('value',snap=>{
-      if(!snap.val()){
-        const msgs=document.getElementById('chatMessages');
-        msgs.innerHTML+='<div class="chat-message closed"><div>🔒 Тикет был удалён.</div></div>';
-        document.getElementById('chatInputArea').style.display='none';
-        msgs.scrollTop=msgs.scrollHeight;
-        cleanupChatListeners();
-        if(activeClosureTimeout)clearTimeout(activeClosureTimeout);
-        activeClosureTimeout=setTimeout(()=>{
-          animateAndCloseChat();
-          activeClosureTimeout=null;
-        },5000);
-      }
-    });
-  }else{
-    document.getElementById('chatHeaderTitle').textContent='📝 Новый тикет';
-    document.getElementById('chatMessages').innerHTML='<div class="chat-message system"><div>Создайте тикет, чтобы связаться с поддержкой.</div></div>';
-    document.getElementById('ticketCreateForm').style.display='flex';
-    document.getElementById('chatInputArea').style.display='none';
-    document.getElementById('ticketSubject').value='';
-    document.getElementById('ticketMessage').value='';
-    currentTicketId=null;
-  }
-}
-
-async function createTicket(){
-  if(!currentUser||isAdmin())return;
-  if(isMuted()){showToast('🔇 Вы замучены и не можете создавать тикеты','error');return;}
-  const subject=document.getElementById('ticketSubject').value.trim();
-  const message=document.getElementById('ticketMessage').value.trim();
-  if(!subject){showToast('Укажите тему','error');return;}
-  if(!message){showToast('Опишите проблему','error');return;}
-  
-  const ref=database.ref('tickets').push();
-  const ticket={username:currentUser.username,status:'open',created_at:new Date().toISOString(),subject:subject,initial_message:message,last_message_time:Date.now()};
-  await ref.set(ticket);
-  currentTicketId=ref.key;
-  
-  document.getElementById('ticketCreateForm').style.display='none';
-  document.getElementById('chatInputArea').style.display='flex';
-  document.getElementById('chatHeaderTitle').textContent='💬 Поддержка';
-  const msgs=document.getElementById('chatMessages');
-  msgs.innerHTML=`<div class="chat-message system"><div>📌 Тема: ${escapeHtml(subject)}<br>📝 Ваше обращение: ${escapeHtml(message)}</div><div class="msg-meta">Вы • ${new Date().toLocaleString()}</div></div>`;
-  
-  cleanupChatListeners();
-  chatListener=database.ref('tickets/'+currentTicketId+'/messages').on('value',snap=>{
-    const data=snap.val();
-    msgs.querySelectorAll('.chat-message:not(.system):not(.closed)').forEach(el=>el.remove());
-    if(data){
-      let hasNew=false;
-      Object.values(data).sort((a,b)=>a.timestamp-b.timestamp).forEach(m=>{
-        const div=document.createElement('div');
-        div.className=`chat-message ${m.sender==='user'?'user':'support'}`;
-        div.innerHTML=`<div>${escapeHtml(m.text)}</div><div class="msg-meta">${m.sender==='user'?'Вы':'Администратор'}</div>`;
-        msgs.appendChild(div);
-        if(m.sender==='support')hasNew=true;
-      });
-      if(hasNew)playNotificationSound();
-    }
-    msgs.scrollTop=msgs.scrollHeight;
-  });
-  ticketClosureListener=database.ref('tickets/'+currentTicketId+'/closure').on('value',snap=>{
-    if(snap.val()){
-      msgs.innerHTML+=`<div class="chat-message closed"><div>🔒 ${escapeHtml(snap.val().message||'Тикет был закрыт администратором.')}</div></div>`;
-      document.getElementById('chatInputArea').style.display='none';
-      msgs.scrollTop=msgs.scrollHeight;
-      if(activeClosureTimeout)clearTimeout(activeClosureTimeout);
-      activeClosureTimeout=setTimeout(()=>{
-        animateAndCloseChat();
-        activeClosureTimeout=null;
-      },30000);
-    }
-  });
-  database.ref('tickets/'+currentTicketId).on('value',snap=>{
-    if(!snap.val()){
-      msgs.innerHTML+='<div class="chat-message closed"><div>🔒 Тикет был удалён.</div></div>';
-      document.getElementById('chatInputArea').style.display='none';
-      msgs.scrollTop=msgs.scrollHeight;
-      cleanupChatListeners();
-      if(activeClosureTimeout)clearTimeout(activeClosureTimeout);
-      activeClosureTimeout=setTimeout(()=>{
-        animateAndCloseChat();
-        activeClosureTimeout=null;
-      },5000);
-    }
-  });
-  showToast('Тикет создан','success');
-}
-
-function sendChatMessage(){
-  if(!currentTicketId){showToast('Тикет не найден','error');return;}
-  database.ref('tickets/'+currentTicketId).once('value').then(snap=>{
-    const ticket=snap.val();
-    if(!ticket||ticket.status!=='open'){
-      showToast('Тикет закрыт или удалён','error');
-      document.getElementById('chatInputArea').style.display='none';
-      document.getElementById('chatMessages').innerHTML+='<div class="chat-message closed"><div>🔒 Этот тикет больше не активен.</div></div>';
-      return;
-    }
-    
-    const input=document.getElementById('chatMessageInput');
-    const text=input.value.trim();
-    if(!text)return;
-    
-    if(!isAdmin()){
-      if(isMuted()){showToast('🔇 Вы замучены','error');return;}
-      const now=Date.now();
-      if(now-lastMessageTime<30000){showToast('Сообщения раз в 30 секунд','error');return;}
-      lastMessageTime=now;
-    }
-    
-    database.ref('tickets/'+currentTicketId+'/messages').push({sender:isAdmin()?'support':'user',text:text,timestamp:Date.now()});
-    database.ref('tickets/'+currentTicketId+'/last_message_time').set(Date.now());
-    input.value='';
-  });
-}
-
-async function closeTicket(){
-  if(!isAdmin()||!currentTicketId)return;
-  if(!confirm('Закрыть тикет?'))return;
-  
-  // Сразу удаляем тикет из базы
-  await database.ref('tickets/'+currentTicketId).remove();
-  
-  const msgs=document.getElementById('chatMessages');
-  msgs.innerHTML+=`<div class="chat-message closed"><div>🔒 Тикет закрыт и удалён. Окно закроется через 10 секунд...</div></div>`;
-  msgs.scrollTop=msgs.scrollHeight;
-  document.getElementById('adminTicketControls').style.display='none';
-  document.getElementById('chatInputArea').style.display='none';
-  cleanupChatListeners();
-  
-  // Ждём 10 секунд, потом закрываем окно
-  setTimeout(()=>{
-    if(document.getElementById('chatWindow').classList.contains('open')){
-      animateAndCloseChat();
-    }
-    currentTicketId=null;
-  },10000);
-  
-  showToast('Тикет закрыт и удалён','info');
 }
 
 // ============ ИНИЦИАЛИЗАЦИЯ ============
@@ -1175,7 +1224,6 @@ window.addEventListener('load',()=>{
 (async()=>{const s=loadSession();if(s){const u=await getUser(s);if(u)currentUser=u;}updateUI();setActiveNavItem('home');setInterval(()=>{if(currentUser)updateProfileUI();},60000);})();
 document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('click',(e)=>{if(e.target===m)m.classList.remove('active');});});
 
-// ============ CANVAS ============
 const canvas=document.getElementById('canvas-bg'),ctx=canvas.getContext('2d');let particles=[],mx=0,my=0;
 function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;particles=[];for(let i=0;i<Math.min(150,Math.floor(window.innerWidth*window.innerHeight/15000));i++)particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,baseX:Math.random()*canvas.width,baseY:Math.random()*canvas.height,size:Math.random()*2.5+1,speed:0.01+Math.random()*0.02,vx:(Math.random()-0.5)*0.5,vy:(Math.random()-0.5)*0.5});}
 function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{let dx=p.baseX-p.x,dy=p.baseY-p.y;p.x+=dx*p.speed+p.vx;p.y+=dy*p.speed+p.vy;let dxx=p.x-mx,dyy=p.y-my,dist=Math.hypot(dxx,dyy);if(dist<100){let force=(100-dist)/100*2,ang=Math.atan2(dyy,dxx);p.x+=Math.cos(ang)*force;p.y+=Math.sin(ang)*force;}ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fillStyle='#6366f1';ctx.fill();});requestAnimationFrame(animate);}
