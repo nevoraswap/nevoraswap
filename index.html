@@ -149,7 +149,26 @@
     .step-content h4 { color: var(--accent); margin-bottom: 0.3rem; }
     .step-content p { color: var(--text-muted); font-size: 0.9rem; }
     
-    .support-chat-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 2000; width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); border: none; color: white; cursor: pointer; box-shadow: 0 8px 25px rgba(99,102,241,0.5); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; }
+    .support-chat-btn { 
+  position: fixed !important; 
+  bottom: 1.5rem !important; 
+  right: 1.5rem !important; 
+  left: auto !important; 
+  top: auto !important; 
+  z-index: 2000; 
+  width: 60px; 
+  height: 60px; 
+  border-radius: 50%; 
+  background: linear-gradient(135deg, var(--primary), var(--accent)); 
+  border: none; 
+  color: white; 
+  cursor: pointer; 
+  box-shadow: 0 8px 25px rgba(99,102,241,0.5); 
+  transition: all 0.3s ease; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+}
     .support-chat-btn:hover { transform: scale(1.1); }
     
     .chat-window { position: fixed; width: 380px; max-width: calc(100vw - 2rem); height: 520px; max-height: 75vh; background: var(--card-bg); border: 2px solid var(--primary); border-radius: 20px; z-index: 2001; display: none; flex-direction: column; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.7); }
@@ -345,7 +364,9 @@ const database=firebase.database();
 let currentUser=null,currentLicense=null,isKeyVisible=false,currentCaptcha='';
 let chatListener=null,currentTicketId=null,lastMessageTime=0,ticketClosureListener=null;
 let activeClosureTimeout=null;
-let unreadTicketsListener=null; // Слушатель непрочитанных тикетов
+let unreadTicketsListener=null;
+let globalSoundListener=null;
+let globalSoundListener2=null;
 
 // ============ ЗВУК УВЕДОМЛЕНИЯ ============
 function playNotificationSound(){
@@ -359,6 +380,44 @@ function playNotificationSound(){
     g.gain.exponentialRampToValueAtTime(0.01,ctx.currentTime+0.3);
     o.start(ctx.currentTime);o.stop(ctx.currentTime+0.3);
   }catch(e){}
+}
+
+// ============ ГЛОБАЛЬНЫЙ СЛУШАТЕЛЬ ЗВУКА ============
+function initGlobalSoundListener(){
+  if(globalSoundListener) database.ref('tickets').off('child_changed',globalSoundListener);
+  if(globalSoundListener2) database.ref('tickets').off('child_added',globalSoundListener2);
+  
+  if(!currentUser) return;
+  
+  if(!isAdmin()){
+    // Пользователь: звук при изменении ЕГО тикета
+    globalSoundListener=database.ref('tickets').orderByChild('username').equalTo(currentUser.username).on('child_changed',snap=>{
+      const ticket=snap.val();
+      const chatOpen=document.getElementById('chatWindow').classList.contains('open');
+      if(ticket && ticket.status==='open' && !chatOpen){
+        playNotificationSound();
+      }
+    });
+  }else{
+    // Админ: звук при изменении любого тикета
+    globalSoundListener=database.ref('tickets').on('child_changed',snap=>{
+      const ticket=snap.val();
+      if(ticket && ticket.status==='open'){
+        const chatOpen=document.getElementById('chatWindow').classList.contains('open');
+        const isViewingThis=currentTicketId===snap.key;
+        if(!chatOpen || !isViewingThis){
+          playNotificationSound();
+        }
+      }
+    });
+    // Админ: звук при создании нового тикета
+    globalSoundListener2=database.ref('tickets').on('child_added',snap=>{
+      const ticket=snap.val();
+      if(ticket && ticket.status==='open'){
+        playNotificationSound();
+      }
+    });
+  }
 }
 
 // ============ УТИЛИТЫ ============
@@ -402,20 +461,15 @@ function initUnreadTicketsWatcher(){
       for(const[id,ticket] of Object.entries(tickets)){
         if(ticket.status!=='open') continue;
         
-        // Проверяем, есть ли вообще сообщения в тикете
         const msgsSnap=await database.ref('tickets/'+id+'/messages').once('value');
         const msgs=msgsSnap.val();
         
         if(!msgs || Object.keys(msgs).length===0){
-          // Тикет без сообщений — незатронутый
           unreadCount++;
         }else{
-          // Проверяем, есть ли непрочитанные сообщения от пользователя
-          // (последнее сообщение от user и админ его ещё не видел)
           const sorted=Object.values(msgs).sort((a,b)=>b.timestamp-a.timestamp);
           const lastMsg=sorted[0];
           
-          // Проверяем localStorage — когда админ последний раз открывал этот тикет
           const lastViewedKey=`ticket_viewed_${id}`;
           const lastViewed=parseInt(localStorage.getItem(lastViewedKey)||'0');
           
@@ -434,11 +488,8 @@ function markTicketAsViewed(ticketId){
   if(!ticketId) return;
   const key=`ticket_viewed_${ticketId}`;
   localStorage.setItem(key,Date.now().toString());
-  // Обновляем счётчик
   if(unreadTicketsListener){
-    database.ref('tickets').once('value').then(snap=>{
-      // Просто обновляем — сработает слушатель
-    });
+    database.ref('tickets').once('value').then(snap=>{});
   }
 }
 
@@ -446,16 +497,13 @@ function updateUnreadBadge(count){
   const btn=document.getElementById('supportChatBtn');
   if(!btn) return;
   
-  // Удаляем старый бейдж
   const oldBadge=document.getElementById('unreadBadge');
   if(oldBadge) oldBadge.remove();
   
-  // Удаляем старую надпись
   const oldLabel=document.getElementById('unreadLabel');
   if(oldLabel) oldLabel.remove();
   
   if(count>0 && isAdmin()){
-    // Создаём бейдж с числом
     const badge=document.createElement('span');
     badge.id='unreadBadge';
     badge.style.cssText='position:absolute;top:-8px;right:-8px;background:var(--error);color:white;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:bold;z-index:2001;box-shadow:0 2px 8px rgba(239,68,68,0.5);';
@@ -463,14 +511,12 @@ function updateUnreadBadge(count){
     btn.style.position='relative';
     btn.appendChild(badge);
     
-    // Создаём всплывающую надпись
     const label=document.createElement('div');
     label.id='unreadLabel';
     label.style.cssText='position:fixed;bottom:85px;right:20px;background:var(--card-bg);border:1px solid var(--error);color:var(--error);padding:0.5rem 1rem;border-radius:20px;font-size:0.8rem;font-weight:600;z-index:2001;animation:fadeInUp 0.3s ease;box-shadow:0 5px 20px rgba(239,68,68,0.3);';
     label.innerHTML=`🔴 Есть непрочитанные тикеты (${count})`;
     document.body.appendChild(label);
     
-    // Авто-скрытие через 5 секунд
     setTimeout(()=>{
       if(label.parentNode) label.style.opacity='0';
       setTimeout(()=>{if(label.parentNode) label.remove();},300);
@@ -504,13 +550,16 @@ async function updateUI(){
       ab.style.display='inline-block';
       if(isOwner()){ab.textContent='OWNER';ab.style.background='var(--warning)';}
       else{ab.textContent='ADMIN';ab.style.background='var(--primary)';}
-      initUnreadTicketsWatcher(); // Запускаем отслеживание
+      initUnreadTicketsWatcher();
     }else{al.style.display='none';am.style.display='none';gl.style.display='none';gm.style.display='none';ab.style.display='none';}
     await updateProfileUI();
+    initGlobalSoundListener();
   }else{
     ad.style.display='block';gd.style.display='none';pn.style.display='block';pl.style.display='none';
     al.style.display='none';am.style.display='none';gl.style.display='none';gm.style.display='none';
     if(unreadTicketsListener){database.ref('tickets').off('value',unreadTicketsListener);unreadTicketsListener=null;}
+    if(globalSoundListener){database.ref('tickets').off('child_changed',globalSoundListener);globalSoundListener=null;}
+    if(globalSoundListener2){database.ref('tickets').off('child_added',globalSoundListener2);globalSoundListener2=null;}
   }
   updateHeroButton();updateLauncherButton();updateChatButton();
 }
@@ -840,7 +889,6 @@ function toggleChat(){
   if(!currentUser){showToast('Войдите для чата','error');return;}
   if(!isAdmin()&&isMuted()){const d=new Date(currentUser.muted_until);showToast(`🔇 Вы замучены до ${d.toLocaleString()}`,'error');return;}
   
-  // Убираем всплывающую надпись при открытии
   const label=document.getElementById('unreadLabel');
   if(label) label.remove();
   
@@ -856,7 +904,6 @@ async function openTicketsList(){
   const tickets=snap.val();
   if(!tickets){body.innerHTML='<p style="color:var(--text-muted);text-align:center;">Нет открытых тикетов</p>';return;}
   body.innerHTML=Object.entries(tickets).sort((a,b)=>new Date(b[1].created_at)-new Date(a[1].created_at)).map(([id,t])=>{
-    // Проверяем непрочитанность
     const lastViewedKey=`ticket_viewed_${id}`;
     const lastViewed=parseInt(localStorage.getItem(lastViewedKey)||'0');
     const isUnread=t.last_message_time?t.last_message_time>lastViewed:true;
@@ -872,7 +919,6 @@ async function openTicketAsAdmin(ticketId){
   const ticket=snap.val();
   if(!ticket||ticket.status!=='open'){showToast('Тикет уже закрыт','error');openTicketsList();return;}
   
-  // Отмечаем как прочитанный
   markTicketAsViewed(ticketId);
   
   currentTicketId=ticketId;
@@ -900,7 +946,6 @@ async function openTicketAsAdmin(ticketId){
         msgs.appendChild(div);
         if(m.sender==='user')hasNew=true;
       });
-      // Обновляем last_message_time в тикете
       const lastMsg=Object.values(data).sort((a,b)=>b.timestamp-a.timestamp)[0];
       if(lastMsg) database.ref('tickets/'+currentTicketId+'/last_message_time').set(lastMsg.timestamp);
       if(hasNew)playNotificationSound();
@@ -908,7 +953,6 @@ async function openTicketAsAdmin(ticketId){
     msgs.scrollTop=msgs.scrollHeight;
   });
   
-  // Убираем бейдж
   const badge=document.getElementById('unreadBadge');
   if(badge) badge.remove();
 }
@@ -1093,7 +1137,6 @@ function sendChatMessage(){
     }
     
     database.ref('tickets/'+currentTicketId+'/messages').push({sender:isAdmin()?'support':'user',text:text,timestamp:Date.now()});
-    // Обновляем last_message_time
     database.ref('tickets/'+currentTicketId+'/last_message_time').set(Date.now());
     input.value='';
   });
@@ -1103,27 +1146,25 @@ async function closeTicket(){
   if(!isAdmin()||!currentTicketId)return;
   if(!confirm('Закрыть тикет?'))return;
   
-  await database.ref('tickets/'+currentTicketId+'/closure').set({
-    closed_at:Date.now(),
-    message:'Ваш тикет был закрыт администратором. Если проблема не решена, создайте новый тикет.'
-  });
+  // Сразу удаляем тикет из базы
+  await database.ref('tickets/'+currentTicketId).remove();
   
   const msgs=document.getElementById('chatMessages');
-  msgs.innerHTML+=`<div class="chat-message closed"><div>🔒 Тикет закрыт. Удаление через 30 секунд...</div></div>`;
+  msgs.innerHTML+=`<div class="chat-message closed"><div>🔒 Тикет закрыт и удалён. Окно закроется через 10 секунд...</div></div>`;
   msgs.scrollTop=msgs.scrollHeight;
   document.getElementById('adminTicketControls').style.display='none';
   document.getElementById('chatInputArea').style.display='none';
   cleanupChatListeners();
   
-  setTimeout(async()=>{
-    await database.ref('tickets/'+currentTicketId).remove();
+  // Ждём 10 секунд, потом закрываем окно
+  setTimeout(()=>{
     if(document.getElementById('chatWindow').classList.contains('open')){
       animateAndCloseChat();
     }
     currentTicketId=null;
-  },30000);
+  },10000);
   
-  showToast('Тикет закрыт','info');
+  showToast('Тикет закрыт и удалён','info');
 }
 
 // ============ ИНИЦИАЛИЗАЦИЯ ============
